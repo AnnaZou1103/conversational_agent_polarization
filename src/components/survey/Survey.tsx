@@ -9,6 +9,7 @@ import RatingQuestion from "@/src/components/survey/RatingQuestion";
 import ContinuousScaleQuestion from "@/src/components/survey/ContinuousScaleQuestion";
 import { SurveyPage, SurveyQuestion, SurveyType, ValidState } from "@/src/types/interfaces";
 import api from "@/src/utils/api";
+import LikertQuestion from "./LikertQuestion";
 
 export default function Survey({ id, surveyType, surveyPage }: { id: string, surveyType: SurveyType, surveyPage: SurveyPage[]; }) {
     const router = useRouter();
@@ -40,8 +41,15 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
 
         const newResponses = { ...responses };
         surveyPage[currentPage].questions.forEach(q => {
-            const value = formData.get(q.name) as string;
-            if (value) newResponses[q.name] = value;
+            if (q.type === "likert") {
+                q.statements!.forEach(statement => {
+                    const value = formData.get(statement.name) as string;
+                    if (value) newResponses[statement.name] = value;
+                });
+            } else {
+                const value = formData.get(q.name!) as string;
+                if (value) newResponses[q.name!] = value;
+            }
         });
         setResponses(newResponses);
 
@@ -54,48 +62,67 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
 
     const renderQuestion = (q: SurveyQuestion) => {
         switch (q.type) {
-            case 'choice':
+
+            case "choice":
                 return (
                     <ChoiceQuestion
                         key={q.name}
                         name={q.name}
                         question={q.question}
-                        options={q.options || []}
+                        options={q.options}
                         selectedValue={responses[q.name]}
                     />
                 );
-            case 'scale':
-                return (q.isDiscrete ?
-                    <DiscreteScaleQuestion
-                        key={q.name}
-                        name={q.name}
-                        question={q.question}
-                        valueLabels={q.valueLabels || []}
-                        initialIndex={q.initialIndex || 0}
-                        selectedValue={responses[q.name]}
-                    /> :
+
+            case "scale":
+                if (q.isDiscrete) {
+                    return (
+                        <DiscreteScaleQuestion
+                            key={q.name}
+                            name={q.name}
+                            question={q.question}
+                            valueLabels={q.valueLabels}
+                            initialIndex={q.initialIndex}
+                            selectedValue={responses[q.name]}
+                        />
+                    );
+                }
+
+                return (
                     <ContinuousScaleQuestion
                         key={q.name}
                         name={q.name}
                         question={q.question}
-                        min={q.min || 0}
-                        max={q.max || 100}
-                        milestones={q.milestones || []}
+                        min={q.min}
+                        max={q.max}
+                        milestones={q.milestones}
                         selectedValue={responses[q.name]}
                     />
                 );
-            case 'rating':
+
+            case "rating":
                 return (
                     <RatingQuestion
                         key={q.name}
                         name={q.name}
                         question={q.question}
-                        min={q.min || 1}
-                        max={q.max || 5}
-                        minLabel={q.minLabel || ""}
-                        maxLabel={q.maxLabel || ""}
-                        allowNotApplicable={q.allowNotApplicable || false}
+                        min={q.min}
+                        max={q.max}
+                        minLabel={q.minLabel}
+                        maxLabel={q.maxLabel}
+                        allowNotApplicable={q.allowNotApplicable}
                         selectedValue={responses[q.name]}
+                    />
+                );
+
+            case "likert":
+                return (
+                    <LikertQuestion
+                        key={q.name}
+                        min={q.min}
+                        max={q.max}
+                        statements={q.statements}
+                        responses={responses}
                     />
                 );
         }
@@ -116,8 +143,8 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
 
             <h1 className="text-3xl font-bold">{surveyType[0].toUpperCase() + surveyType.slice(1)}-Survey</h1>
 
-            {surveyPage[currentPage].note &&
-                <p className="text-zinc-600 font-medium">{surveyPage[currentPage].note}</p>}
+            {surveyPage[currentPage].instruction &&
+                <p className="text-zinc-900 font-medium whitespace-pre-line">{surveyPage[currentPage].instruction}</p>}
 
             <form onSubmit={handleNextClick} className="space-y-6">
                 {surveyPage[currentPage].questions.map(renderQuestion)}

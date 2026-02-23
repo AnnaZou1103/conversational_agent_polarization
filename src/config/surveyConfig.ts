@@ -42,6 +42,7 @@ export const preSurveyPages: SurveyPage[] = [
                 name: "republicanStrength",
                 question: "Would you call yourself a strong Republican or a not very strong Republican?",
                 isDiscrete: true,
+                initialIndex: 0,
                 valueLabels: ["Not very strong Republican", "Strong Republican"]
             },
             {
@@ -49,6 +50,7 @@ export const preSurveyPages: SurveyPage[] = [
                 name: "democratStrength",
                 question: "Would you call yourself a strong Democrat or a not very strong Democrat?",
                 isDiscrete: true,
+                initialIndex: 0,
                 valueLabels: ["Not very strong Democrat", "Strong Democrat"]
             },
             {
@@ -72,7 +74,7 @@ export const preSurveyPages: SurveyPage[] = [
                 milestones: [{ value: 0, label: "Not important at all" }, { value: 50, label: "Moderately important" }, { value: 100, label: "Extremely important" }]
             }
         ],
-        note: "Note: On this and the following pages, text in square brackets is conditional on participants’ party identification. The text before the “/” will be shown to Republican participants. The text after the “/” wil be shown to Democratic participants. If other conditions are used, this will be specifically noted."
+        instruction: "Note: On this and the following pages, text in square brackets is conditional on participants’ party identification. The text before the “/” will be shown to Republican participants. The text after the “/” wil be shown to Democratic participants. If other conditions are used, this will be specifically noted."
     },
     {
         questions: [
@@ -89,83 +91,150 @@ export const postSurveyPages: SurveyPage[] = [
     {
         questions: [
             {
-                type: "choice",
-                name: "gender",
-                question: "What is your gender?",
-                options: ["Male", "Female", "Non-binary / third gender", "Prefer not to say"]
-            },
-            {
-                type: "choice",
-                name: "age",
-                question: "What is your age?",
-                options: ["18–24", "25–34", "35–44", "45–54", "55 or above", "Prefer not to say", "Under 18"]
-            },]
-    },
-    {
-        questions: [
-            {
-                type: "choice",
-                name: "aiFrequency",
-                question: "How often do you use AI tools such as ChatGPT, Gemini, or similar systems?",
-                options: ["Never", "Less than once a month", "A few times per month", "A few times per week", "Daily or almost daily"],
-            },
-            {
-                type: "rating",
-                name: "politicalOrientation",
-                question: "How would you describe your political orientation?",
-                min: 1,
-                max: 7,
-                minLabel: "Very conservative",
-                maxLabel: "Very liberal",
-                allowNotApplicable: true
-            }]
-    },
-    {
-        questions: [
-            {
                 type: "scale",
-                name: "republicanStrength",
-                question: "Would you call yourself a strong Republican or a not very strong Republican?",
-                isDiscrete: true,
-                valueLabels: ["Not very strong Republican", "Strong Republican"]
-            },
-            {
-                type: "scale",
-                name: "democratStrength",
-                question: "Would you call yourself a strong Democrat or a not very strong Democrat?",
-                isDiscrete: true,
-                valueLabels: ["Not very strong Democrat", "Strong Democrat"]
-            },
-            {
-                type: "scale",
-                name: "closerParty",
-                question: "Do you think of yourself as closer to the Republican Party or the Democratic Party?",
-                isDiscrete: true,
-                initialIndex: 1,
-                valueLabels: ["Closer to Republican Party", "Neither", "Closer to Democratic Party"]
-            }]
-    },
-    {
-        questions: [
-            {
-                type: "scale",
-                name: "partisanshipStrength",
-                question: "How important is being a [Republican/Democrat] to you?",
+                name: "rateRepublicans",
+                question: "How would you rate Republicans?",
                 isDiscrete: false,
                 min: 0,
                 max: 100,
-                milestones: [{ value: 0, label: "Not important at all" }, { value: 50, label: "Moderately important" }, { value: 100, label: "Extremely important" }]
+                milestones: [{ value: 0, label: "Very cold\nor unfavorable feeling" }, { value: 50, label: "No feeling at all" }, { value: 100, label: "Very warm\nor favorable feeling" }]
+            },
+            {
+                type: "scale",
+                name: "rateDemocrats",
+                question: "How would you rate Democrats?",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Very cold\nor unfavorable feeling" }, { value: 50, label: "No feeling at all" }, { value: 100, label: "Very warm\nor favorable feeling" }]
             }
         ],
-        note: "Note: On this and the following pages, text in square brackets is conditional on participants’ party identification. The text before the “/” will be shown to Republican participants. The text after the “/” wil be shown to Democratic participants. If other conditions are used, this will be specifically noted."
+        instruction: "We would like to get your feelings toward both Democrats and Republicans. We would like you to rate them using something we call the feeling thermometer. Ratings between 50 degrees and 100 degrees mean that you feel favorable and warm toward them. Ratings between 0 degrees and 50 degrees mean that you don't feel favorable toward them and that you don't care too much for them. You would rate them at the 50 degree mark if you don't feel particularly warm or cold toward them."
     },
     {
         questions: [
             {
-                type: "choice",
-                name: "attentionCheck",
-                question: `To help keep track of who is paying attention, please select "Somewhat disagree" in the options below.`,
-                options: ["Strongly agree", "Somewhat agree", "No opinion", "Somewhat disagree", "Strongly disagree"]
-            }]
+                type: "scale",
+                name: "giveCents",
+                question: "How many cents (if any) will you give to the [Democratic/Republican] participant?",
+                isDiscrete: false,
+                min: 0,
+                max: 50,
+                milestones: [{ value: 0, label: "0 cents" }, { value: 25, label: "25 cents" }, { value: 50, label: "50 cents" }]
+            },
+        ],
+        instruction: "You have been anonymously and randomly matched with another participant who identifies as a [Democrat/Republican]. You have been given 50 cents. You will now decide how to split these 50 cents between yourself and the [Democratic/Republican] participant. You can give any amount between 0 cents and 50 cents to the other participant. The other participant cannot affect the outcome you choose.\n\nFor example:\n- If you give 0 cents, you will end up with 50 cents and the [Democratic/Republican] participant will end up with 0 cents.\n- If you give 50 cents, you will end up with 0 cents and the [Democratic/Republican] participant will end up with 50 cents."
+    },
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "reducePollStations",
+                question: "[Republicans/Democrats] should reduce the number of polling stations in areas that support [Democrats/Republicans].",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Strongly disagree" }, { value: 50, label: "Neither disagree nor agree" }, { value: 100, label: "Strongly agree" }]
+            },
+            {
+                type: "scale",
+                name: "ignoreUnfavorableJudges",
+                question: "[Republican/Democratic] governors should ignore unfavorable court rulings by [Democrat/Republican]-appointed judges.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Strongly disagree" }, { value: 50, label: "Neither disagree nor agree" }, { value: 100, label: "Strongly agree" }]
+            }
+        ],
+    },
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "prosecuteJournalists",
+                question: "[Republican/Democratic] governors should prosecute journalists who accuse [Republican/Democratic] politicians of misconduct without revealing sources.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Strongly disagree" }, { value: 50, label: "Neither disagree nor agree" }, { value: 100, label: "Strongly agree" }]
+            },
+            {
+                type: "scale",
+                name: "acceptElectionResults",
+                question: "[Republicans/Democrats] should not accept the results of elections if they lose.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Strongly disagree" }, { value: 50, label: "Neither disagree nor agree" }, { value: 100, label: "Strongly agree" }]
+            }
+        ],
+    },
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "sendThreateningMessages",
+                question: "When, if ever, is it OK for [Republicans/Democrats] to send threatening and intimidating messages to [Democratic/Republican] party leaders?",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Never" }, { value: 100, label: "Always" }]
+            },
+            {
+                type: "scale",
+                name: "publicHarass",
+                question: "When, if ever, is it OK for an ordinary [Republican/Democrat] in the public to harass an ordinary [Democrat/Republican] on the Internet, in a way that makes the target feel frightened?",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Never" }, { value: 100, label: "Always" }]
+            }
+        ],
+    },
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "violanceForGoals",
+                question: "How much do you feel it is justified for [Republicans/Democrats] to use violence in advancing their political goals these days?",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Not justified at all" }, { value: 50, label: "Moderately justified" }, { value: 100, label: "Extremely justified" }]
+            },
+            {
+                type: "scale",
+                name: "violanceForElection",
+                question: "How much do you feel it is justified for [Republicans/Democrats] to use violence if the [Democratic/Republican] party wins more races in the next election?",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Not justified at all" }, { value: 50, label: "Moderately justified" }, { value: 100, label: "Extremely justified" }]
+            }
+        ],
+    },
+    {
+        questions: [
+            {
+                type: "likert",
+                name: "agentTrust",
+                min: 1,
+                max: 7,
+                statements: [
+                    { name: "negativeConsequences", content: "I believe that there could be negative consequences when using this agent." },
+                    { name: "cautiousUsingAgent", content: "I feel I must be cautious when using this agent." },
+                    { name: "riskyToInteract", content: "It is risky to interact with this agent." },
+                    { name: "actsInBestInterest", content: "I believe that this agent will act in my best interest." },
+                    { name: "triesToHelp", content: "I believe that this agent will do its best to help me if I need help." },
+                    { name: "understandsNeeds", content: "I believe that this agent is interested in understanding my needs and preferences." },
+                    { name: "competentAndEffective", content: "I think that this agent is competent and effective in its role." },
+                    { name: "performsRoleWell", content: "I think that this agent performs its role very well." },
+                    { name: "hasExpectedFunctionalities", content: "I believe that this agent has all the functionalities I would expect." },
+                    { name: "dependCompletely", content: "If I use this agent, I think I would be able to depend on it completely." },
+                    { name: "alwaysReliable", content: "I can always rely on this agent for assistance." },
+                    { name: "trustInformation", content: "I can trust the information presented to me by this agent." }
+                ]
+            }
+        ]
     },
 ];

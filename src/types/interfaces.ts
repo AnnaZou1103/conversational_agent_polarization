@@ -17,28 +17,59 @@ export interface SurveyResponses {
     responses: Record<string, string>;
 }
 
-export interface SurveyQuestion {
-    type: 'choice' | 'scale' | 'rating';
+export interface BaseQuestion {
     name: string;
     question: string;
-    // Choice-specific
-    options?: string[];
-    // Rating-specific
-    min?: number; // Continuous-scale shared
-    max?: number; // Continuous-scale shared
+}
+
+export interface ChoiceQuestion extends BaseQuestion {
+    type: "choice";
+    options: string[];
+}
+
+export interface RatingQuestion extends BaseQuestion {
+    type: "rating";
+    min: number;
+    max: number;
     minLabel?: string;
     maxLabel?: string;
     allowNotApplicable?: boolean;
-    // Scale-specific
-    isDiscrete?: boolean;
-    // Discrete-scale-specific
-    initialIndex?: number;
-    valueLabels?: string[];
-    // Continuous-scale-specific
-    milestones?: { value: number; label: string; }[];
 }
+
+export interface DiscreteScaleQuestion extends BaseQuestion {
+    type: "scale";
+    isDiscrete: true;
+    valueLabels: string[];
+    initialIndex: number;
+}
+
+export interface ContinuousScaleQuestion extends BaseQuestion {
+    type: "scale";
+    isDiscrete: false;
+    min: number;
+    max: number;
+    milestones: { value: number; label: string; }[];
+}
+
+export interface LikertQuestion {
+    type: "likert";
+    name: string;
+    min: number;
+    max: number;
+    statements: {
+        name: string;
+        content: string;
+    }[];
+}
+
+export type SurveyQuestion =
+    | ChoiceQuestion
+    | DiscreteScaleQuestion
+    | ContinuousScaleQuestion
+    | RatingQuestion
+    | LikertQuestion;
 
 export interface SurveyPage {
     questions: SurveyQuestion[];
-    note?: string;
+    instruction?: string;
 }

@@ -3,18 +3,18 @@ export default function RatingQuestion({
     question,
     min,
     max,
-    minLabel,
-    maxLabel,
-    allowNotApplicable,
+    minLabel = "",
+    maxLabel = "",
+    allowNotApplicable = false,
     selectedValue
 }: {
     name: string,
     question: string,
     min: number,
     max: number,
-    minLabel: string,
-    maxLabel: string,
-    allowNotApplicable: boolean,
+    minLabel?: string,
+    maxLabel?: string,
+    allowNotApplicable?: boolean,
     selectedValue?: string;
 }) {
     return (

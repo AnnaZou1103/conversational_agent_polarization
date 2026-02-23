@@ -32,7 +32,7 @@ export default function ContinuousScaleQuestion({
 
     return (
         <fieldset className="border border-zinc-300 px-4 pt-3 pb-4">
-            <legend className="px-2 text-lg font-medium">
+            <legend className="px-2 text-lg font-medium whitespace-pre-line">
                 {question}
             </legend>
 
@@ -74,7 +74,7 @@ export default function ContinuousScaleQuestion({
                                 <div className="text-sm text-zinc-600">
                                     {milestone.value}
                                 </div>
-                                <div className="text-sm font-semibold text-zinc-800">
+                                <div className="text-sm font-semibold text-zinc-800 whitespace-pre">
                                     {milestone.label}
                                 </div>
                             </div>
