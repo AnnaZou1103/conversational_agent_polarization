@@ -237,4 +237,93 @@ export const postSurveyPages: SurveyPage[] = [
             }
         ]
     },
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "Di",
+                question: "During Donald Trump's presidency, there was the lowest rate of Black people and Hispanics in poverty since these data began being collected in 1966.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
+            },
+            {
+                type: "scale",
+                name: "Dii",
+                question: "The Trump administration deported fewer undocumented immigrants in its first three years than the Obama administration did in its first three years.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
+            }
+        ],
+        instruction: "In this task, we will ask you to give us your opinion about various claims. The claims are statements that may be true or may be false. The truth or falsity of the statements has been determined by real-world sources.\n\nWhat is the likelihood that the following statements are true?\nPlease choose a point that best describes your view on the below scale that goes from 0% (certainly false) to 100% (certainly true)."
+    },
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "Diii",
+                question: "During Donald Trump's presidency, the unemployment rate reached its lowest level since 1969.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
+            },
+            {
+                type: "scale",
+                name: "Div",
+                question: "Donald Trump was lawfully elected President in the 2016 election against Hillary Clinton.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
+            }
+        ],
+    },
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "Ri",
+                question: "The vast majority (more than 90%) of climate scientists believe that climate change is an established fact and that it is most likely caused by human-made emissions.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
+            },
+            {
+                type: "scale",
+                name: "Rii",
+                question: "The crime rate among illegal immigrants is lower than the crime rate among American citizens.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
+            }
+        ],
+    },
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "Riii",
+                question: "White Americans own homes at a higher rate than Black Americans, and this gap is larger now than it was in the late 1960s.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
+            },
+            {
+                type: "scale",
+                name: "Riv",
+                question: "Joe Biden was lawfully elected President in the 2020 election against Donald Trump.",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
+            }
+        ],
+    },
 ];
