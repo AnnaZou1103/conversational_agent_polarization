@@ -4,16 +4,16 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const userAPI = {
     validateStudyID: async (id: string) => {
-        const response = await fetch(`${apiUrl}/validate/${id}`);
+        const response = await fetch(`${apiUrl}/user/validate/${id}`);
         return response;
     },
     getUserState: async (id: string) => {
-        const response = await fetch(`${apiUrl}/state/${id}`);
+        const response = await fetch(`${apiUrl}/user/state/${id}`);
         const data: UserState = await response.json();
         return data;
     },
     advanceUserState: async (id: string, nextState: UserState) => {
-        const response = await fetch(`${apiUrl}/advance/${id}`, {
+        const response = await fetch(`${apiUrl}/user/advance/${id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
