@@ -1,16 +1,10 @@
-"use client";
+import InterventionPage from "@/src/components/intervention/InterventionPage";
+import { checkState } from "@/src/utils/state/server";
 
-import { checkState, routeToState } from "@/src/utils/state";
-import React from "react";
+export default async function Intervention({ params }: { params: Promise<{ id: string; }>; }) {
+    const { id } = await params;
 
-export default function Intervention({ params }: { params: Promise<{ id: string; }>; }) {
-    const { id } = React.use(params);
+    await checkState(id, "intervention");
 
-    checkState(id, "intervention");
-
-    return (
-        <main className="flex flex-col items-start justify-center gap-12 px-80 py-8">
-            <button className="btn-blue" onClick={() => routeToState(id, "post_survey")}>Next</button>
-        </main>
-    );
+    return <InterventionPage id={id} />;
 }

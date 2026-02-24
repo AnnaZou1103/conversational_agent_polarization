@@ -1,6 +1,6 @@
 "use client";
 
-import { checkState, routeToState } from "@/src/utils/state";
+
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ChoiceQuestion from "@/src/components/survey/ChoiceQuestion";
@@ -10,12 +10,12 @@ import ContinuousScaleQuestion from "@/src/components/survey/ContinuousScaleQues
 import { SurveyPage, SurveyQuestion, SurveyType, ValidState } from "@/src/types/interfaces";
 import api from "@/src/utils/api";
 import LikertQuestion from "./LikertQuestion";
+import { routeToState } from "@/src/utils/state/client";
 
 export default function Survey({ id, surveyType, surveyPage }: { id: string, surveyType: SurveyType, surveyPage: SurveyPage[]; }) {
     const router = useRouter();
 
-    checkState(id, `${surveyType}_survey`);
-    const nextState: Record<SurveyType, ValidState> = { "pre": "intervention", "post": "complete" };
+    const nextState: Record<SurveyType, ValidState> = { "pre": "to_intervention", "post": "complete" };
 
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [responses, setResponses] = useState<Record<string, string>>({});
@@ -25,7 +25,7 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
         setIsSubmitting(true);
         try {
             await api.preSurvey.saveSurvey(id, surveyType, { responses: finalResponses });
-            routeToState(id, nextState[surveyType]);
+            routeToState(router, id, nextState[surveyType]);
         } catch (error) {
             console.error('Error submitting survey:', error);
             router.push(`/${error}`);

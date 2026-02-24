@@ -8,7 +8,7 @@ export default async function RootLayout({ params, children }: {
 }) {
     const { id } = await params;
     const response = await api.user.validateStudyID(id);
-    if (!response.ok) redirect("/error");
+    if (!response.ok) redirect("/");
     return (
         <>
             <Header id={id} />

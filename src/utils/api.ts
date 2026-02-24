@@ -9,8 +9,7 @@ const userAPI = {
     },
     getUserState: async (id: string) => {
         const response = await fetch(`${apiUrl}/user/state/${id}`);
-        const data: UserState = await response.json();
-        return data;
+        return response;
     },
     advanceUserState: async (id: string, nextState: UserState) => {
         const response = await fetch(`${apiUrl}/user/advance/${id}`, {

@@ -7,7 +7,7 @@ export interface InstructionItem {
 }
 
 export type SurveyType = "pre" | "post";
-export type ValidState = "not_started" | "pre_survey" | "intervention" | "post_survey" | "complete";
+export type ValidState = "not_started" | "pre_survey" | "to_intervention" | "intervention" | "to_post_survey" | "post_survey" | "complete";
 
 export interface UserState {
     state: ValidState;

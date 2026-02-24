@@ -1,9 +1,11 @@
 import Survey from "@/src/components/survey/Survey";
-import React from "react";
 import { postSurveyPages } from "../../../src/config/surveyConfig";
+import { checkState } from "@/src/utils/state/server";
 
-export default function PostSurvey({ params }: { params: Promise<{ id: string; }>; }) {
-    const { id } = React.use(params);
+export default async function PostSurvey({ params }: { params: Promise<{ id: string; }>; }) {
+    const { id } = await params;
+
+    await checkState(id, "post_survey");
 
     return (
         <Survey id={id} surveyType="post" surveyPage={postSurveyPages} />

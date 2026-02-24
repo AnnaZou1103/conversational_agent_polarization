@@ -1,10 +1,12 @@
 import Survey from "@/src/components/survey/Survey";
 import { preSurveyPages } from "@/src/config/surveyConfig";
-import React from "react";
+import { checkState } from "@/src/utils/state/server";
 
 
-export default function PreSurvey({ params }: { params: Promise<{ id: string; }>; }) {
-    const { id } = React.use(params);
+export default async function PreSurvey({ params }: { params: Promise<{ id: string; }>; }) {
+    const { id } = await params;
+
+    await checkState(id, "pre_survey");
 
     return (
         <Survey id={id} surveyType="pre" surveyPage={preSurveyPages} />

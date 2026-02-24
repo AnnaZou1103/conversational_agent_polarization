@@ -1,8 +1,12 @@
+import MessageCard from "@/src/components/common/MessageCard";
+import { thankyouMessage } from "@/src/config/messageConfig";
+
 export default function ThankYouPage() {
     return (
-        <main className="flex flex-col items-start justify-center gap-12 px-80 py-8">
-            <h1>Thank you!</h1>
-        </main>
+        <MessageCard>
+            <span className="text-5xl">🎉</span>
+            <h1 className="text-2xl font-semibold text-gray-800">{thankyouMessage}</h1>
+        </MessageCard>
     );
 
 }
