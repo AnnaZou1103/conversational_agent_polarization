@@ -1,10 +1,31 @@
 @import "tailwindcss";
+@import "@fontsource/inter";
 
-
-.btn-blue {
-    @apply bg-blue-600 hover:bg-blue-700 cursor-pointer text-white font-semibold px-6 py-2 rounded-lg transition-colors;
+@theme {
+    --shadow-card: 0px 2px 12px rgb(0 0 0 / 0.08);
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
-.btn-zinc {
-    @apply bg-zinc-400 hover:bg-zinc-500 cursor-pointer text-white font-semibold px-6 py-2 rounded-lg transition-colors;
+@layer base {
+    body {
+        @apply font-sans bg-[#F5F5F5];
+    }
+}
+
+@layer components {
+    .btn-blue {
+        @apply w-40 h-12 bg-[#2563EB] hover:bg-blue-700 cursor-pointer text-white text-base font-semibold rounded-lg transition-colors;
+    }
+
+    .btn-zinc {
+        @apply w-40 h-12 bg-zinc-400 hover:bg-zinc-500 cursor-pointer text-white text-base font-semibold rounded-lg transition-colors;
+    }
+
+    .card-container {
+        @apply px-6 py-4 w-190 rounded-xl bg-white shadow-card;
+    }
+
+    .text-question {
+        @apply text-[18px] font-bold;
+    }
 }

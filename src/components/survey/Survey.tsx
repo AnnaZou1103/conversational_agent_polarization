@@ -11,8 +11,23 @@ import { SurveyPage, SurveyQuestion, SurveyType, ValidState } from "@/src/types/
 import api from "@/src/utils/api";
 import LikertQuestion from "./LikertQuestion";
 import { routeToState } from "@/src/utils/state/client";
+import { shuffleWithSeed } from "@/src/utils/shuffle";
+
 
 export default function Survey({ id, surveyType, surveyPage }: { id: string, surveyType: SurveyType, surveyPage: SurveyPage[]; }) {
+    const [pages] = useState(() =>
+        surveyPage.map((p, pageIndex) => ({
+            ...p,
+            questions: p.questions.map((q) => {
+                if (q.type === "choice" && q.randomized) {
+                    const seed = `${id}|${surveyType}|${pageIndex}|${q.name}`;
+                    return { ...q, options: shuffleWithSeed(q.options, seed) };
+                }
+                return q;
+            }),
+        }))
+    );
+
     const router = useRouter();
 
     const nextState: Record<SurveyType, ValidState> = { "pre": "to_intervention", "post": "complete" };
@@ -40,7 +55,7 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
         const formData = new FormData(form);
 
         const newResponses = { ...responses };
-        surveyPage[currentPage].questions.forEach(q => {
+        pages[currentPage].questions.forEach(q => {
             if (q.type === "likert") {
                 q.statements!.forEach(statement => {
                     const value = formData.get(statement.name) as string;
@@ -53,7 +68,7 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
         });
         setResponses(newResponses);
 
-        if (currentPage !== surveyPage.length - 1) {
+        if (currentPage !== pages.length - 1) {
             setCurrentPage(prev => prev + 1);
         } else {
             submitSurvey(newResponses);
@@ -131,23 +146,11 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
 
     return (
         <main className="mx-100 my-10 space-y-6">
-            <div className="mb-6">
-                <p className="text-sm text-zinc-600 mb-2">Page {currentPage + 1} of {surveyPage.length}</p>
-                <div className="w-full bg-zinc-200 rounded-full h-2">
-                    <div
-                        className="bg-blue-600 h-2 rounded-full transition-all duration-200"
-                        style={{ width: `${((currentPage + 1) / surveyPage.length) * 100}%` }}
-                    />
-                </div>
-            </div>
-
-            <h1 className="text-3xl font-bold">{surveyType[0].toUpperCase() + surveyType.slice(1)}-Survey</h1>
-
-            {surveyPage[currentPage].instruction &&
-                <p className="text-zinc-900 font-medium whitespace-pre-line">{surveyPage[currentPage].instruction}</p>}
+            {pages[currentPage].instruction &&
+                <p className="text-zinc-900 font-medium whitespace-pre-line">{pages[currentPage].instruction}</p>}
 
             <form onSubmit={handleNextClick} className="space-y-6">
-                {surveyPage[currentPage].questions.map(renderQuestion)}
+                {pages[currentPage].questions.map(renderQuestion)}
                 <div className="space-x-10">
                     {currentPage > 0 && <button
                         type="button"
@@ -163,7 +166,7 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
                     >
                         {isSubmitting
                             ? "Submitting..."
-                            : currentPage < surveyPage.length - 1 ? "Next" : "Submit"}
+                            : currentPage < pages.length - 1 ? "Next" : "Submit"}
                     </button>
                 </div>
             </form>

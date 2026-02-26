@@ -5,34 +5,16 @@ export const preSurveyPages: SurveyPage[] = [
         questions: [
             {
                 type: "choice",
-                name: "gender",
-                question: "What is your gender?",
-                options: ["Male", "Female", "Non-binary / third gender", "Prefer not to say"]
-            },
-            {
-                type: "choice",
-                name: "age",
-                question: "What is your age?",
-                options: ["18–24", "25–34", "35–44", "45–54", "55 or above", "Prefer not to say", "Under 18"]
-            },]
-    },
-    {
-        questions: [
-            {
-                type: "choice",
                 name: "aiFrequency",
-                question: "How often do you use AI tools such as ChatGPT, Gemini, or similar systems?",
+                question: "Q1. How often do you use AI tools such as ChatGPT, Gemini, or similar systems?",
                 options: ["Never", "Less than once a month", "A few times per month", "A few times per week", "Daily or almost daily"],
             },
             {
-                type: "rating",
-                name: "politicalOrientation",
-                question: "How would you describe your political orientation?",
-                min: 1,
-                max: 7,
-                minLabel: "Very conservative",
-                maxLabel: "Very liberal",
-                allowNotApplicable: true
+                type: "choice",
+                name: "partyIdentification",
+                question: "Q2. Generally speaking, do you think of yourself as a Republican, a Democrat, an Independent, or something else?",
+                options: ["Republican", "Democrat", "Independent/Other"],
+                randomized: true
             }]
     },
     {
@@ -67,23 +49,19 @@ export const preSurveyPages: SurveyPage[] = [
             {
                 type: "scale",
                 name: "partisanshipStrength",
-                question: "How important is being a [Republican/Democrat] to you?",
+                question: "Q3. How important is being a [Republican/Democrat] to you?",
                 isDiscrete: false,
                 min: 0,
                 max: 100,
                 milestones: [{ value: 0, label: "Not important at all" }, { value: 50, label: "Moderately important" }, { value: 100, label: "Extremely important" }]
-            }
-        ],
-        instruction: "Note: On this and the following pages, text in square brackets is conditional on participants’ party identification. The text before the “/” will be shown to Republican participants. The text after the “/” wil be shown to Democratic participants. If other conditions are used, this will be specifically noted."
-    },
-    {
-        questions: [
+            },
             {
                 type: "choice",
                 name: "attentionCheck",
-                question: `To help keep track of who is paying attention, please select "Somewhat disagree" in the options below.`,
+                question: `Q5. To help keep track of who is paying attention, please select "Somewhat disagree" in the options below.`,
                 options: ["Strongly agree", "Somewhat agree", "No opinion", "Somewhat disagree", "Strongly disagree"]
-            }]
+            }
+        ],
     },
 ];
 

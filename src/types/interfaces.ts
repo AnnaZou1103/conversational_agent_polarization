@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 
-export interface InstructionItem {
+export interface ConsentFormItem {
     title: string;
-    titleSize?: "xl" | "2xl" | "3xl";
     content: ReactNode;
 }
 
@@ -25,6 +24,7 @@ export interface BaseQuestion {
 export interface ChoiceQuestion extends BaseQuestion {
     type: "choice";
     options: string[];
+    randomized?: boolean;
 }
 
 export interface RatingQuestion extends BaseQuestion {

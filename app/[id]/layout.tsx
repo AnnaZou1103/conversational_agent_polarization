@@ -11,7 +11,7 @@ export default async function RootLayout({ params, children }: {
     if (!response.ok) redirect("/");
     return (
         <>
-            <Header id={id} />
+            <Header />
             {children}
         </>
     );
