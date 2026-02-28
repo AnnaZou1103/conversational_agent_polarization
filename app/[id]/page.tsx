@@ -1,6 +1,6 @@
 import { UserState } from "@/src/types/interfaces";
-import api from "@/src/utils/api";
-import { statePath } from "@/src/utils/state/shared";
+import api from "@/src/lib/api";
+import { statePath } from "@/src/lib/state/shared";
 import { redirect } from "next/navigation";
 
 async function getUserPath(id: string) {

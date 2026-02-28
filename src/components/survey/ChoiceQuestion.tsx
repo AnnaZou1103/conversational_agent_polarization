@@ -1,3 +1,5 @@
+import QuestionCard from "../common/QuestionCard";
+
 export default function ChoiceQuestion({
     name,
     question,
@@ -10,9 +12,7 @@ export default function ChoiceQuestion({
     selectedValue?: string;
 }) {
     return (
-        <div className="card-container">
-            <h1 className="text-question">{question}</h1>
-
+        <QuestionCard question={question}>
             <div className="space-y-2 mt-2">
                 {options.map((option, _) => (
                     <label key={option} className="flex items-center space-x-2 cursor-pointer">
@@ -28,6 +28,6 @@ export default function ChoiceQuestion({
                     </label>
                 ))}
             </div>
-        </div>
+        </QuestionCard>
     );
 }

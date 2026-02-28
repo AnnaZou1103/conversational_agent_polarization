@@ -71,5 +71,5 @@ export type SurveyQuestion =
 
 export interface SurveyPage {
     questions: SurveyQuestion[];
-    instruction?: string;
+    paragraph?: string;
 }

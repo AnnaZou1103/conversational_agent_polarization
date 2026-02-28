@@ -1,3 +1,5 @@
+import QuestionCard from "../common/QuestionCard";
+
 export default function RatingQuestion({
     name,
     question,
@@ -18,11 +20,7 @@ export default function RatingQuestion({
     selectedValue?: string;
 }) {
     return (
-        <fieldset className="border border-zinc-300 px-4 pt-3 pb-4">
-            <legend className="px-2 text-lg font-medium">
-                {question}
-            </legend>
-
+        <QuestionCard question={question}>
             <div className="flex items-center justify-between border-0 rounded-full bg-blue-50 px-4 py-2">
                 <span className="text-sm font-semibold text-zinc-800">{min} = {minLabel}</span>
                 <div className="flex justify-between items-center space-x-12">
@@ -56,6 +54,6 @@ export default function RatingQuestion({
                     <span className="text-sm font-semibold text-zinc-800">Not applicable</span>
                 </label>
             }
-        </fieldset>
+        </QuestionCard>
     );
 }

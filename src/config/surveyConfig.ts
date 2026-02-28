@@ -20,29 +20,24 @@ export const preSurveyPages: SurveyPage[] = [
     {
         questions: [
             {
-                type: "scale",
-                name: "republicanStrength",
-                question: "Would you call yourself a strong Republican or a not very strong Republican?",
-                isDiscrete: true,
-                initialIndex: 0,
-                valueLabels: ["Not very strong Republican", "Strong Republican"]
+                type: "choice",
+                name: "strongRepublican",
+                question: "Q2.1. Would you call yourself a strong Republican or a not very strong Republican?",
+                options: ["Not very strong Republican", "Strong Republican"],
             },
             {
-                type: "scale",
-                name: "democratStrength",
-                question: "Would you call yourself a strong Democrat or a not very strong Democrat?",
-                isDiscrete: true,
-                initialIndex: 0,
-                valueLabels: ["Not very strong Democrat", "Strong Democrat"]
+                type: "choice",
+                name: "strongDemocrat",
+                question: "Q2.2. Would you call yourself a strong Democrat or a not very strong Democrat?",
+                options: ["Not very strong Democrat", "Strong Democrat"],
             },
             {
-                type: "scale",
+                type: "choice",
                 name: "closerParty",
-                question: "Do you think of yourself as closer to the Republican Party or the Democratic Party?",
-                isDiscrete: true,
-                initialIndex: 1,
-                valueLabels: ["Closer to Republican Party", "Neither", "Closer to Democratic Party"]
-            }]
+                question: "Q2.3. Do you think of yourself as closer to the Republican Party or the Democratic Party?",
+                options: ["Closer to Republican Party", "Neither", "Closer to Democratic Party"],
+            }
+        ]
     },
     {
         questions: [
@@ -55,6 +50,19 @@ export const preSurveyPages: SurveyPage[] = [
                 max: 100,
                 milestones: [{ value: 0, label: "Not important at all" }, { value: 50, label: "Moderately important" }, { value: 100, label: "Extremely important" }]
             },
+            {
+                type: "rating",
+                name: "issueAttitude",
+                question: "Q4. What is your overall attitude toward [issue]?",
+                min: 1,
+                max: 7,
+                minLabel: "Strongly oppose",
+                maxLabel: "Strongly support"
+            }
+        ],
+    },
+    {
+        questions: [
             {
                 type: "choice",
                 name: "attentionCheck",
@@ -87,7 +95,7 @@ export const postSurveyPages: SurveyPage[] = [
                 milestones: [{ value: 0, label: "Very cold\nor unfavorable feeling" }, { value: 50, label: "No feeling at all" }, { value: 100, label: "Very warm\nor favorable feeling" }]
             }
         ],
-        instruction: "We would like to get your feelings toward both Democrats and Republicans. We would like you to rate them using something we call the feeling thermometer. Ratings between 50 degrees and 100 degrees mean that you feel favorable and warm toward them. Ratings between 0 degrees and 50 degrees mean that you don't feel favorable toward them and that you don't care too much for them. You would rate them at the 50 degree mark if you don't feel particularly warm or cold toward them."
+        paragraph: "Q6. We would like to get your feelings toward both Democrats and Republicans. We would like you to rate them using something we call the feeling thermometer.\n\nRatings between 50 degrees and 100 degrees mean that you feel favorable and warm toward them. Ratings between 0 degrees and 50 degrees mean that you don't feel favorable toward them and that you don't care too much for them. You would rate them at the 50 degree mark if you don't feel particularly warm or cold toward them."
     },
     {
         questions: [
@@ -101,7 +109,7 @@ export const postSurveyPages: SurveyPage[] = [
                 milestones: [{ value: 0, label: "0 cents" }, { value: 25, label: "25 cents" }, { value: 50, label: "50 cents" }]
             },
         ],
-        instruction: "You have been anonymously and randomly matched with another participant who identifies as a [Democrat/Republican]. You have been given 50 cents. You will now decide how to split these 50 cents between yourself and the [Democratic/Republican] participant. You can give any amount between 0 cents and 50 cents to the other participant. The other participant cannot affect the outcome you choose.\n\nFor example:\n- If you give 0 cents, you will end up with 50 cents and the [Democratic/Republican] participant will end up with 0 cents.\n- If you give 50 cents, you will end up with 0 cents and the [Democratic/Republican] participant will end up with 50 cents."
+        paragraph: "Q7. You have been anonymously and randomly matched with another participant who identifies as a [Democrat/Republican].\nYou have been given 50 cents. You will now decide how to split these 50 cents between yourself and the [Democratic/Republican] participant. You can give any amount between 0 cents and 50 cents to the other participant. The other participant cannot affect the outcome you choose."
     },
     {
         questions: [
@@ -122,11 +130,7 @@ export const postSurveyPages: SurveyPage[] = [
                 min: 0,
                 max: 100,
                 milestones: [{ value: 0, label: "Strongly disagree" }, { value: 50, label: "Neither disagree nor agree" }, { value: 100, label: "Strongly agree" }]
-            }
-        ],
-    },
-    {
-        questions: [
+            },
             {
                 type: "scale",
                 name: "prosecuteJournalists",
@@ -146,6 +150,7 @@ export const postSurveyPages: SurveyPage[] = [
                 milestones: [{ value: 0, label: "Strongly disagree" }, { value: 50, label: "Neither disagree nor agree" }, { value: 100, label: "Strongly agree" }]
             }
         ],
+        paragraph: "Q8. Please indicate how much you disagree or agree with each of the following statements."
     },
     {
         questions: [
@@ -166,11 +171,7 @@ export const postSurveyPages: SurveyPage[] = [
                 min: 0,
                 max: 100,
                 milestones: [{ value: 0, label: "Never" }, { value: 100, label: "Always" }]
-            }
-        ],
-    },
-    {
-        questions: [
+            },
             {
                 type: "scale",
                 name: "violanceForGoals",
@@ -190,6 +191,7 @@ export const postSurveyPages: SurveyPage[] = [
                 milestones: [{ value: 0, label: "Not justified at all" }, { value: 50, label: "Moderately justified" }, { value: 100, label: "Extremely justified" }]
             }
         ],
+        paragraph: "Q9. Please answer the following questions."
     },
     {
         questions: [
@@ -213,7 +215,8 @@ export const postSurveyPages: SurveyPage[] = [
                     { name: "trustInformation", content: "I can trust the information presented to me by this agent." }
                 ]
             }
-        ]
+        ],
+        paragraph: "Q10. Please indicate how much you disagree or agree with each of the following statements."
     },
     {
         questions: [
@@ -236,7 +239,7 @@ export const postSurveyPages: SurveyPage[] = [
                 milestones: [{ value: 0, label: "0% certainly false" }, { value: 100, label: "100% certainly true" }]
             }
         ],
-        instruction: "In this task, we will ask you to give us your opinion about various claims. The claims are statements that may be true or may be false. The truth or falsity of the statements has been determined by real-world sources.\n\nWhat is the likelihood that the following statements are true?\nPlease choose a point that best describes your view on the below scale that goes from 0% (certainly false) to 100% (certainly true)."
+        paragraph: "In this task, we will ask you to give us your opinion about various claims. The claims are statements that may be true or may be false. The truth or falsity of the statements has been determined by real-world sources.\n\nWhat is the likelihood that the following statements are true?\nPlease choose a point that best describes your view on the below scale that goes from 0% (certainly false) to 100% (certainly true)."
     },
     {
         questions: [

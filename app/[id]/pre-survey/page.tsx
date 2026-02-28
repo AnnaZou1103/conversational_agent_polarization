@@ -1,6 +1,6 @@
 import Survey from "@/src/components/survey/Survey";
 import { preSurveyPages } from "@/src/config/surveyConfig";
-import { checkState } from "@/src/utils/state/server";
+import { checkState } from "@/src/lib/state/server";
 
 
 export default async function PreSurvey({ params }: { params: Promise<{ id: string; }>; }) {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import QuestionCard from "../common/QuestionCard";
 
 export default function DiscreteScaleQuestion({
     name,
@@ -43,10 +44,7 @@ export default function DiscreteScaleQuestion({
     };
 
     return (
-        <fieldset className="border border-zinc-300 px-4 pt-3 pb-4">
-            <legend className="px-2 text-lg font-medium">
-                {question}
-            </legend>
+        <QuestionCard question={question}>
 
             <input
                 type="hidden"
@@ -99,6 +97,6 @@ export default function DiscreteScaleQuestion({
                     <span>{valueLabels[labelCount - 1]}</span>
                 </div>
             </div>
-        </fieldset>
+        </QuestionCard>
     );
 }

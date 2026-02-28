@@ -1,3 +1,5 @@
+import QuestionCard from "../common/QuestionCard";
+
 export default function LikertQuestion({
     min,
     max,
@@ -11,7 +13,7 @@ export default function LikertQuestion({
 }) {
     const scale = Array.from({ length: max - min + 1 }, (_, i) => min + i);
     return (
-        <div className="border border-zinc-300 px-4 pt-3 pb-4">
+        <QuestionCard question="">
             <div
                 className="grid items-center gap-1 mb-3"
                 style={{ gridTemplateColumns: `1fr repeat(${scale.length}, 64px)` }}
@@ -26,7 +28,7 @@ export default function LikertQuestion({
                 <div
                     key={index}
                     className="grid items-center gap-1 py-1 pl-2"
-                    style={{ gridTemplateColumns: `1fr repeat(${scale.length}, 64px)`, backgroundColor: index % 2 ? "" : "WhiteSmoke" }}
+                    style={{ gridTemplateColumns: `1fr repeat(${scale.length}, 64px)`, backgroundColor: index % 2 ? "" : "#F5F5F5" }}
                 >
                     <div>{statement.content}</div>
 
@@ -44,6 +46,6 @@ export default function LikertQuestion({
                     ))}
                 </div>
             ))}
-        </div>
+        </QuestionCard>
     );
 }

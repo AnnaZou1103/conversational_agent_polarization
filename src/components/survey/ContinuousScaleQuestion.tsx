@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import QuestionCard from "../common/QuestionCard";
 
 export default function ContinuousScaleQuestion({
     name,
@@ -31,11 +32,7 @@ export default function ContinuousScaleQuestion({
     };
 
     return (
-        <fieldset className="border border-zinc-300 px-4 pt-3 pb-4">
-            <legend className="px-2 text-lg font-medium whitespace-pre-line">
-                {question}
-            </legend>
-
+        <QuestionCard question={question}>
             <input
                 type="hidden"
                 name={name}
@@ -82,6 +79,6 @@ export default function ContinuousScaleQuestion({
                     })}
                 </div>
             </div>
-        </fieldset>
+        </QuestionCard>
     );
 }

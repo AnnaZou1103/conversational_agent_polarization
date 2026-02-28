@@ -2,16 +2,18 @@
 
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChoiceQuestion from "@/src/components/survey/ChoiceQuestion";
 import DiscreteScaleQuestion from "@/src/components/survey/DiscreteScaleQuestion";
 import RatingQuestion from "@/src/components/survey/RatingQuestion";
 import ContinuousScaleQuestion from "@/src/components/survey/ContinuousScaleQuestion";
 import { SurveyPage, SurveyQuestion, SurveyType, ValidState } from "@/src/types/interfaces";
-import api from "@/src/utils/api";
+import api from "@/src/lib/api";
 import LikertQuestion from "./LikertQuestion";
-import { routeToState } from "@/src/utils/state/client";
-import { shuffleWithSeed } from "@/src/utils/shuffle";
+import { routeToState } from "@/src/lib/state/client";
+import { shuffleWithSeed } from "@/src/lib/utils";
+import { useProgress } from "../layout/ProgressContext";
+import { getStepOffset } from "@/src/config/progressConfig";
 
 
 export default function Survey({ id, surveyType, surveyPage }: { id: string, surveyType: SurveyType, surveyPage: SurveyPage[]; }) {
@@ -35,6 +37,12 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [responses, setResponses] = useState<Record<string, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { setCurrentStep } = useProgress();
+
+    useEffect(() => {
+        setCurrentStep(getStepOffset(`${surveyType}-survey`) + currentPage + 1);
+    }, [currentPage, surveyType]);
 
     const submitSurvey = async (finalResponses: Record<string, string>) => {
         setIsSubmitting(true);
@@ -146,8 +154,8 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
 
     return (
         <main className="mx-100 my-10 space-y-6">
-            {pages[currentPage].instruction &&
-                <p className="text-zinc-900 font-medium whitespace-pre-line">{pages[currentPage].instruction}</p>}
+            {pages[currentPage].paragraph &&
+                <p className="text-question whitespace-pre-line">{pages[currentPage].paragraph}</p>}
 
             <form onSubmit={handleNextClick} className="space-y-6">
                 {pages[currentPage].questions.map(renderQuestion)}
