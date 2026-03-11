@@ -11,6 +11,10 @@ const userAPI = {
         const response = await fetch(`${apiUrl}/user/state/${id}`);
         return response;
     },
+    getUserParty: async (id: string) => {
+        const response = await fetch(`${apiUrl}/user/party/${id}`);
+        return response;
+    },
     advanceUserState: async (id: string, nextState: UserState) => {
         const response = await fetch(`${apiUrl}/user/advance/${id}`, {
             method: "POST",

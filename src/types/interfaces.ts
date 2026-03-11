@@ -6,10 +6,15 @@ export interface ConsentFormItem {
 }
 
 export type SurveyType = "pre" | "post";
-export type ValidState = "not_started" | "pre_survey" | "to_intervention" | "intervention" | "to_post_survey" | "post_survey" | "complete";
+export type State = "not_started" | "pre_survey" | "to_intervention" | "intervention" | "to_post_survey" | "post_survey" | "complete";
+export type Party = "Democrat" | "Republican";
 
 export interface UserState {
-    state: ValidState;
+    state: State;
+}
+
+export interface UserParty {
+    party: Party;
 }
 
 export interface SurveyResponses {
@@ -19,6 +24,7 @@ export interface SurveyResponses {
 export interface BaseQuestion {
     name: string;
     question: string;
+    showIf?: (responses: Record<string, string>) => boolean;
 }
 
 export interface ChoiceQuestion extends BaseQuestion {
@@ -60,6 +66,7 @@ export interface LikertQuestion {
         name: string;
         content: string;
     }[];
+    showIf?: (responses: Record<string, string>) => boolean;
 }
 
 export type SurveyQuestion =

@@ -1,6 +1,5 @@
 import Survey from "@/src/components/survey/Survey";
-import { preSurveyPages } from "@/src/config/surveyConfig";
-import { checkState } from "@/src/lib/state/server";
+import { checkState, getParty } from "@/src/lib/state/server";
 
 
 export default async function PreSurvey({ params }: { params: Promise<{ id: string; }>; }) {
@@ -8,7 +7,8 @@ export default async function PreSurvey({ params }: { params: Promise<{ id: stri
 
     await checkState(id, "pre_survey");
 
+    const party = await getParty(id);
     return (
-        <Survey id={id} surveyType="pre" surveyPage={preSurveyPages} />
+        <Survey id={id} surveyType="pre" party={party} />
     );
 }

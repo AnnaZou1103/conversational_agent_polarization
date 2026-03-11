@@ -20,7 +20,7 @@ export default function ConcentFormPage({ id }: { id: string; }) {
     const router = useRouter();
     return (
         <MessageCard>
-            <p className="text-title">Consent Form</p>
+            <p className="relative text-title">Consent Form</p>
             {consentFormItems.map((item, idx) => (
                 <ConsentFormSection key={idx} title={item.title}>
                     {item.content}

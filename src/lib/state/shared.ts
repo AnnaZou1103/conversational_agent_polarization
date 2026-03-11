@@ -1,7 +1,7 @@
-import { ValidState } from "@/src/types/interfaces";
+import { State } from "@/src/types/interfaces";
 
 
-export const statePath: Record<ValidState, string> = {
+export const statePath: Record<State, string> = {
     not_started: "consent",
     pre_survey: "pre-survey",
     to_intervention: "to-intervention",

@@ -1,3 +1,5 @@
+import { Party } from "../types/interfaces";
+
 function hashStringToUint32(str: string) {
     // Simple, fast deterministic hash (FNV-1a)
     let h = 2166136261;
@@ -25,4 +27,10 @@ export function shuffleWithSeed<T>(arr: T[], seedStr: string): T[] {
         [result[i], result[j]] = [result[j], result[i]];
     }
     return result;
+}
+
+export function applyParty(text: string, party: Party): string {
+    return text.replace(/\[([^\]]+)\/([^\]]+)\]/g, (_, repText, demText) =>
+        party === "Republican" ? repText : demText
+    );
 }

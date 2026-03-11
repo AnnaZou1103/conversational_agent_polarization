@@ -7,18 +7,21 @@ import ChoiceQuestion from "@/src/components/survey/ChoiceQuestion";
 import DiscreteScaleQuestion from "@/src/components/survey/DiscreteScaleQuestion";
 import RatingQuestion from "@/src/components/survey/RatingQuestion";
 import ContinuousScaleQuestion from "@/src/components/survey/ContinuousScaleQuestion";
-import { SurveyPage, SurveyQuestion, SurveyType, ValidState } from "@/src/types/interfaces";
+import { SurveyQuestion, SurveyType, State, Party } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import LikertQuestion from "./LikertQuestion";
 import { routeToState } from "@/src/lib/state/client";
-import { shuffleWithSeed } from "@/src/lib/utils";
+import { applyParty, shuffleWithSeed } from "@/src/lib/utils";
 import { useProgress } from "../layout/ProgressContext";
 import { getStepOffset } from "@/src/config/progressConfig";
+import { postSurveyPages, preSurveyPages } from "@/src/config/surveyConfig";
 
 
-export default function Survey({ id, surveyType, surveyPage }: { id: string, surveyType: SurveyType, surveyPage: SurveyPage[]; }) {
-    const [pages] = useState(() =>
-        surveyPage.map((p, pageIndex) => ({
+
+export default function Survey({ id, surveyType, party }: { id: string, surveyType: SurveyType, party?: Party; }) {
+    const [pages] = useState(() => {
+        const rawPages = surveyType === "pre" ? preSurveyPages : postSurveyPages;
+        return rawPages.map((p, pageIndex) => ({
             ...p,
             questions: p.questions.map((q) => {
                 if (q.type === "choice" && q.randomized) {
@@ -27,18 +30,22 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
                 }
                 return q;
             }),
-        }))
-    );
+        }));
+    });
 
     const router = useRouter();
 
-    const nextState: Record<SurveyType, ValidState> = { "pre": "to_intervention", "post": "complete" };
+    const nextState: Record<SurveyType, State> = { "pre": "to_intervention", "post": "complete" };
 
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [responses, setResponses] = useState<Record<string, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { setCurrentStep } = useProgress();
+
+    const visibleQuestions = pages[currentPage].questions.filter(
+        q => !q.showIf || q.showIf(responses)
+    );
 
     useEffect(() => {
         setCurrentStep(getStepOffset(`${surveyType}-survey`) + currentPage + 1);
@@ -74,6 +81,14 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
                 if (value) newResponses[q.name!] = value;
             }
         });
+
+        // Clear responses for questions that are now hidden
+        pages[currentPage + 1]?.questions.forEach(q => {
+            if (q.showIf && !q.showIf(newResponses)) {
+                delete newResponses[q.name];
+            }
+        });
+
         setResponses(newResponses);
 
         if (currentPage !== pages.length - 1) {
@@ -81,6 +96,11 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
         } else {
             submitSurvey(newResponses);
         }
+    };
+
+    const applyPartyToQuestion = (q: SurveyQuestion): SurveyQuestion => {
+        if (!party || q.type === "likert") return q;
+        return { ...q, question: applyParty(q.question, party) };
     };
 
     const renderQuestion = (q: SurveyQuestion) => {
@@ -155,10 +175,12 @@ export default function Survey({ id, surveyType, surveyPage }: { id: string, sur
     return (
         <main className="mx-100 my-10 space-y-6">
             {pages[currentPage].paragraph &&
-                <p className="text-question whitespace-pre-line">{pages[currentPage].paragraph}</p>}
+                <p className="text-question whitespace-pre-line">
+                    {applyParty(pages[currentPage].paragraph, party!)}
+                </p>}
 
             <form onSubmit={handleNextClick} className="space-y-6">
-                {pages[currentPage].questions.map(renderQuestion)}
+                {visibleQuestions.map(q => renderQuestion(applyPartyToQuestion(q)))}
                 <div className="space-x-10">
                     {currentPage > 0 && <button
                         type="button"

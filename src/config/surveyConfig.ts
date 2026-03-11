@@ -1,4 +1,4 @@
-import { SurveyPage } from "@/src/types/interfaces";
+import { Party, SurveyPage } from "@/src/types/interfaces";
 
 export const preSurveyPages: SurveyPage[] = [
     {
@@ -20,22 +20,34 @@ export const preSurveyPages: SurveyPage[] = [
     {
         questions: [
             {
-                type: "choice",
+                type: "scale",
                 name: "strongRepublican",
                 question: "Q2.1. Would you call yourself a strong Republican or a not very strong Republican?",
-                options: ["Not very strong Republican", "Strong Republican"],
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Not very strong Republican" }, { value: 50, label: "Moderately strong Republican" }, { value: 100, label: "Strong Republican" }],
+                showIf: (response: Record<string, string>) => response["partyIdentification"] === "Republican",
             },
             {
-                type: "choice",
+                type: "scale",
                 name: "strongDemocrat",
-                question: "Q2.2. Would you call yourself a strong Democrat or a not very strong Democrat?",
-                options: ["Not very strong Democrat", "Strong Democrat"],
+                question: "Q2.1. Would you call yourself a strong Democrat or a not very strong Democrat?",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Not very strong Democrat" }, { value: 50, label: "Moderately strong Democrat" }, { value: 100, label: "Strong Democrat" }],
+                showIf: (response: Record<string, string>) => response["partyIdentification"] === "Democrat",
             },
             {
-                type: "choice",
+                type: "scale",
                 name: "closerParty",
-                question: "Q2.3. Do you think of yourself as closer to the Republican Party or the Democratic Party?",
-                options: ["Closer to Republican Party", "Neither", "Closer to Democratic Party"],
+                question: "Q2.1. Do you think of yourself as closer to the Republican Party or the Democratic Party?",
+                isDiscrete: false,
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Closer to Republican Party" }, { value: 50, label: "Neither" }, { value: 100, label: "Closer to Democratic Party" }],
+                showIf: (response: Record<string, string>) => response["partyIdentification"] === "Independent/Other",
             }
         ]
     },
