@@ -17,6 +17,15 @@ export default function ConcentFormPage({ id }: { id: string; }) {
         setCurrentStep(getStepOffset("consent") + 1);
     }, []);
 
+    const downloadForm = () => {
+        const link = document.createElement("a");
+        link.href = "/consent form.pdf";
+        link.download = "consent form.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const router = useRouter();
     return (
         <MessageCard>
@@ -30,6 +39,11 @@ export default function ConcentFormPage({ id }: { id: string; }) {
             <div className="flex items-start justify-between w-full space-x-3">
                 <p>Thank you.</p>
                 <div className="flex gap-6">
+                    <button
+                        className="btn-blue"
+                        onClick={downloadForm}>
+                        Download
+                    </button>
                     <button
                         className="btn-zinc"
                         onClick={() => routeToState(router, id, "complete")}>
