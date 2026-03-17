@@ -29,7 +29,7 @@ export default function ConcentFormPage({ id }: { id: string; }) {
     const router = useRouter();
     return (
         <MessageCard>
-            <p className="relative text-title">Consent Form</p>
+            <p className="text-title">Consent Form</p>
             {consentFormItems.map((item, idx) => (
                 <ConsentFormSection key={idx} title={item.title}>
                     {item.content}
@@ -37,13 +37,16 @@ export default function ConcentFormPage({ id }: { id: string; }) {
             ))}
 
             <div className="flex items-start justify-between w-full space-x-3">
-                <p>Thank you.</p>
-                <div className="flex gap-6">
+                <div className="flex space-x-2">
+                    <p>Thank you.</p>
                     <button
-                        className="btn-blue"
+                        className="hover:cursor-pointer"
                         onClick={downloadForm}>
-                        Download
+                        ⬇️
                     </button>
+                </div>
+
+                <div className="flex gap-6">
                     <button
                         className="btn-zinc"
                         onClick={() => routeToState(router, id, "complete")}>

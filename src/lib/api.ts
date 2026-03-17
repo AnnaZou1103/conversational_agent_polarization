@@ -1,4 +1,4 @@
-import { SurveyResponses, SurveyType, UserState } from "../types/interfaces";
+import { SurveyResponses, SurveyType, UserParty, UserState } from "../types/interfaces";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -24,6 +24,17 @@ const userAPI = {
             body: JSON.stringify(nextState),
         });
         if (!response.ok) throw new Error('Failed to advance user');
+        return await response.json();
+    },
+    saveUserParty: async (id: string, userParty: UserParty) => {
+        const response = await fetch(`${apiUrl}/user/party/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userParty),
+        });
+        if (!response.ok) throw new Error('Failed to save party');
         return await response.json();
     }
 };

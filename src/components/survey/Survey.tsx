@@ -40,6 +40,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [responses, setResponses] = useState<Record<string, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [effectiveParty, setEffectiveParty] = useState<Party | undefined>(party);
 
     const { setCurrentStep } = useProgress();
 
@@ -51,11 +52,13 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
         setCurrentStep(getStepOffset(`${surveyType}-survey`) + currentPage + 1);
     }, [currentPage, surveyType]);
 
-    const submitSurvey = async (finalResponses: Record<string, string>) => {
+    const submitSurvey = async (finalResponses: Record<string, string>, resolvedParty: Party | undefined) => {
         setIsSubmitting(true);
         try {
             await api.preSurvey.saveSurvey(id, surveyType, { responses: finalResponses });
-            routeToState(router, id, nextState[surveyType]);
+            if (surveyType === "pre")
+                await api.user.saveUserParty(id, { party: resolvedParty! });
+            await routeToState(router, id, nextState[surveyType]);
         } catch (error) {
             console.error('Error submitting survey:', error);
             router.push(`/${error}`);
@@ -64,7 +67,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
         }
     };
 
-    const handleNextClick = (e: React.SubmitEvent) => {
+    const handleNextClick = async (e: React.SubmitEvent) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
         const formData = new FormData(form);
@@ -89,18 +92,36 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
             }
         });
 
+        // End if no partisanship
+        if (newResponses["partyIdentification"] === "Independent/Other" && parseInt(newResponses["closerParty"]) === 50) {
+            await routeToState(router, id, "complete");
+            return;
+        }
+
+        // Track effective party
+        let resolvedParty = effectiveParty;
+        if (!resolvedParty) {
+            const partyChoice = newResponses["partyIdentification"];
+            if (partyChoice && partyChoice !== "Independent/Other") {
+                resolvedParty = partyChoice as Party;
+            } else if (newResponses["closerParty"]) {
+                resolvedParty = parseInt(newResponses["closerParty"]) > 50 ? "Democrat" : "Republican";
+            }
+            setEffectiveParty(resolvedParty);
+        }
+
         setResponses(newResponses);
 
         if (currentPage !== pages.length - 1) {
             setCurrentPage(prev => prev + 1);
         } else {
-            submitSurvey(newResponses);
+            submitSurvey(newResponses, resolvedParty);
         }
     };
 
     const applyPartyToQuestion = (q: SurveyQuestion): SurveyQuestion => {
-        if (!party || q.type === "likert") return q;
-        return { ...q, question: applyParty(q.question, party) };
+        if (q.type === "likert") return q;
+        return { ...q, question: applyParty(q.question, effectiveParty!) };
     };
 
     const renderQuestion = (q: SurveyQuestion) => {
@@ -176,28 +197,37 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
         <main className="mx-100 my-10 space-y-6">
             {pages[currentPage].paragraph &&
                 <p className="text-question whitespace-pre-line">
-                    {applyParty(pages[currentPage].paragraph, party!)}
+                    {applyParty(pages[currentPage].paragraph, effectiveParty!)}
                 </p>}
+
 
             <form onSubmit={handleNextClick} className="space-y-6">
                 {visibleQuestions.map(q => renderQuestion(applyPartyToQuestion(q)))}
-                <div className="space-x-10">
-                    {currentPage > 0 && <button
+                <div className="flex justify-between">
+                    <button
                         type="button"
                         className="btn-zinc"
-                        onClick={() => { setCurrentPage(prev => prev - 1); }}>
-                        Back
-                    </button>}
-
-                    <button
-                        type="submit"
-                        className="btn-blue"
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting
-                            ? "Submitting..."
-                            : currentPage < pages.length - 1 ? "Next" : "Submit"}
+                        onClick={() => routeToState(router, id, "complete")}>
+                        I wish to withdraw
                     </button>
+                    <div className="space-x-10">
+                        {currentPage > 0 && <button
+                            type="button"
+                            className="btn-zinc"
+                            onClick={() => { setCurrentPage(prev => prev - 1); }}>
+                            Back
+                        </button>}
+
+                        <button
+                            type="submit"
+                            className="btn-blue"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting
+                                ? "Submitting..."
+                                : currentPage < pages.length - 1 ? "Next" : "Submit"}
+                        </button>
+                    </div>
                 </div>
             </form>
         </main>
