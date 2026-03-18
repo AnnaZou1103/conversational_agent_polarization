@@ -37,24 +37,17 @@ export default function ConcentFormPage({ id }: { id: string; }) {
             ))}
 
             <div className="flex items-start justify-between w-full space-x-3">
-                <div className="flex space-x-2">
-                    <p>Thank you.</p>
+                <p>Thank you.</p>
+
+                <div className="flex gap-10 items-center">
                     <button
-                        className="hover:cursor-pointer"
+                        className="text-4xl hover:cursor-pointer"
                         onClick={downloadForm}>
                         ⬇️
                     </button>
-                </div>
-
-                <div className="flex gap-6">
-                    <button
-                        className="btn-zinc"
-                        onClick={() => routeToState(router, id, "complete")}>
-                        I wish to withdraw
-                    </button>
                     <button
                         className="btn-blue"
-                        onClick={() => routeToState(router, id, "pre_survey")}>
+                        onClick={async () => await routeToState(router, id, "pre_survey")}>
                         Continue
                     </button>
                 </div>

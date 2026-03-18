@@ -6,7 +6,7 @@ export const transitionMessages = {
             <p className="text-main-body">As you proceed to the next section, please make sure you do not close out of this tab. You must complete the whole study to collect your payment.</p>
             <br />
             <br />
-            <h1 className="text-subtitle">Task Instruction</h1>
+            <h1 className="text-xl font-bold">Task Instruction</h1>
             <br />
             <p className="text-main-body">In the following section, you will be asked to write a <strong>persuasive message</strong> to individuals from the opposing political party on [Gun control/Immigration]. (Participants will be randomly assigned to one of the conditions.)</p>
             <br />

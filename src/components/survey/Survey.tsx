@@ -4,9 +4,8 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ChoiceQuestion from "@/src/components/survey/ChoiceQuestion";
-import DiscreteScaleQuestion from "@/src/components/survey/DiscreteScaleQuestion";
 import RatingQuestion from "@/src/components/survey/RatingQuestion";
-import ContinuousScaleQuestion from "@/src/components/survey/ContinuousScaleQuestion";
+import ScaleQuestion from "@/src/components/survey/ScaleQuestion";
 import { SurveyQuestion, SurveyType, State, Party } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import LikertQuestion from "./LikertQuestion";
@@ -21,16 +20,26 @@ import { postSurveyPages, preSurveyPages } from "@/src/config/surveyConfig";
 export default function Survey({ id, surveyType, party }: { id: string, surveyType: SurveyType, party?: Party; }) {
     const [pages] = useState(() => {
         const rawPages = surveyType === "pre" ? preSurveyPages : postSurveyPages;
-        return rawPages.map((p, pageIndex) => ({
-            ...p,
-            questions: p.questions.map((q) => {
+
+        return rawPages.map((p, pageIndex) => {
+            let questions = p.questions.map((q, questionIndex) => {
                 if (q.type === "choice" && q.randomized) {
-                    const seed = `${id}|${surveyType}|${pageIndex}|${q.name}`;
+                    const seed = `${id}|${surveyType}|${pageIndex}|${questionIndex}|${q.name}|options`;
                     return { ...q, options: shuffleWithSeed(q.options, seed) };
                 }
                 return q;
-            }),
-        }));
+            });
+
+            if (p.randomized) {
+                const pageSeed = `${id}|${surveyType}|${pageIndex}|questions`;
+                questions = shuffleWithSeed(questions, pageSeed);
+            }
+
+            return {
+                ...p,
+                questions,
+            };
+        });
     });
 
     const router = useRouter();
@@ -47,6 +56,10 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
     const visibleQuestions = pages[currentPage].questions.filter(
         q => !q.showIf || q.showIf(responses)
     );
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, [currentPage]);
 
     useEffect(() => {
         setCurrentStep(getStepOffset(`${surveyType}-survey`) + currentPage + 1);
@@ -93,22 +106,20 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
         });
 
         // End if no partisanship
-        if (newResponses["partyIdentification"] === "Independent/Other" && parseInt(newResponses["closerParty"]) === 50) {
+        if (newResponses["partyIdentification"] === "Independent/Other" && Number(newResponses["closerParty"]) === 0) {
             await routeToState(router, id, "complete");
             return;
         }
 
         // Track effective party
         let resolvedParty = effectiveParty;
-        if (!resolvedParty) {
-            const partyChoice = newResponses["partyIdentification"];
-            if (partyChoice && partyChoice !== "Independent/Other") {
-                resolvedParty = partyChoice as Party;
-            } else if (newResponses["closerParty"]) {
-                resolvedParty = parseInt(newResponses["closerParty"]) > 50 ? "Democrat" : "Republican";
-            }
-            setEffectiveParty(resolvedParty);
+        const partyChoice = newResponses["partyIdentification"];
+        if (partyChoice && partyChoice !== "Independent/Other") {
+            resolvedParty = partyChoice as Party;
+        } else if (newResponses["closerParty"]) {
+            resolvedParty = Number(newResponses["closerParty"]) > 0 ? "Democrat" : "Republican";
         }
+        setEffectiveParty(resolvedParty);
 
         setResponses(newResponses);
 
@@ -139,21 +150,8 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
                 );
 
             case "scale":
-                if (q.isDiscrete) {
-                    return (
-                        <DiscreteScaleQuestion
-                            key={q.name}
-                            name={q.name}
-                            question={q.question}
-                            valueLabels={q.valueLabels}
-                            initialIndex={q.initialIndex}
-                            selectedValue={responses[q.name]}
-                        />
-                    );
-                }
-
                 return (
-                    <ContinuousScaleQuestion
+                    <ScaleQuestion
                         key={q.name}
                         name={q.name}
                         question={q.question}
@@ -203,31 +201,23 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
 
             <form onSubmit={handleNextClick} className="space-y-6">
                 {visibleQuestions.map(q => renderQuestion(applyPartyToQuestion(q)))}
-                <div className="flex justify-between">
-                    <button
+                <div className={`flex ${currentPage > 0 ? "justify-between" : "justify-end"}`}>
+                    {currentPage > 0 && <button
                         type="button"
                         className="btn-zinc"
-                        onClick={() => routeToState(router, id, "complete")}>
-                        I wish to withdraw
-                    </button>
-                    <div className="space-x-10">
-                        {currentPage > 0 && <button
-                            type="button"
-                            className="btn-zinc"
-                            onClick={() => { setCurrentPage(prev => prev - 1); }}>
-                            Back
-                        </button>}
+                        onClick={() => { setCurrentPage(prev => prev - 1); }}>
+                        Back
+                    </button>}
 
-                        <button
-                            type="submit"
-                            className="btn-blue"
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting
-                                ? "Submitting..."
-                                : currentPage < pages.length - 1 ? "Next" : "Submit"}
-                        </button>
-                    </div>
+                    <button
+                        type="submit"
+                        className="btn-blue"
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting
+                            ? "Submitting..."
+                            : currentPage < pages.length - 1 ? "Next" : "Submit"}
+                    </button>
                 </div>
             </form>
         </main>

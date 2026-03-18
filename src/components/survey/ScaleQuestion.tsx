@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import QuestionCard from "../common/QuestionCard";
 
-export default function ContinuousScaleQuestion({
+export default function ScaleQuestion({
     name,
     question,
     min,
@@ -18,18 +18,63 @@ export default function ContinuousScaleQuestion({
     milestones: { value: number; label: string; }[];
     selectedValue?: string;
 }) {
-    const [currentValue, setCurrentValue] = useState<number>(min);
-    const percentage = ((currentValue - min) / (max - min)) * 100;
+    const initialValue = min <= 0 && max >= 0 ? 0 : min;
+    const [currentValue, setCurrentValue] = useState<number>(initialValue);
 
     useEffect(() => {
-        if (selectedValue) {
+        if (selectedValue !== undefined) {
             setCurrentValue(Number(selectedValue));
+        } else {
+            setCurrentValue(initialValue);
         }
-    }, [selectedValue]);
+    }, [selectedValue, initialValue]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentValue(Number(e.target.value));
     };
+
+    // The percentage of current value on the bar
+    const valuePercent = ((currentValue - min) / (max - min)) * 100;
+    // The percentage of 0 point on the bar
+    const zeroPercent = ((0 - min) / (max - min)) * 100;
+    // If both min and max are negative or position
+    // CSS will break, so we need to clamp zero point to safe range (0 ~ 100)
+    const clampedZeroPercent = Math.max(0, Math.min(100, zeroPercent));
+
+    let background = "#e5e7eb";
+
+    // We start from internal point
+    if (min <= 0 && max >= 0) {
+        if (currentValue > 0) {
+            background = `linear-gradient(
+                to right,
+                #e5e7eb 0%,
+                #e5e7eb ${clampedZeroPercent}%,
+                #2563eb ${clampedZeroPercent}%,
+                #2563eb ${valuePercent}%,
+                #e5e7eb ${valuePercent}%,
+                #e5e7eb 100%
+            )`;
+        } else if (currentValue < 0) {
+            background = `linear-gradient(
+                to right,
+                #e5e7eb 0%,
+                #e5e7eb ${valuePercent}%,
+                #2563eb ${valuePercent}%,
+                #2563eb ${clampedZeroPercent}%,
+                #e5e7eb ${clampedZeroPercent}%,
+                #e5e7eb 100%
+            )`;
+        }
+    } else {
+        background = `linear-gradient(
+            to right,
+            #2563eb 0%,
+            #2563eb ${valuePercent}%,
+            #e5e7eb ${valuePercent}%,
+            #e5e7eb 100%
+        )`;
+    }
 
     return (
         <QuestionCard question={question}>
@@ -43,7 +88,7 @@ export default function ContinuousScaleQuestion({
             <div className="mt-4 mx-20 space-y-4">
                 <div className="text-center">
                     <span className="text-xl font-semibold text-blue-600">
-                        {currentValue}
+                        {Math.abs(currentValue)}
                     </span>
                 </div>
 
@@ -54,9 +99,7 @@ export default function ContinuousScaleQuestion({
                     value={currentValue}
                     onChange={handleChange}
                     className="w-full h-2 rounded-full appearance-none cursor-pointer"
-                    style={{
-                        background: `linear-gradient(to right, #2563eb 0%, #2563eb ${percentage}%, #e5e7eb ${percentage}%, #e5e7eb 100%)`
-                    }}
+                    style={{ background }}
                 />
 
                 <div className="relative h-12">
@@ -69,7 +112,7 @@ export default function ContinuousScaleQuestion({
                                 style={{ left: `${position}%` }}
                             >
                                 <div className="text-sm text-zinc-600">
-                                    {milestone.value}
+                                    {Math.abs(milestone.value)}
                                 </div>
                                 <div className="text-sm font-semibold text-zinc-800 whitespace-pre">
                                     {milestone.label}

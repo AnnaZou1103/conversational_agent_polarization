@@ -12,7 +12,7 @@ export default async function RootLayout({ params, children }: {
     if (!response.ok) redirect("/");
     return (
         <ProgressProvider>
-            <Header />
+            <Header id={id} />
             {children}
         </ProgressProvider>
     );

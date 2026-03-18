@@ -29,12 +29,7 @@ export default function TransitionPage({
     return (
         <MessageCard>
             {content}
-            <div className="w-full flex justify-between mt-8">
-                <button
-                    className="btn-zinc"
-                    onClick={() => routeToState(router, id, "complete")}>
-                    I wish to withdraw
-                </button>
+            <div className="w-full flex justify-end">
                 <button
                     className="btn-blue"
                     onClick={() => routeToState(router, id, destination)}>

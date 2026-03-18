@@ -42,16 +42,8 @@ export interface RatingQuestion extends BaseQuestion {
     allowNotApplicable?: boolean;
 }
 
-export interface DiscreteScaleQuestion extends BaseQuestion {
+export interface ScaleQuestion extends BaseQuestion {
     type: "scale";
-    isDiscrete: true;
-    valueLabels: string[];
-    initialIndex: number;
-}
-
-export interface ContinuousScaleQuestion extends BaseQuestion {
-    type: "scale";
-    isDiscrete: false;
     min: number;
     max: number;
     milestones: { value: number; label: string; }[];
@@ -71,12 +63,12 @@ export interface LikertQuestion {
 
 export type SurveyQuestion =
     | ChoiceQuestion
-    | DiscreteScaleQuestion
-    | ContinuousScaleQuestion
+    | ScaleQuestion
     | RatingQuestion
     | LikertQuestion;
 
 export interface SurveyPage {
     questions: SurveyQuestion[];
     paragraph?: string;
+    randomized?: boolean;
 }
