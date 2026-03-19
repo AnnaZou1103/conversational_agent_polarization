@@ -158,6 +158,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
                         min={q.min}
                         max={q.max}
                         milestones={q.milestones}
+                        displayValue={q.displayValue}
                         selectedValue={responses[q.name]}
                     />
                 );

@@ -111,7 +111,13 @@ export const postSurveyPages: SurveyPage[] = [
                 question: "How many cents (if any) will you give to the [Democratic/Republican] participant?",
                 min: 0,
                 max: 50,
-                milestones: [{ value: 0, label: "0 cents" }, { value: 25, label: "25 cents" }, { value: 50, label: "50 cents" }]
+                milestones: [{ value: 0, label: "0 cents" }, { value: 25, label: "25 cents" }, { value: 50, label: "50 cents" }],
+                displayValue: ((value: number) =>
+                    <div className="flex justify-around">
+                        <span className="text-xl font-semibold text-blue-600">Their Share {value}</span>
+                        <span className="text-xl font-semibold text-zinc-400">{50 - value} Your Share</span>
+                    </div>
+                )
             },
         ],
         paragraph: "Q7. You have been anonymously and randomly matched with another participant who identifies as a [Democrat/Republican].\nYou have been given 50 cents. You will now decide how to split these 50 cents between yourself and the [Democratic/Republican] participant. You can give any amount between 0 cents and 50 cents to the other participant. The other participant cannot affect the outcome you choose."

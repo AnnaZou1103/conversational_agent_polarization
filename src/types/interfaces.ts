@@ -47,6 +47,7 @@ export interface ScaleQuestion extends BaseQuestion {
     min: number;
     max: number;
     milestones: { value: number; label: string; }[];
+    displayValue?: (value: number) => ReactNode;
 }
 
 export interface LikertQuestion {

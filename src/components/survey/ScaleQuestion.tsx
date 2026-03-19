@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import QuestionCard from "../common/QuestionCard";
 
 export default function ScaleQuestion({
@@ -9,6 +9,7 @@ export default function ScaleQuestion({
     min,
     max,
     milestones,
+    displayValue,
     selectedValue
 }: {
     name: string,
@@ -16,6 +17,7 @@ export default function ScaleQuestion({
     min: number,
     max: number,
     milestones: { value: number; label: string; }[];
+    displayValue?: (value: number) => ReactNode;
     selectedValue?: string;
 }) {
     const initialValue = min <= 0 && max >= 0 ? 0 : min;
@@ -41,38 +43,40 @@ export default function ScaleQuestion({
     // CSS will break, so we need to clamp zero point to safe range (0 ~ 100)
     const clampedZeroPercent = Math.max(0, Math.min(100, zeroPercent));
 
-    let background = "#e5e7eb";
+    const sliderBackgroundColor = "#e5e7eb";
+    const sliderBarColor = "#2563eb";
+    let background = sliderBackgroundColor;
 
     // We start from internal point
     if (min <= 0 && max >= 0) {
         if (currentValue > 0) {
             background = `linear-gradient(
                 to right,
-                #e5e7eb 0%,
-                #e5e7eb ${clampedZeroPercent}%,
-                #2563eb ${clampedZeroPercent}%,
-                #2563eb ${valuePercent}%,
-                #e5e7eb ${valuePercent}%,
-                #e5e7eb 100%
+                ${sliderBackgroundColor} 0%,
+                ${sliderBackgroundColor} ${clampedZeroPercent}%,
+                ${sliderBarColor} ${clampedZeroPercent}%,
+                ${sliderBarColor} ${valuePercent}%,
+                ${sliderBackgroundColor} ${valuePercent}%,
+                ${sliderBackgroundColor} 100%
             )`;
         } else if (currentValue < 0) {
             background = `linear-gradient(
                 to right,
-                #e5e7eb 0%,
-                #e5e7eb ${valuePercent}%,
-                #2563eb ${valuePercent}%,
-                #2563eb ${clampedZeroPercent}%,
-                #e5e7eb ${clampedZeroPercent}%,
-                #e5e7eb 100%
+                ${sliderBackgroundColor} 0%,
+                ${sliderBackgroundColor} ${valuePercent}%,
+                ${sliderBarColor} ${valuePercent}%,
+                ${sliderBarColor} ${clampedZeroPercent}%,
+                ${sliderBackgroundColor} ${clampedZeroPercent}%,
+                ${sliderBackgroundColor} 100%
             )`;
         }
     } else {
         background = `linear-gradient(
             to right,
-            #2563eb 0%,
-            #2563eb ${valuePercent}%,
-            #e5e7eb ${valuePercent}%,
-            #e5e7eb 100%
+            ${sliderBarColor} 0%,
+            ${sliderBarColor} ${valuePercent}%,
+            ${sliderBackgroundColor} ${valuePercent}%,
+            ${sliderBackgroundColor} 100%
         )`;
     }
 
@@ -86,11 +90,14 @@ export default function ScaleQuestion({
             />
 
             <div className="mt-4 mx-20 space-y-4">
-                <div className="text-center">
-                    <span className="text-xl font-semibold text-blue-600">
-                        {Math.abs(currentValue)}
-                    </span>
-                </div>
+                {displayValue ? displayValue(currentValue) : (
+                    <div className="text-center">
+                        <span className="text-xl font-semibold text-blue-600">
+                            {Math.abs(currentValue)}
+                        </span>
+                    </div>
+                )}
+
 
                 <input
                     type="range"
