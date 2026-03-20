@@ -1,4 +1,4 @@
-import { SurveyResponses, SurveyType, UserParty, UserState } from "../types/interfaces";
+import { ChatRequest, SurveyResponses, SurveyType, UserParty, UserState } from "../types/interfaces";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -51,7 +51,53 @@ const surveyAPI = {
     }
 };
 
+const chatAPI = {
+    getHistory: async (id: string) => {
+        const response = await fetch(`${apiUrl}/chat/history/${id}`);
+        return response;
+    },
+    llmInference: async (id: string, chatRequest: ChatRequest, handleMessage: (data: any) => void) => {
+        const response = await fetch(`${apiUrl}/chat/complete/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(chatRequest),
+        });
+
+        if (!response.ok || !response.body) {
+            throw new Error('Streaming failed');
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        let buffer = "";
+        while (true) {
+            const { done, value } = await reader.read();
+
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+
+            // split SSE delemiter
+            const chunks = buffer.split("\n\n");
+
+            // last chunk might be incomplete message (word) or empty (done)
+            // we only send complete message to frontend to render
+            buffer = chunks.pop() || "";
+            for (const chunk of chunks) {
+                if (chunk.startsWith("data: ")) {
+                    const jsonStr = chunk.replace("data: ", "").trim();
+                    const parsed = JSON.parse(jsonStr);
+
+                    handleMessage(parsed);
+                }
+            }
+        }
+    }
+};
+
 export default {
     user: userAPI,
-    preSurvey: surveyAPI
+    survey: surveyAPI,
+    chat: chatAPI
 };

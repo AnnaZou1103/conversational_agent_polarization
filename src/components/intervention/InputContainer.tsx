@@ -7,9 +7,9 @@ import { useEffect, useRef, useState } from "react";
 export default function InputContainer({ id, addMessage }: { id: string, addMessage: Function; }) {
     const router = useRouter();
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-    const [message, setMessage] = useState("");
+    const [content, setContent] = useState("");
 
-    const submitDisabled = message.trim().length === 0;
+    const submitDisabled = content.trim().length === 0;
     const continueDisabled = false;
 
     useEffect(() => {
@@ -25,12 +25,13 @@ export default function InputContainer({ id, addMessage }: { id: string, addMess
         // Allow container extension, once exceeding maxHeight, allow scrolling
         textarea.style.height = `${nextHeight}px`;
         textarea.style.overflowY = textarea.scrollHeight > maxHeight ? "auto" : "hidden";
-    }, [message]);
+    }, [content]);
 
-    const handleSubmit = () => {
-        const submittedMessage = message;
-        addMessage(submittedMessage);
-        setMessage("");
+    const handleSubmit = async () => {
+        const submittedContent = content;
+        setContent("");
+
+        addMessage(submittedContent);
     };
 
     return (
@@ -42,9 +43,15 @@ export default function InputContainer({ id, addMessage }: { id: string, addMess
                 ">
                     <textarea
                         ref={textareaRef}
-                        value={message}
+                        value={content}
                         rows={1}
-                        onChange={(e) => setMessage(e.target.value)}
+                        onChange={(e) => setContent(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSubmit();
+                            }
+                        }}
                         placeholder="Type your message..."
                         className="flex-1 resize-none overflow-y-hidden text-base placeholder:text-zinc-400 outline-none" />
                 </div>

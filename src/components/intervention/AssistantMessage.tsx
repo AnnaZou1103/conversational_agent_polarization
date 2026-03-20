@@ -1,4 +1,8 @@
-export default function AssistantMessage({ message }: { message: string; }) {
+import { Message } from "@/src/types/interfaces";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+export default function AssistantMessage({ message }: { message: Message; }) {
     return (
         <div className="flex justify-start">
             <div className="
@@ -7,9 +11,12 @@ export default function AssistantMessage({ message }: { message: string; }) {
               bg-zinc-200 text-zinc-800
                 px-4 py-2
                 text-sm leading-relaxed
-                wrap-break-word
+                whitespace-pre-wrap
             ">
-                {message}
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {message.content}
+                </ReactMarkdown>
+                {message.status === "streaming" && <span className="animate-pulse">▌</span>}
             </div>
         </div>
     );

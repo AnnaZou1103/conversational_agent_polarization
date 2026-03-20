@@ -73,3 +73,18 @@ export interface SurveyPage {
     paragraph?: string;
     randomized?: boolean;
 }
+
+export interface ChatRequest {
+    message: string;
+}
+
+export interface ChatResponse {
+    type: "token" | "done";
+    content: string;
+}
+
+export type Message = {
+    role: "user" | "assistant",
+    content: string,
+    status?: "streaming" | "done";
+};

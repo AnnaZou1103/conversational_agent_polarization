@@ -1,4 +1,6 @@
-export default function UserMessage({ message }: { message: string; }) {
+import { Message } from "@/src/types/interfaces";
+
+export default function UserMessage({ message }: { message: Message; }) {
     return (
         <div className="flex justify-end">
             <div className="
@@ -7,9 +9,9 @@ export default function UserMessage({ message }: { message: string; }) {
               bg-blue-600 text-white
                 px-4 py-2
                 text-sm leading-relaxed
-                wrap-break-word
+                whitespace-pre-wrap
             ">
-                {message}
+                {message.content}
             </div>
         </div>
     );

@@ -68,7 +68,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
     const submitSurvey = async (finalResponses: Record<string, string>, resolvedParty: Party | undefined) => {
         setIsSubmitting(true);
         try {
-            await api.preSurvey.saveSurvey(id, surveyType, { responses: finalResponses });
+            await api.survey.saveSurvey(id, surveyType, { responses: finalResponses });
             if (surveyType === "pre")
                 await api.user.saveUserParty(id, { party: resolvedParty! });
             await routeToState(router, id, nextState[surveyType]);
