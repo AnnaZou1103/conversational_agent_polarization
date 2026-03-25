@@ -1,16 +1,13 @@
 "use client";
 
-import { routeToState } from "@/src/lib/state/client";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function InputContainer({ id, addMessage }: { id: string, addMessage: Function; }) {
-    const router = useRouter();
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [content, setContent] = useState("");
+    const [multiline, setMultiline] = useState(false);
 
     const submitDisabled = content.trim().length === 0;
-    const continueDisabled = false;
 
     useEffect(() => {
         const textarea = textareaRef.current;
@@ -19,12 +16,15 @@ export default function InputContainer({ id, addMessage }: { id: string, addMess
         // Recalculate height everytime change happens
         textarea.style.height = "auto";
 
-        const maxHeight = 180; // px
+        const maxHeight = 100; // px
         const nextHeight = Math.min(textarea.scrollHeight, maxHeight);
 
         // Allow container extension, once exceeding maxHeight, allow scrolling
         textarea.style.height = `${nextHeight}px`;
         textarea.style.overflowY = textarea.scrollHeight > maxHeight ? "auto" : "hidden";
+
+        const lineHeight = 16; // px — adjust to match your font size
+        setMultiline(textarea.scrollHeight > lineHeight * 2);
     }, [content]);
 
     const handleSubmit = async () => {
@@ -36,11 +36,13 @@ export default function InputContainer({ id, addMessage }: { id: string, addMess
 
     return (
         <section className="border-t border-zinc-200 rounded-b-xl bg-white px-4 py-4">
-            <div className="flex justify-end gap-3">
-                <div className="
-                    flex-1 flex rounded-2xl border border-zinc-300 bg-zinc-50 px-4 py-3 shadow-sm 
-                    focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200
-                ">
+            <div className="flex justify-end items-start gap-3">
+                <div className={`
+                        flex-1 flex border border-zinc-300 bg-[#fdf8f3] px-4 py-3 shadow-sm
+                        focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200
+                        transition-colors duration-150
+                        ${multiline ? "rounded-2xl" : "rounded-full"}
+                    `}>
                     <textarea
                         ref={textareaRef}
                         value={content}
@@ -56,20 +58,21 @@ export default function InputContainer({ id, addMessage }: { id: string, addMess
                         className="flex-1 resize-none overflow-y-hidden text-base placeholder:text-zinc-400 outline-none" />
                 </div>
 
-                <div className="flex flex-col justify-end space-y-2">
-                    <button
-                        className={`input-btn-${submitDisabled ? "zinc" : "blue"} shrink-0`}
-                        disabled={submitDisabled}
-                        onClick={handleSubmit}>
-                        Submit ↑
-                    </button>
-                    <button
-                        className={`input-btn-${continueDisabled ? "zinc" : "blue"} shrink-0`}
-                        disabled={continueDisabled}
-                        onClick={async () => await routeToState(router, id, "to_post_survey")}>
-                        Continue
-                    </button>
-                </div>
+                <button
+                    className={`
+                        shrink-0 w-12 h-12 rounded-full flex items-center justify-center
+                        transition-colors duration-150
+                        ${submitDisabled
+                            ? "bg-zinc-200 cursor-not-allowed"
+                            : "bg-blue-500 hover:bg-blue-600 cursor-pointer shadow-sm"}
+                    `}
+                    disabled={submitDisabled}
+                    onClick={handleSubmit}
+                >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                </button>
             </div>
         </section>
     );

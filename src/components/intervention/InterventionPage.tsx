@@ -13,7 +13,7 @@ export default function InterventionPage({ id }: { id: string; }) {
     }, []);
 
     return (
-        <main className="px-40 py-8">
+        <main className="px-100 py-8">
             <ChatContainer id={id} />
         </main>
     );

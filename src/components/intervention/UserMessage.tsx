@@ -6,7 +6,7 @@ export default function UserMessage({ message }: { message: Message; }) {
             <div className="
                 max-w-[70%]
                 rounded-2xl rounded-br-sm
-              bg-blue-600 text-white
+              bg-black text-white
                 px-4 py-2
                 text-sm leading-relaxed
                 whitespace-pre-wrap
