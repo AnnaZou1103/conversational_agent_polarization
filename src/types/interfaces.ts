@@ -76,11 +76,14 @@ export interface SurveyPage {
 
 export interface ChatRequest {
     message: string;
+    model?: "common-identity" | "personal-narrative" | "misperception-correction";
 }
 
 export interface ChatResponse {
     type: "token" | "done";
     content: string;
+    conversationComplete?: boolean;
+    stage?: string | null;
 }
 
 export type Message = {

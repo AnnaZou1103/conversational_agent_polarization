@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import InputContainer from "./InputContainer";
 import UserMessage from "./UserMessage";
 import AssistantMessage from "./AssistantMessage";
-import { Message } from "@/src/types/interfaces";
+import { ChatResponse, Message } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import ChatHeader from "./ChatHeader";
 import { useRouter } from "next/navigation";
@@ -31,7 +31,7 @@ export default function ChatContainer({ id }: { id: string; }) {
         setCanContinue(false);
         setMessages(prev => [...prev, { role: "user", content: content }, { role: "assistant", content: "", status: "streaming" }]);
 
-        const handleMessage = (event: any) => {
+        const handleMessage = (event: ChatResponse) => {
             if (event.type === "token") {
                 setMessages(prev => {
                     const lastIndex = prev.length - 1;
@@ -48,10 +48,14 @@ export default function ChatContainer({ id }: { id: string; }) {
                         index === lastIndex ? { ...message, status: "done" } : message
                     );
                 });
+
+                if (event.conversationComplete) {
+                    setCanContinue(true);
+                }
             }
         };
 
-        await api.chat.llmInference(id, { message: content }, handleMessage);
+        await api.chat.llmInference(id, { message: content, model: "common-identity" }, handleMessage);
     };
 
     const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -75,10 +79,6 @@ export default function ChatContainer({ id }: { id: string; }) {
 
         if (last?.status === "streaming" && isNearBottom()) {
             bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-        }
-
-        if (last?.status === "done") {
-            setCanContinue(true);
         }
     }, [messages]);
 
@@ -104,7 +104,7 @@ export default function ChatContainer({ id }: { id: string; }) {
                 </div>}
                 <div ref={bottomRef} />
             </div>
-            <InputContainer id={id} addMessage={addMessage} />
+            <InputContainer addMessage={addMessage} canContinue={canContinue} />
         </section>
     );
 }

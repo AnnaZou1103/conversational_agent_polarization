@@ -1,6 +1,13 @@
-import { ChatRequest, SurveyResponses, SurveyType, UserParty, UserState } from "../types/interfaces";
+import { ChatRequest, ChatResponse, SurveyResponses, SurveyType, UserParty, UserState } from "../types/interfaces";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+const serverAPI = {
+    getServerHealth: async () => {
+        const response = await fetch(`${apiUrl}/health`);
+        return response;
+    },
+};
 
 const userAPI = {
     validateStudyID: async (id: string) => {
@@ -56,11 +63,16 @@ const chatAPI = {
         const response = await fetch(`${apiUrl}/chat/history/${id}`);
         return response;
     },
-    llmInference: async (id: string, chatRequest: ChatRequest, handleMessage: (data: any) => void) => {
-        const response = await fetch(`${apiUrl}/chat/complete/${id}`, {
+    llmInference: async (id: string, chatRequest: ChatRequest, handleMessage: (data: ChatResponse) => void) => {
+        const response = await fetch(`${apiUrl}/v1/chat/completions`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(chatRequest),
+            body: JSON.stringify({
+                study_id: id,
+                model: chatRequest.model ?? "common-identity",
+                messages: [{ role: "user", content: chatRequest.message }],
+                stream: true,
+            }),
         });
 
         if (!response.ok || !response.body) {
@@ -78,7 +90,7 @@ const chatAPI = {
 
             buffer += decoder.decode(value, { stream: true });
 
-            // split SSE delemiter
+            // Split by SSE event delimiter.
             const chunks = buffer.split("\n\n");
 
             // last chunk might be incomplete message (word) or empty (done)
@@ -87,9 +99,27 @@ const chatAPI = {
             for (const chunk of chunks) {
                 if (chunk.startsWith("data: ")) {
                     const jsonStr = chunk.replace("data: ", "").trim();
-                    const parsed = JSON.parse(jsonStr);
+                    if (!jsonStr || jsonStr === "[DONE]") continue;
 
-                    handleMessage(parsed);
+                    const parsed = JSON.parse(jsonStr);
+                    const choice = parsed?.choices?.[0];
+                    const token = choice?.delta?.content;
+                    const finishReason = choice?.finish_reason;
+                    const conversationComplete = parsed?.conversation_complete;
+                    const stage = parsed?.stage ?? null;
+
+                    if (typeof token === "string" && token.length > 0) {
+                        handleMessage({ type: "token", content: token });
+                    }
+
+                    if (finishReason === "stop") {
+                        handleMessage({
+                            type: "done",
+                            content: "",
+                            conversationComplete: Boolean(conversationComplete),
+                            stage,
+                        });
+                    }
                 }
             }
         }
@@ -97,6 +127,7 @@ const chatAPI = {
 };
 
 export default {
+    server: serverAPI,
     user: userAPI,
     survey: surveyAPI,
     chat: chatAPI

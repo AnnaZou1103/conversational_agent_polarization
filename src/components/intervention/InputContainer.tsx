@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export default function InputContainer({ id, addMessage }: { id: string, addMessage: Function; }) {
+export default function InputContainer({ addMessage, canContinue }: { addMessage: Function, canContinue: boolean; }) {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [content, setContent] = useState("");
     const [multiline, setMultiline] = useState(false);
 
-    const submitDisabled = content.trim().length === 0;
+    const submitDisabled = canContinue || content.trim().length === 0;
 
     useEffect(() => {
         const textarea = textareaRef.current;
@@ -28,6 +28,8 @@ export default function InputContainer({ id, addMessage }: { id: string, addMess
     }, [content]);
 
     const handleSubmit = async () => {
+        if (canContinue) return;
+
         const submittedContent = content;
         setContent("");
 
@@ -54,7 +56,8 @@ export default function InputContainer({ id, addMessage }: { id: string, addMess
                                 handleSubmit();
                             }
                         }}
-                        placeholder="Type your message..."
+                        disabled={canContinue}
+                        placeholder={canContinue ? "Conversation ended" : "Type your message..."}
                         className="flex-1 resize-none overflow-y-hidden text-base placeholder:text-zinc-400 outline-none" />
                 </div>
 
