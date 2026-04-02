@@ -55,7 +55,7 @@ export default function ChatContainer({ id }: { id: string; }) {
             }
         };
 
-        await api.chat.llmInference(id, { message: content, model: "common-identity" }, handleMessage);
+        await api.chat.llmInference(id, { message: content, model: "personal-narrative" }, handleMessage);
     };
 
     const bottomRef = useRef<HTMLDivElement | null>(null);
