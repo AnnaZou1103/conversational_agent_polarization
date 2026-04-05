@@ -8,12 +8,14 @@ export interface ConsentFormItem {
 export type SurveyType = "pre" | "post";
 export type State = "not_started" | "pre_survey" | "to_intervention" | "intervention" | "to_post_survey" | "post_survey" | "complete";
 export type Party = "Democrat" | "Republican";
-export type Strategy = "common_identity" | "personal_narrative" | "misperception_correction";
-export type APIStrategy = "common-identity" | "personal-narrative" | "misperception-correction";
+export type Strategy = "common_identity" | "personal_narrative" | "misperception_correction" | "control" | "control_politics";
+export type APIStrategy = "common-identity" | "personal-narrative" | "misperception-correction" | "control" | "control-politics";
 export const ModelToCondition: Record<Strategy, APIStrategy> = {
     "common_identity": "common-identity",
     "personal_narrative": "personal-narrative",
     "misperception_correction": "misperception-correction",
+    "control": "control",
+    "control_politics": "control-politics"
 };
 
 export interface UserState {
