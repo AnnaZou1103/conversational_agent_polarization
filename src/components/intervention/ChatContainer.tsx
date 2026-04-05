@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import InputContainer from "./InputContainer";
 import UserMessage from "./UserMessage";
 import AssistantMessage from "./AssistantMessage";
-import { ChatResponse, Message } from "@/src/types/interfaces";
+import { AgentStrategy, ChatResponse, Message, ModelToCondition } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import ChatHeader from "./ChatHeader";
 import { useRouter } from "next/navigation";
@@ -15,12 +15,16 @@ export default function ChatContainer({ id }: { id: string; }) {
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [canContinue, setCanContinue] = useState<boolean>(false);
+    const [agentStrategy, setAgentStrategy] = useState<AgentStrategy>();
 
     const loadConversation = async (id: string) => {
-        const response = await api.chat.getHistory(id);
-        const data: Message[] = await response.json();
-        console.log(data);
-        setMessages(data.map((message, _) => ({ ...message, status: "done" })));
+        const historyResponse = await api.chat.getHistory(id);
+        const historyData: Message[] = await historyResponse.json();
+        setMessages(historyData.map((message, _) => ({ ...message, status: "done" })));
+
+        const strategyResponse = await api.user.getAgentStrategy(id);
+        const strategyData = await strategyResponse.json();
+        setAgentStrategy(strategyData);
     };
 
     useEffect(() => {
@@ -55,7 +59,7 @@ export default function ChatContainer({ id }: { id: string; }) {
             }
         };
 
-        await api.chat.llmInference(id, { message: content, model: "personal-narrative" }, handleMessage);
+        await api.chat.llmInference(id, { message: content, model: agentStrategy ? ModelToCondition[agentStrategy.strategy] : undefined, }, handleMessage);
     };
 
     const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -95,11 +99,12 @@ export default function ChatContainer({ id }: { id: string; }) {
                     </div>
                 ))}
 
+                {/* Temporary jump to end state */}
                 {canContinue && <div className="flex justify-center">
                     <button
                         className="px-6 py-4 bg-black cursor-pointer text-white text-sm font-semibold rounded-full"
-                        onClick={async () => await routeToState(router, id, "to_post_survey")}>
-                        Continue to Survey →
+                        onClick={async () => await routeToState(router, id, "complete")}>
+                        Leave Intervention →
                     </button>
                 </div>}
                 <div ref={bottomRef} />

@@ -18,6 +18,10 @@ const userAPI = {
         const response = await fetch(`${apiUrl}/user/state/${id}`);
         return response;
     },
+    getAgentStrategy: async (id: string) => {
+        const response = await fetch(`${apiUrl}/user/agent_strategy/${id}`);
+        return response;
+    },
     getUserParty: async (id: string) => {
         const response = await fetch(`${apiUrl}/user/party/${id}`);
         return response;
