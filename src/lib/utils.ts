@@ -30,7 +30,8 @@ export function shuffleWithSeed<T>(arr: T[], seedStr: string): T[] {
 }
 
 export function applyParty(text: string, party: Party): string {
+    const normalizedParty = party.toLowerCase();
     return text.replace(/\[([^\]]+)\/([^\]]+)\]/g, (_, repText, demText) =>
-        party === "Republican" ? repText : demText
+        normalizedParty === "republican" ? repText : demText
     );
 }

@@ -18,6 +18,11 @@ import { postSurveyPages, preSurveyPages } from "@/src/config/surveyConfig";
 
 
 export default function Survey({ id, surveyType, party }: { id: string, surveyType: SurveyType, party?: Party; }) {
+    const normalizePartyChoice = (choice?: string): Party | undefined => {
+        if (!choice || choice === "Independent/Other") return undefined;
+        return choice.toLowerCase() as Party;
+    };
+
     const [pages] = useState(() => {
         const rawPages = surveyType === "pre" ? preSurveyPages : postSurveyPages;
 
@@ -114,10 +119,11 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
         // Track effective party
         let resolvedParty = effectiveParty;
         const partyChoice = newResponses["partyIdentification"];
-        if (partyChoice && partyChoice !== "Independent/Other") {
-            resolvedParty = partyChoice as Party;
+        const normalizedPartyChoice = normalizePartyChoice(partyChoice);
+        if (normalizedPartyChoice) {
+            resolvedParty = normalizedPartyChoice;
         } else if (newResponses["closerParty"]) {
-            resolvedParty = Number(newResponses["closerParty"]) > 0 ? "Democrat" : "Republican";
+            resolvedParty = Number(newResponses["closerParty"]) > 0 ? "democrat" : "republican";
         }
         setEffectiveParty(resolvedParty);
 
