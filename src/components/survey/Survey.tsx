@@ -137,7 +137,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
     };
 
     const applyPartyToQuestion = (q: SurveyQuestion): SurveyQuestion => {
-        if (q.type === "likert") return q;
+        if (q.type === "likert" || !effectiveParty) return q;
         return { ...q, question: applyParty(q.question, effectiveParty!) };
     };
 
@@ -200,9 +200,9 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
 
     return (
         <main className="mx-100 my-10 space-y-6">
-            {pages[currentPage].paragraph &&
+            {pages[currentPage].paragraph && effectiveParty &&
                 <p className="text-question whitespace-pre-line">
-                    {applyParty(pages[currentPage].paragraph, effectiveParty!)}
+                    {applyParty(pages[currentPage].paragraph, effectiveParty)}
                 </p>}
 
 
