@@ -9,13 +9,16 @@ import api from "@/src/lib/api";
 import ChatHeader from "./ChatHeader";
 import { useRouter } from "next/navigation";
 import { routeToState } from "@/src/lib/state/client";
+import PartyModal from "./PartyModal";
 
-export default function ChatContainer({ id }: { id: string; }) {
+export default function ExperimentContainer({ id }: { id: string; }) {
     const router = useRouter();
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [canContinue, setCanContinue] = useState<boolean>(false);
     const [agentStrategy, setAgentStrategy] = useState<AgentStrategy>();
+    const [showPartyModal, setShowPartyModal] = useState<boolean>(false);
+    const [partyLoaded, setPartyLoaded] = useState<boolean>(false);
     const [historyLoaded, setHistoryLoaded] = useState<boolean>(false);
     const [strategyLoaded, setStrategyLoaded] = useState<boolean>(false);
 
@@ -29,6 +32,11 @@ export default function ChatContainer({ id }: { id: string; }) {
         const strategyData = await strategyResponse.json();
         setAgentStrategy(strategyData);
         setStrategyLoaded(true);
+
+        const userPartyResponse = await api.user.getUserParty(id);
+        if (userPartyResponse.status === 404) {
+            setShowPartyModal(true);
+        }
     };
 
     const initializeConversation = async (id: string) => {
@@ -71,10 +79,10 @@ export default function ChatContainer({ id }: { id: string; }) {
     }, []);
 
     useEffect(() => {
-        if (historyLoaded && strategyLoaded) {
+        if (historyLoaded && strategyLoaded && partyLoaded) {
             initializeConversation(id);
         }
-    }, [historyLoaded, strategyLoaded]);
+    }, [historyLoaded, partyLoaded]);
 
     const addMessage = async (content: string) => {
         setCanContinue(false);
@@ -131,9 +139,15 @@ export default function ChatContainer({ id }: { id: string; }) {
         }
     }, [messages]);
 
+    const onSubmit = () => {
+        setPartyLoaded(true);
+        setShowPartyModal(false);
+    };
 
     return (
         <section className="flex h-190 w-full flex-col rounded-xl bg-white shadow-card">
+            {showPartyModal && <PartyModal id={id} onSubmit={onSubmit} />}
+
             <ChatHeader />
             <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-8">
                 {messages.map((message, index) => (
@@ -149,8 +163,8 @@ export default function ChatContainer({ id }: { id: string; }) {
                 {canContinue && <div className="flex justify-center">
                     <button
                         className="px-6 py-4 bg-black cursor-pointer text-white text-sm font-semibold rounded-full"
-                        onClick={async () => await routeToState(router, id, "to_post_survey")}>
-                        Continue to Survey →
+                        onClick={async () => await routeToState(router, id, "complete")}>
+                        Leave Intervention →
                     </button>
                 </div>}
                 <div ref={bottomRef} />

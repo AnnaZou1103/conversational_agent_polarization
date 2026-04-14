@@ -7,6 +7,7 @@ export interface ConsentFormItem {
 
 export type SurveyType = "pre" | "post";
 export type State = "not_started" | "pre_survey" | "to_intervention" | "intervention" | "to_post_survey" | "post_survey" | "complete";
+export type Type = "study" | "experiment";
 export type Party = "democrat" | "republican";
 export type Strategy = "common_identity" | "personal_narrative" | "misperception_correction" | "control" | "control_politics";
 export type APIStrategy = "common-identity" | "personal-narrative" | "misperception-correction" | "control" | "control-politics";
@@ -20,6 +21,10 @@ export const ModelToCondition: Record<Strategy, APIStrategy> = {
 
 export interface UserState {
     state: State;
+}
+
+export interface StudyType {
+    type: Type;
 }
 
 export interface UserParty {

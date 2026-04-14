@@ -47,7 +47,11 @@ const userAPI = {
         });
         if (!response.ok) throw new Error('Failed to save party');
         return await response.json();
-    }
+    },
+    getStudyType: async (id: string) => {
+        const response = await fetch(`${apiUrl}/user/type/${id}`);
+        return response;
+    },
 };
 
 const surveyAPI = {
@@ -74,7 +78,7 @@ const chatAPI = {
             body: JSON.stringify({
                 study_id: id,
                 model: chatRequest.model ?? "common-identity",
-                messages: [{ role: "user", content: chatRequest.message }],
+                message: { role: "user", content: chatRequest.message },
                 stream: true,
             }),
         });
@@ -130,9 +134,23 @@ const chatAPI = {
     }
 };
 
+type newUserResponse = { id: string; };
+
+const experimentAPI = {
+    generateExperimentUser: async () => {
+        const response = await fetch(`${apiUrl}/experiment/generate`, {
+            method: "POST"
+        });
+
+        const data: newUserResponse = await response.json();
+        return data.id;
+    },
+};
+
 export default {
     server: serverAPI,
     user: userAPI,
     survey: surveyAPI,
-    chat: chatAPI
+    chat: chatAPI,
+    experiment: experimentAPI
 };
