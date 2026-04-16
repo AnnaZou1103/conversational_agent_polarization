@@ -143,7 +143,6 @@ const experimentAPI = {
         });
 
         const data: newUserResponse = await response.json();
-        console.log(data);
         return data.id;
     },
 };
