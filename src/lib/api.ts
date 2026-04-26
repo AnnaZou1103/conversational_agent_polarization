@@ -71,6 +71,10 @@ const chatAPI = {
         const response = await fetch(`${apiUrl}/chat/history/${id}`);
         return response;
     },
+    getChatObservation: async (id: string) => {
+        const response = await fetch(`${apiUrl}/observation/${id}`);
+        return response;
+    },
     llmInference: async (id: string, chatRequest: ChatRequest, handleMessage: (data: ChatResponse) => void) => {
         const response = await fetch(`${apiUrl}/v1/chat/completions`, {
             method: 'POST',

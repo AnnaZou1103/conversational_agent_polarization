@@ -4,31 +4,24 @@ import { useEffect, useRef, useState } from "react";
 import InputContainer from "./InputContainer";
 import UserMessage from "./UserMessage";
 import AssistantMessage from "./AssistantMessage";
-import { AgentStrategy, ChatResponse, Message, ModelToCondition } from "@/src/types/interfaces";
+import { ChatResponse, Message, ModelToCondition, Strategy } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import ChatHeader from "./ChatHeader";
 import { useRouter } from "next/navigation";
 import { routeToState } from "@/src/lib/state/client";
 
-export default function ChatContainer({ id }: { id: string; }) {
+export default function ChatContainer({ id, strategy, onChatObservationUpdate }: { id: string; strategy: Strategy; onChatObservationUpdate: (id: string) => Promise<void>; }) {
     const router = useRouter();
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [canContinue, setCanContinue] = useState<boolean>(false);
-    const [agentStrategy, setAgentStrategy] = useState<AgentStrategy>();
     const [historyLoaded, setHistoryLoaded] = useState<boolean>(false);
-    const [strategyLoaded, setStrategyLoaded] = useState<boolean>(false);
 
     const loadConversation = async (id: string) => {
         const historyResponse = await api.chat.getHistory(id);
         const historyData: Message[] = await historyResponse.json();
         setMessages(historyData.map((message, _) => ({ ...message, status: "done" })));
         setHistoryLoaded(true);
-
-        const strategyResponse = await api.user.getAgentStrategy(id);
-        const strategyData = await strategyResponse.json();
-        setAgentStrategy(strategyData);
-        setStrategyLoaded(true);
     };
 
     const initializeConversation = async (id: string) => {
@@ -54,13 +47,14 @@ export default function ChatContainer({ id }: { id: string; }) {
                             index === lastIndex ? { ...message, status: "done" } : message
                         );
                     });
+                    onChatObservationUpdate(id);
                 }
             };
 
             // Send empty message to get greeting
             await api.chat.llmInference(
                 id,
-                { message: "", model: agentStrategy ? ModelToCondition[agentStrategy.strategy] : undefined },
+                { message: "", model: strategy ? ModelToCondition[strategy] : undefined },
                 handleMessage
             );
         }
@@ -71,10 +65,10 @@ export default function ChatContainer({ id }: { id: string; }) {
     }, []);
 
     useEffect(() => {
-        if (historyLoaded && strategyLoaded) {
+        if (historyLoaded) {
             initializeConversation(id);
         }
-    }, [historyLoaded, strategyLoaded]);
+    }, [historyLoaded]);
 
     const addMessage = async (content: string) => {
         setCanContinue(false);
@@ -101,10 +95,11 @@ export default function ChatContainer({ id }: { id: string; }) {
                 if (event.conversationComplete) {
                     setCanContinue(true);
                 }
+                onChatObservationUpdate(id);
             }
         };
 
-        await api.chat.llmInference(id, { message: content, model: agentStrategy ? ModelToCondition[agentStrategy.strategy] : undefined, }, handleMessage);
+        await api.chat.llmInference(id, { message: content, model: strategy ? ModelToCondition[strategy] : undefined, }, handleMessage);
     };
 
     const bottomRef = useRef<HTMLDivElement | null>(null);

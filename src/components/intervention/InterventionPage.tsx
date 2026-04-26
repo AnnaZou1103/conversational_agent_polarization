@@ -4,33 +4,53 @@ import { useProgress } from "../layout/ProgressContext";
 import { useEffect, useState } from "react";
 import { getStepOffset } from "@/src/config/progressConfig";
 import ChatContainer from "./ChatContainer";
-import { StudyType } from "@/src/types/interfaces";
+import { AgentStrategy, ChatObservation, StudyType } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import ExperimentContainer from "./ExperimentContainer";
+import ManipulationCard from "./cards/ManipulationCard";
 
 export default function InterventionPage({ id }: { id: string; }) {
     const { setCurrentStep } = useProgress();
     const [studyType, setStudyType] = useState<StudyType>();
+    const [agentStrategy, setAgentStrategy] = useState<AgentStrategy>();
+    const [chatObservation, setChatObservation] = useState<ChatObservation>();
 
-    const loadStudyType = async (id: string) => {
-        const response = await api.user.getStudyType(id);
-        const data: StudyType = await response.json();
-        setStudyType(data);
+    const handleChatObservationUpdate = async (userId: string) => {
+        const response = await api.chat.getChatObservation(userId);
+        console.log(response);
+        const data: ChatObservation = await response.json();
+        console.log(data);
+        setChatObservation(data);
+    };
+
+    const loadInterventionData = async (id: string) => {
+        const [studyTypeResponse, strategyResponse] = await Promise.all([
+            api.user.getStudyType(id),
+            api.user.getAgentStrategy(id),
+        ]);
+
+        const studyTypeData: StudyType = await studyTypeResponse.json();
+        const strategyData: AgentStrategy = await strategyResponse.json();
+
+        setStudyType(studyTypeData);
+        setAgentStrategy(strategyData);
     };
 
     useEffect(() => {
         setCurrentStep(getStepOffset("intervention") + 1);
-        loadStudyType(id);
+        loadInterventionData(id);
     }, []);
 
-    if (!studyType) return null;
+    if (!studyType || !agentStrategy) return null;
 
     return (
-        <main className="px-100 py-8">
+        <main className="px-40 py-6 flex gap-20">
             {studyType.type === "study" ?
-                <ChatContainer id={id} />
+                <ChatContainer id={id} strategy={agentStrategy.strategy} onChatObservationUpdate={handleChatObservationUpdate} />
                 :
-                <ExperimentContainer id={id} />}
+                <ExperimentContainer id={id} strategy={agentStrategy.strategy} onChatObservationUpdate={handleChatObservationUpdate} />}
+
+            <ManipulationCard strategy={agentStrategy.strategy} chatObservation={chatObservation} />
         </main>
     );
 }

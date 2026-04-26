@@ -18,6 +18,7 @@ export default function Header({ id }: { id: string; }) {
                     width={100}
                     height={100}
                     className="w-auto h-7/12 object-contain"
+                    priority
                 />
                 <button
                     type="button"

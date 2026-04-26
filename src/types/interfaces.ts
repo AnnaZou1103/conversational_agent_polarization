@@ -35,6 +35,41 @@ export interface AgentStrategy {
     strategy: Strategy;
 }
 
+export interface CIObservation {
+    showSurvey: boolean;
+    surveyText: string;
+    userFeelingText: string;
+    userMediaText: string;
+}
+
+export interface PNObservation {
+    personLabel: string;
+    personTraits: string[];
+    personCaresAbout: string[];
+    personMemories: string[];
+    personPoliticalOrigin: string;
+}
+
+export interface QuizQuestion {
+    label: string;
+    userAnswer: number;
+    surveyAverage: number;
+}
+
+export interface MCObservation {
+    questions: QuizQuestion[];
+}
+
+export interface ControlObservation {
+    topicsShared: string[];
+    currentMood: string;
+}
+
+export interface ChatObservation {
+    observation: CIObservation | PNObservation | MCObservation | ControlObservation;
+}
+
+
 export interface SurveyResponses {
     responses: Record<string, string>;
 }

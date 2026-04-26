@@ -18,7 +18,13 @@ export default function AssistantMessage({ message }: { message: Message; }) {
                 <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
-                        p: ({ children }) => <span>{children}</span> // override p with span to avoid block
+                        p: ({ children }) => <span>{children}</span>,
+                        ol: ({ children }) => (
+                            <ol className="list-decimal ml-4">{children}</ol>
+                        ),
+                        li: ({ children }) => (
+                            <li className="mb-1">{children}</li>
+                        ),
                     }}>
                     {message.content}
                 </ReactMarkdown>

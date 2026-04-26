@@ -4,23 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import InputContainer from "./InputContainer";
 import UserMessage from "./UserMessage";
 import AssistantMessage from "./AssistantMessage";
-import { AgentStrategy, ChatResponse, Message, ModelToCondition } from "@/src/types/interfaces";
+import { ChatObservation, ChatResponse, Message, ModelToCondition, Strategy } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import ChatHeader from "./ChatHeader";
 import { useRouter } from "next/navigation";
 import { routeToState } from "@/src/lib/state/client";
 import PartyModal from "./PartyModal";
 
-export default function ExperimentContainer({ id }: { id: string; }) {
+export default function ExperimentContainer({ id, strategy, onChatObservationUpdate }: { id: string; strategy: Strategy; onChatObservationUpdate: (id: string) => Promise<void>; }) {
     const router = useRouter();
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [canContinue, setCanContinue] = useState<boolean>(false);
-    const [agentStrategy, setAgentStrategy] = useState<AgentStrategy>();
     const [showPartyModal, setShowPartyModal] = useState<boolean>(false);
     const [partyLoaded, setPartyLoaded] = useState<boolean>(false);
     const [historyLoaded, setHistoryLoaded] = useState<boolean>(false);
-    const [strategyLoaded, setStrategyLoaded] = useState<boolean>(false);
+
 
     const loadConversation = async (id: string) => {
         const historyResponse = await api.chat.getHistory(id);
@@ -28,14 +27,11 @@ export default function ExperimentContainer({ id }: { id: string; }) {
         setMessages(historyData.map((message, _) => ({ ...message, status: "done" })));
         setHistoryLoaded(true);
 
-        const strategyResponse = await api.user.getAgentStrategy(id);
-        const strategyData = await strategyResponse.json();
-        setAgentStrategy(strategyData);
-        setStrategyLoaded(true);
-
         const userPartyResponse = await api.user.getUserParty(id);
         if (userPartyResponse.status === 404) {
             setShowPartyModal(true);
+        } else {
+            setPartyLoaded(true);
         }
     };
 
@@ -62,13 +58,14 @@ export default function ExperimentContainer({ id }: { id: string; }) {
                             index === lastIndex ? { ...message, status: "done" } : message
                         );
                     });
+                    onChatObservationUpdate(id);
                 }
             };
 
             // Send empty message to get greeting
             await api.chat.llmInference(
                 id,
-                { message: "", model: agentStrategy ? ModelToCondition[agentStrategy.strategy] : undefined },
+                { message: "", model: strategy ? ModelToCondition[strategy] : undefined },
                 handleMessage
             );
         }
@@ -76,10 +73,11 @@ export default function ExperimentContainer({ id }: { id: string; }) {
 
     useEffect(() => {
         loadConversation(id);
+        onChatObservationUpdate(id);
     }, []);
 
     useEffect(() => {
-        if (historyLoaded && strategyLoaded && partyLoaded) {
+        if (historyLoaded && partyLoaded) {
             initializeConversation(id);
         }
     }, [historyLoaded, partyLoaded]);
@@ -109,10 +107,11 @@ export default function ExperimentContainer({ id }: { id: string; }) {
                 if (event.conversationComplete) {
                     setCanContinue(true);
                 }
+                onChatObservationUpdate(id);
             }
         };
 
-        await api.chat.llmInference(id, { message: content, model: agentStrategy ? ModelToCondition[agentStrategy.strategy] : undefined, }, handleMessage);
+        await api.chat.llmInference(id, { message: content, model: strategy ? ModelToCondition[strategy] : undefined, }, handleMessage);
     };
 
     const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -145,7 +144,7 @@ export default function ExperimentContainer({ id }: { id: string; }) {
     };
 
     return (
-        <section className="flex h-190 w-full flex-col rounded-xl bg-white shadow-card">
+        <section className="flex-2 flex h-190 w-full flex-col rounded-xl bg-white shadow-card">
             {showPartyModal && <PartyModal id={id} onSubmit={onSubmit} />}
 
             <ChatHeader />
@@ -159,7 +158,6 @@ export default function ExperimentContainer({ id }: { id: string; }) {
                     </div>
                 ))}
 
-                {/* Temporary jump to end state */}
                 {canContinue && <div className="flex justify-center">
                     <button
                         className="px-6 py-4 bg-black cursor-pointer text-white text-sm font-semibold rounded-full"
