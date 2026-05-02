@@ -128,7 +128,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
 
 
     return (
-        <section className="flex h-190 w-full flex-col rounded-xl bg-white shadow-card">
+        <section className="flex-2 flex h-190 w-full flex-col rounded-xl bg-white shadow-card">
             <ChatHeader />
             <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-8">
                 {messages.map((message, index) => (
