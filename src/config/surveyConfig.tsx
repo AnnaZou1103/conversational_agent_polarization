@@ -259,122 +259,7 @@ export const postSurveyPages: SurveyPage[] = [
         ],
         randomized: true
     },
-    // Page 6: AI Trust
-    {
-        questions: [
-            {
-                type: "rating",
-                name: "negativeConsequences",
-                question: "I believe that there could be negative consequences when using this agent.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "cautiousUsingAgent",
-                question: "I feel I must be cautious when using this agent.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "riskyToInteract",
-                question: "It is risky to interact with this agent.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "actsInBestInterest",
-                question: "I believe that this agent will act in my best interest.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "triesToHelp",
-                question: "I believe that this agent will do its best to help me if I need help.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "understandsNeeds",
-                question: "I believe that this agent is interested in understanding my needs and preferences.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "competentAndEffective",
-                question: "I think that this agent is competent and effective in its role.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "performsRoleWell",
-                question: "I think that this agent performs its role very well.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "hasExpectedFunctionalities",
-                question: "I believe that this agent has all the functionalities I would expect.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "dependCompletely",
-                question: "If I use this agent, I think I would be able to depend on it completely.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "alwaysReliable",
-                question: "I can always rely on this agent for assistance.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-            {
-                type: "rating",
-                name: "trustInformation",
-                question: "I can trust the information presented to me by this agent.",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly disagree",
-                maxLabel: "Strongly agree"
-            },
-        ],
-        paragraph: "Q10. Please indicate how much you disagree or agree with each of the following statements.",
-        randomized: true
-    },
-    // Page 7: Manipulation Check
+    // Page 6: Manipulation Check
     {
         questions: [
             {
@@ -425,7 +310,7 @@ export const postSurveyPages: SurveyPage[] = [
         ],
         paragraph: "During my conversation with the AI agent..."
     },
-    // Page 8: Conversation Experience
+    // Page 7: Conversation Experience
     {
         questions: [
             {
@@ -521,7 +406,7 @@ export const postSurveyPages: SurveyPage[] = [
         ],
         paragraph: "Please indicate how much you agree with each of the following statements about your conversation with the AI agent."
     },
-    // Page 9: Perceived Manipulation + Willingness to Engage + Open-ended
+    // Page 8: Perceived Manipulation + Willingness to Engage + Open-ended
     {
         questions: [
             {
