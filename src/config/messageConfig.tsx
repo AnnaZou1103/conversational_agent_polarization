@@ -1,36 +1,31 @@
 export const transitionMessages = {
     toIntervention: (
-        <div className="w-full">
-            <p className="text-main-body">Congradulations, you have finished the first part!</p>
-            <br />
-            <p className="text-main-body">As you proceed to the next section, please make sure you do not close out of this tab. You must complete the whole study to collect your payment.</p>
-            <br />
-            <br />
-            <h1 className="text-xl font-bold">Task Instruction</h1>
-            <br />
-            <p className="text-main-body">In the following section, you will be asked to write a <strong>persuasive message</strong> to individuals from the opposing political party on [Gun control/Immigration]. (Participants will be randomly assigned to one of the conditions.)</p>
-            <br />
-            <p className="text-main-body">Before submitting your message, you will have the opportunity to interact with a conversational AI agent that can help you refine your statement. You are welcome to share your initial thoughts, concerns, or reasoning with the agent.</p>
-            <br />
-            <p className="text-main-body">After the interaction, please submit your final revised message. There are no right or wrong answers. We are interested in your honest views.</p>
+        <div className="w-full space-y-4">
+            <p className="text-title">Congratulations!</p>
+            <p className="text-main-body">You have finished the first part. As you proceed to the next section, please make sure you do not close out of this tab. You must complete the whole study to collect your payment.</p>
+
+            <hr className="border-zinc-200 my-2" />
+
+            <p className="text-subtitle">Task Instruction</p>
+            <p className="text-main-body">In the following section, you will have a conversation with an AI conversational agent. The agent will engage you in a discussion about your perceptions of people from the opposing political party.</p>
+            <p className="text-main-body">The conversation will take approximately <strong>5–8 minutes</strong>. Please engage with the agent openly and honestly — there are no right or wrong answers. A <strong>"Continue"</strong> button will appear at the bottom of the chat when the conversation is complete.</p>
         </div>
     ),
     toPostSurvey: (
-        <div className="w-full">
+        <div className="w-full space-y-4">
+            <p className="text-title">Almost done!</p>
             <p className="text-main-body">You are now moving on to the last section of the study.</p>
-            <br />
-            <p>Please answer the following questions to the best of your ability.</p>
-            <br />
-            <p>Thank you.</p>
+            <p className="text-main-body">Please answer the following questions to the best of your ability.</p>
+            <p className="text-main-body">Thank you.</p>
         </div>
     )
 };
 
 export const thankyouMessage = (
-    <>
+    <div className="space-y-3">
         <h1 className="text-title">Congratulations!</h1>
-        <p>You have finished all parts!</p>
-        <p>Now you can close the tab.</p>
-        <p>Thank you for participating this study.</p>
-    </>
+        <p className="text-main-body">You have finished all parts of the study.</p>
+        <p className="text-main-body">You may now close this tab.</p>
+        <p className="text-main-body">Thank you for your participation.</p>
+    </div>
 );
