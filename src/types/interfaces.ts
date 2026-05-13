@@ -120,11 +120,17 @@ export interface LikertQuestion {
     questionLabel?: string;
 }
 
+export interface TextQuestion extends BaseQuestion {
+    type: "text";
+    placeholder?: string;
+}
+
 export type SurveyQuestion =
     | ChoiceQuestion
     | ScaleQuestion
     | RatingQuestion
-    | LikertQuestion;
+    | LikertQuestion
+    | TextQuestion;
 
 export interface SurveyPage {
     questions: SurveyQuestion[];

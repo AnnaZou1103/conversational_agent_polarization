@@ -2,13 +2,14 @@
 
 
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ChoiceQuestion from "@/src/components/survey/ChoiceQuestion";
 import RatingQuestion from "@/src/components/survey/RatingQuestion";
 import ScaleQuestion from "@/src/components/survey/ScaleQuestion";
 import { SurveyQuestion, SurveyType, State, Party } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import LikertQuestion from "./LikertQuestion";
+import TextQuestion from "./TextQuestion";
 import { routeToState } from "@/src/lib/state/client";
 import { applyParty, shuffleWithSeed } from "@/src/lib/utils";
 import { useProgress } from "../layout/ProgressContext";
@@ -58,8 +59,24 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
 
     const { setCurrentStep } = useProgress();
 
+    const questionNumberMap = useMemo(() => {
+        const map: Record<string, number | string> = {};
+        let counter = 1;
+        pages.forEach(page => {
+            page.questions.forEach(q => {
+                if (q.hidden) return;
+                if (q.questionLabel) {
+                    map[q.name] = q.questionLabel;
+                } else {
+                    map[q.name] = counter++;
+                }
+            });
+        });
+        return map;
+    }, [pages]);
+
     const visibleQuestions = pages[currentPage].questions.filter(
-        q => !q.showIf || q.showIf(responses)
+        q => !q.hidden && (!q.showIf || q.showIf(responses))
     );
 
     useEffect(() => {
@@ -97,6 +114,9 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
                     const value = formData.get(statement.name) as string;
                     if (value) newResponses[statement.name] = value;
                 });
+            } else if (q.type === "text") {
+                const value = formData.get(q.name!) as string;
+                newResponses[q.name!] = value ?? "";
             } else {
                 const value = formData.get(q.name!) as string;
                 if (value) newResponses[q.name!] = value;
@@ -137,8 +157,16 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
     };
 
     const applyPartyToQuestion = (q: SurveyQuestion): SurveyQuestion => {
-        if (q.type === "likert" || !effectiveParty) return q;
+        if (q.type === "likert" || q.type === "text" || !effectiveParty) return q;
         return { ...q, question: applyParty(q.question, effectiveParty!) };
+    };
+
+    const withNumber = (q: SurveyQuestion): SurveyQuestion => {
+        if (q.type === "likert") return q;
+        const num = questionNumberMap[q.name];
+        if (num === undefined) return q;
+        const prefix = typeof num === "string" ? `${num}. ` : `Q${num}. `;
+        return { ...q, question: `${prefix}${q.question}` };
     };
 
     const renderQuestion = (q: SurveyQuestion) => {
@@ -194,6 +222,17 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
                         responses={responses}
                     />
                 );
+
+            case "text":
+                return (
+                    <TextQuestion
+                        key={q.name}
+                        name={q.name}
+                        question={q.question}
+                        placeholder={q.placeholder}
+                        selectedValue={responses[q.name]}
+                    />
+                );
         }
     };
 
@@ -207,7 +246,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
 
 
             <form onSubmit={handleNextClick} className="space-y-6">
-                {visibleQuestions.map(q => renderQuestion(applyPartyToQuestion(q)))}
+                {visibleQuestions.map(q => renderQuestion(withNumber(applyPartyToQuestion(q))))}
                 <div className={`flex ${currentPage > 0 ? "justify-between" : "justify-end"}`}>
                     {currentPage > 0 && <button
                         type="button"
