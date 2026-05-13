@@ -84,7 +84,7 @@ const chatAPI = {
         const response = await fetch(`${apiUrl}/observation/${id}`);
         return response;
     },
-    llmInference: async (id: string, chatRequest: ChatRequest, handleMessage: (data: ChatResponse) => void) => {
+    llmInference: async (id: string, chatRequest: ChatRequest, handleMessage: (data: ChatResponse) => void | Promise<void>) => {
         const response = await fetch(`${apiUrl}/v1/chat/completions`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -130,11 +130,11 @@ const chatAPI = {
                     const stage = parsed?.stage ?? null;
 
                     if (typeof token === "string" && token.length > 0) {
-                        handleMessage({ type: "token", content: token });
+                        await handleMessage({ type: "token", content: token });
                     }
 
                     if (finishReason === "stop") {
-                        handleMessage({
+                        await handleMessage({
                             type: "done",
                             content: "",
                             conversationComplete: Boolean(conversationComplete),

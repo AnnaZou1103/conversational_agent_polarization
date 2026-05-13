@@ -80,7 +80,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
         setCanContinue(false);
         setMessages(prev => [...prev, { role: "user", content: content }, { role: "assistant", content: "", status: "streaming" }]);
 
-        const handleMessage = (event: ChatResponse) => {
+        const handleMessage = async (event: ChatResponse) => {
             if (event.type === "token") {
                 setMessages(prev => {
                     const lastIndex = prev.length - 1;
