@@ -38,16 +38,16 @@ export interface AgentStrategy {
 export interface CIObservation {
     showSurvey: boolean;
     surveyText: string;
-    userFeelingText: string;
-    userMediaText: string;
+    userFeelingText: string | null;
+    userMediaText: string | null;
 }
 
 export interface PNObservation {
-    personLabel: string;
+    personLabel: string | null;
     personTraits: string[];
     personCaresAbout: string[];
     personMemories: string[];
-    personPoliticalOrigin: string;
+    personPoliticalOrigin: string | null;
 }
 
 export interface QuizQuestion {
@@ -62,7 +62,7 @@ export interface MCObservation {
 
 export interface ControlObservation {
     topicsShared: string[];
-    currentMood: string;
+    currentMood: string | null;
 }
 
 export interface ChatObservation {
