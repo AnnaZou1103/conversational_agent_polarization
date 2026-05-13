@@ -66,6 +66,7 @@ export interface ControlObservation {
 }
 
 export interface ChatObservation {
+    stage: string;
     observation: CIObservation | PNObservation | MCObservation | ControlObservation;
 }
 
@@ -78,6 +79,8 @@ export interface BaseQuestion {
     name: string;
     question: string;
     showIf?: (responses: Record<string, string>) => boolean;
+    hidden?: boolean;
+    questionLabel?: string;
 }
 
 export interface ChoiceQuestion extends BaseQuestion {
@@ -113,6 +116,8 @@ export interface LikertQuestion {
         content: string;
     }[];
     showIf?: (responses: Record<string, string>) => boolean;
+    hidden?: boolean;
+    questionLabel?: string;
 }
 
 export type SurveyQuestion =

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import InputContainer from "./InputContainer";
 import UserMessage from "./UserMessage";
 import AssistantMessage from "./AssistantMessage";
-import { ChatResponse, Message, ModelToCondition, Strategy } from "@/src/types/interfaces";
+import { ChatObservation, ChatResponse, Message, ModelToCondition, Strategy } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import ChatHeader from "./ChatHeader";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,12 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
     const [messages, setMessages] = useState<Message[]>([]);
     const [canContinue, setCanContinue] = useState<boolean>(false);
     const [historyLoaded, setHistoryLoaded] = useState<boolean>(false);
+
+    const checkCompletion = async () => {
+        const response = await api.chat.getChatObservation(id);
+        const data: ChatObservation = await response.json();
+        if (data.stage === "complete") setCanContinue(true);
+    };
 
     const loadConversation = async (id: string) => {
         const historyResponse = await api.chat.getHistory(id);
@@ -92,9 +98,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
                     );
                 });
 
-                if (event.conversationComplete) {
-                    setCanContinue(true);
-                }
+                await checkCompletion();
                 onChatObservationUpdate(id);
             }
         };
