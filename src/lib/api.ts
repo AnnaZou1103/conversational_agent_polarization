@@ -52,6 +52,15 @@ const userAPI = {
         const response = await fetch(`${apiUrl}/user/type/${id}`);
         return response;
     },
+    createStudyUser: async (strategy?: string) => {
+        const url = strategy
+            ? `${apiUrl}/user/create?strategy=${encodeURIComponent(strategy)}`
+            : `${apiUrl}/user/create`;
+        const response = await fetch(url, { method: "POST" });
+        if (!response.ok) throw new Error("Failed to create study user");
+        const data: newStudyUserResponse = await response.json();
+        return data.study_id;
+    },
 };
 
 const surveyAPI = {
@@ -139,6 +148,7 @@ const chatAPI = {
 };
 
 type newUserResponse = { id: string; };
+type newStudyUserResponse = { study_id: string; };
 
 const experimentAPI = {
     generateExperimentUser: async () => {
