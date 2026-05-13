@@ -57,7 +57,7 @@ const userAPI = {
             ? `${apiUrl}/user/create?strategy=${encodeURIComponent(strategy)}`
             : `${apiUrl}/user/create`;
         const response = await fetch(url, { method: "POST" });
-        if (!response.ok) throw new Error("Failed to create study user");
+        if (!response.ok) throw new Error(`Failed to create study user: ${response.status} at ${url}`);
         const data: newStudyUserResponse = await response.json();
         return data.study_id;
     },
