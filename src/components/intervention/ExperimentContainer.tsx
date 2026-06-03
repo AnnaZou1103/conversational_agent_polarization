@@ -17,6 +17,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
     const [messages, setMessages] = useState<Message[]>([]);
     const [canContinue, setCanContinue] = useState<boolean>(false);
     const [showPartyModal, setShowPartyModal] = useState<boolean>(false);
+    const [isInitializing, setIsInitializing] = useState<boolean>(true);
 
     const checkCompletion = async () => {
         const response = await api.chat.getChatObservation(id);
@@ -79,7 +80,11 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
                 setMessages(prev => prev.map((m, i) =>
                     i === prev.length - 1 ? { ...m, content: "Failed to connect. Please refresh the page.", status: "done" } : m
                 ));
+            } finally {
+                setIsInitializing(false);
             }
+        } else {
+            setIsInitializing(false);
         }
     };
 
@@ -177,7 +182,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
                 </div>}
                 <div ref={bottomRef} />
             </div>
-            <InputContainer addMessage={addMessage} canContinue={canContinue} />
+            <InputContainer addMessage={addMessage} canContinue={canContinue} isInitializing={isInitializing} />
         </section>
     );
 }

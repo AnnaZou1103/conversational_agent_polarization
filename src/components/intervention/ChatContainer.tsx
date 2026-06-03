@@ -16,6 +16,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
     const [messages, setMessages] = useState<Message[]>([]);
     const [canContinue, setCanContinue] = useState<boolean>(false);
     const [historyLoaded, setHistoryLoaded] = useState<boolean>(false);
+    const [isInitializing, setIsInitializing] = useState<boolean>(true);
 
     const checkCompletion = async () => {
         const response = await api.chat.getChatObservation(id);
@@ -68,7 +69,11 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
                 setMessages(prev => prev.map((m, i) =>
                     i === prev.length - 1 ? { ...m, content: "Failed to connect. Please refresh the page.", status: "done" } : m
                 ));
+            } finally {
+                setIsInitializing(false);
             }
+        } else {
+            setIsInitializing(false);
         }
     };
 
@@ -160,7 +165,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
                 </div>}
                 <div ref={bottomRef} />
             </div>
-            <InputContainer addMessage={addMessage} canContinue={canContinue} />
+            <InputContainer addMessage={addMessage} canContinue={canContinue} isInitializing={isInitializing} />
         </section>
     );
 }
