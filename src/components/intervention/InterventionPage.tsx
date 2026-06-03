@@ -17,9 +17,7 @@ export default function InterventionPage({ id }: { id: string; }) {
 
     const handleChatObservationUpdate = async (userId: string) => {
         const response = await api.chat.getChatObservation(userId);
-        console.log(response);
         const data: ChatObservation = await response.json();
-        console.log(data);
         setChatObservation(data);
     };
 

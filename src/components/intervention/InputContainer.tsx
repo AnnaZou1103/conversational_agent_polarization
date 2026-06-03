@@ -51,6 +51,7 @@ export default function InputContainer({ addMessage, canContinue }: { addMessage
                         rows={1}
                         onChange={(e) => setContent(e.target.value)}
                         onPaste={(e) => e.preventDefault()}
+                        onDrop={(e) => e.preventDefault()}
                         onKeyDown={(e) => {
                             if (e.key === "Enter" && !e.shiftKey) {
                                 e.preventDefault();

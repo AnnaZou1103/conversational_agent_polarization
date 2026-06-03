@@ -62,16 +62,6 @@ export const preSurveyPages: SurveyPage[] = [
                 max: 100,
                 milestones: [{ value: 0, label: "Not important at all" }, { value: 50, label: "Moderately important" }, { value: 100, label: "Extremely important" }]
             },
-            {
-                type: "rating",
-                name: "issueAttitude",
-                hidden: true,
-                question: "What is your overall attitude toward [issue]?",
-                min: 1,
-                max: 7,
-                minLabel: "Strongly oppose",
-                maxLabel: "Strongly support"
-            }
         ],
     },
     {
