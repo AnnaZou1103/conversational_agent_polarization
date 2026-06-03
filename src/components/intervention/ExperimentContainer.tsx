@@ -21,7 +21,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
     const checkCompletion = async () => {
         const response = await api.chat.getChatObservation(id);
         const data: ChatObservation = await response.json();
-        if (data.stage === "complete") setCanContinue(true);
+        if (data?.stage === "complete") setCanContinue(true);
     };
     const [partyLoaded, setPartyLoaded] = useState<boolean>(false);
     const [historyLoaded, setHistoryLoaded] = useState<boolean>(false);

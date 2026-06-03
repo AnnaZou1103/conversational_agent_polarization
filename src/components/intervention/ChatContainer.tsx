@@ -20,7 +20,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
     const checkCompletion = async () => {
         const response = await api.chat.getChatObservation(id);
         const data: ChatObservation = await response.json();
-        if (data.stage === "complete") setCanContinue(true);
+        if (data?.stage === "complete") setCanContinue(true);
     };
 
     const loadConversation = async (id: string) => {
