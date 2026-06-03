@@ -64,6 +64,60 @@ export const preSurveyPages: SurveyPage[] = [
             },
         ],
     },
+    // Mediators (pre-measure)
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "similarityToOutgroup",
+                question: "How similar are you to [Democrats/Republicans]?",
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Not similar at all" }, { value: 50, label: "Moderately similar" }, { value: 100, label: "Extremely similar" }]
+            },
+            {
+                type: "scale",
+                name: "partyImportancePost",
+                question: "How important is being a [Republican/Democrat] to you?",
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Not important at all" }, { value: 50, label: "Moderately important" }, { value: 100, label: "Extremely important" }]
+            },
+            {
+                type: "scale",
+                name: "angerTowardOutgroup",
+                question: "How much anger do you feel toward [Democrats/Republicans]?",
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "No anger at all" }, { value: 50, label: "A moderate amount of anger" }, { value: 100, label: "A great deal of anger" }]
+            },
+            {
+                type: "scale",
+                name: "empathyTowardOutgroup",
+                question: "How much empathy do you feel toward [Democrats/Republicans]?",
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "No empathy at all" }, { value: 50, label: "A moderate amount of empathy" }, { value: 100, label: "A great deal of empathy" }]
+            },
+            {
+                type: "scale",
+                name: "commonEnemy",
+                question: "To what extent should Democrats and Republicans see themselves as united against a common enemy?",
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "A moderate amount" }, { value: 100, label: "A great deal" }]
+            },
+            {
+                type: "scale",
+                name: "threatPerception",
+                question: "To what extent do you view [Democrats/Republicans] as a serious threat to the country's well-being?",
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "A moderate amount" }, { value: 100, label: "A great deal" }]
+            }
+        ],
+        randomized: true
+    },
     {
         questions: [
             {
@@ -195,61 +249,7 @@ export const postSurveyPages: SurveyPage[] = [
         ],
         paragraph: "Q9. Please answer the following questions."
     },
-    // Page 5: Mediators
-    {
-        questions: [
-            {
-                type: "scale",
-                name: "similarityToOutgroup",
-                question: "How similar are you to [Democrats/Republicans]?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "Not similar at all" }, { value: 50, label: "Moderately similar" }, { value: 100, label: "Extremely similar" }]
-            },
-            {
-                type: "scale",
-                name: "partyImportancePost",
-                question: "How important is being a [Republican/Democrat] to you?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "Not important at all" }, { value: 50, label: "Moderately important" }, { value: 100, label: "Extremely important" }]
-            },
-            {
-                type: "scale",
-                name: "angerTowardOutgroup",
-                question: "How much anger do you feel toward [Democrats/Republicans]?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "No anger at all" }, { value: 50, label: "A moderate amount of anger" }, { value: 100, label: "A great deal of anger" }]
-            },
-            {
-                type: "scale",
-                name: "empathyTowardOutgroup",
-                question: "How much empathy do you feel toward [Democrats/Republicans]?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "No empathy at all" }, { value: 50, label: "A moderate amount of empathy" }, { value: 100, label: "A great deal of empathy" }]
-            },
-            {
-                type: "scale",
-                name: "commonEnemy",
-                question: "To what extent should Democrats and Republicans see themselves as united against a common enemy?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "A moderate amount" }, { value: 100, label: "A great deal" }]
-            },
-            {
-                type: "scale",
-                name: "threatPerception",
-                question: "To what extent do you view [Democrats/Republicans] as a serious threat to the country's well-being?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "A moderate amount" }, { value: 100, label: "A great deal" }]
-            }
-        ],
-        randomized: true
-    },
-    // Page 6: Manipulation Check
+    // Page 5: Manipulation Check
     {
         questions: [
             {
