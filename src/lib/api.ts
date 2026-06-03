@@ -152,14 +152,13 @@ type newStudyUserResponse = { study_id: string; };
 
 const experimentAPI = {
     generateExperimentUser: async (strategy?: string) => {
-        const response = await fetch(`${apiUrl}/experiment/generate`, {
+        const params = strategy ? `?strategy=${strategy}` : "";
+        const response = await fetch(`${apiUrl}/user/create${params}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ strategy: strategy ?? null }),
         });
 
-        const data: newUserResponse = await response.json();
-        return data.id;
+        const data: newStudyUserResponse = await response.json();
+        return data.study_id;
     },
 };
 
