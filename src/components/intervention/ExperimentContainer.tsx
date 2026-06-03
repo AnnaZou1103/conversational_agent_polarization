@@ -17,6 +17,12 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
     const [messages, setMessages] = useState<Message[]>([]);
     const [canContinue, setCanContinue] = useState<boolean>(false);
     const [showPartyModal, setShowPartyModal] = useState<boolean>(false);
+
+    const checkCompletion = async () => {
+        const response = await api.chat.getChatObservation(id);
+        const data: ChatObservation = await response.json();
+        if (data.stage === "complete") setCanContinue(true);
+    };
     const [partyLoaded, setPartyLoaded] = useState<boolean>(false);
     const [historyLoaded, setHistoryLoaded] = useState<boolean>(false);
 
@@ -86,7 +92,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
         setCanContinue(false);
         setMessages(prev => [...prev, { role: "user", content: content }, { role: "assistant", content: "", status: "streaming" }]);
 
-        const handleMessage = (event: ChatResponse) => {
+        const handleMessage = async (event: ChatResponse) => {
             if (event.type === "token") {
                 setMessages(prev => {
                     const lastIndex = prev.length - 1;
@@ -104,9 +110,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
                     );
                 });
 
-                if (event.conversationComplete) {
-                    setCanContinue(true);
-                }
+                await checkCompletion();
                 onChatObservationUpdate(id);
             }
         };
@@ -161,8 +165,8 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
                 {canContinue && <div className="flex justify-center">
                     <button
                         className="px-6 py-4 bg-black cursor-pointer text-white text-sm font-semibold rounded-full"
-                        onClick={async () => await routeToState(router, id, "complete")}>
-                        Leave Intervention →
+                        onClick={async () => await routeToState(router, id, "to_post_survey")}>
+                        Continue to Survey →
                     </button>
                 </div>}
                 <div ref={bottomRef} />
