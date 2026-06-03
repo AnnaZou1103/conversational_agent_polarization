@@ -52,18 +52,6 @@ export const preSurveyPages: SurveyPage[] = [
             }
         ]
     },
-    {
-        questions: [
-            {
-                type: "scale",
-                name: "partisanshipStrength",
-                question: "How important is being a [Republican/Democrat] to you?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "Not important at all" }, { value: 50, label: "Moderately important" }, { value: 100, label: "Extremely important" }]
-            },
-        ],
-    },
     // Mediators (pre-measure)
     {
         questions: [
