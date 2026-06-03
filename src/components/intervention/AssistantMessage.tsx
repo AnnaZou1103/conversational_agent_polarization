@@ -15,20 +15,30 @@ export default function AssistantMessage({ message }: { message: Message; }) {
                 text-sm leading-relaxed
                 whitespace-pre-wrap
             ">
-                <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                        p: ({ children }) => <span>{children}</span>,
-                        ol: ({ children }) => (
-                            <ol className="list-decimal ml-4">{children}</ol>
-                        ),
-                        li: ({ children }) => (
-                            <li className="mb-1">{children}</li>
-                        ),
-                    }}>
-                    {message.content}
-                </ReactMarkdown>
-                {message.status === "streaming" && <span className="animate-pulse">▌</span>}
+                {message.status === "streaming" && message.content === "" ? (
+                    <span className="flex gap-1 items-center py-1">
+                        <span className="w-2 h-2 bg-zinc-400 rounded-full animate-bounce [animation-delay:0ms]" />
+                        <span className="w-2 h-2 bg-zinc-400 rounded-full animate-bounce [animation-delay:150ms]" />
+                        <span className="w-2 h-2 bg-zinc-400 rounded-full animate-bounce [animation-delay:300ms]" />
+                    </span>
+                ) : (
+                    <>
+                        <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                                p: ({ children }) => <span>{children}</span>,
+                                ol: ({ children }) => (
+                                    <ol className="list-decimal ml-4">{children}</ol>
+                                ),
+                                li: ({ children }) => (
+                                    <li className="mb-1">{children}</li>
+                                ),
+                            }}>
+                            {message.content}
+                        </ReactMarkdown>
+                        {message.status === "streaming" && <span className="animate-pulse">▌</span>}
+                    </>
+                )}
             </div>
         </div>
     );

@@ -57,12 +57,18 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
                 }
             };
 
-            // Send empty message to get greeting
-            await api.chat.llmInference(
-                id,
-                { message: "", model: strategy ? ModelToCondition[strategy] : undefined },
-                handleMessage
-            );
+            try {
+                // Send empty message to get greeting
+                await api.chat.llmInference(
+                    id,
+                    { message: "", model: strategy ? ModelToCondition[strategy] : undefined },
+                    handleMessage
+                );
+            } catch {
+                setMessages(prev => prev.map((m, i) =>
+                    i === prev.length - 1 ? { ...m, content: "Failed to connect. Please refresh the page.", status: "done" } : m
+                ));
+            }
         }
     };
 
