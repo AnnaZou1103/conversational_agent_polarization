@@ -38,7 +38,7 @@ export default function RatingQuestion({
                         </label>
                     ))}
                 </div>
-                <span className="text-sm font-semibold text-zinc-800">{max} = {maxLabel}</span>
+                <span className="text-sm font-semibold text-zinc-800 ml-6">{max} = {maxLabel}</span>
             </div>
 
             {allowNotApplicable &&
