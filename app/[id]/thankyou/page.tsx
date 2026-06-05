@@ -2,12 +2,15 @@
 
 import MessageCard from "@/src/components/common/MessageCard";
 import { useProgress } from "@/src/components/layout/ProgressContext";
-import { thankyouMessage } from "@/src/config/messageConfig";
+import { screenedOutMessage, thankyouMessage } from "@/src/config/messageConfig";
 import { getStepOffset } from "@/src/config/progressConfig";
-import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
 
-export default function ThankYouPage() {
+function ThankYouContent() {
     const { setCurrentStep } = useProgress();
+    const searchParams = useSearchParams();
+    const screenedOut = searchParams.get("screened") === "1";
 
     useEffect(() => {
         setCurrentStep(getStepOffset("thankyou") + 1);
@@ -15,9 +18,16 @@ export default function ThankYouPage() {
 
     return (
         <MessageCard>
-            <span className="text-5xl">✅</span>
-            {thankyouMessage}
+            <span className="text-5xl">{screenedOut ? "👋" : "✅"}</span>
+            {screenedOut ? screenedOutMessage : thankyouMessage}
         </MessageCard>
     );
+}
 
+export default function ThankYouPage() {
+    return (
+        <Suspense>
+            <ThankYouContent />
+        </Suspense>
+    );
 }

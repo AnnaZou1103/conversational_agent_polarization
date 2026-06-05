@@ -14,6 +14,7 @@ export default function TextQuestion({
     return (
         <QuestionCard question={question}>
             <textarea
+                suppressHydrationWarning
                 name={name}
                 defaultValue={selectedValue ?? ""}
                 placeholder={placeholder}

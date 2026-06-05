@@ -77,12 +77,20 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
         }
     };
 
+    const didLoad = useRef(false);
+    const didInit = useRef(false);
+
     useEffect(() => {
+        // Guard against React Strict Mode double-invocation: a second
+        // loadConversation would reset messages and wipe the greeting.
+        if (didLoad.current) return;
+        didLoad.current = true;
         loadConversation(id);
     }, []);
 
     useEffect(() => {
-        if (historyLoaded) {
+        if (historyLoaded && !didInit.current) {
+            didInit.current = true;
             initializeConversation(id);
         }
     }, [historyLoaded]);
@@ -145,7 +153,12 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
     return (
         <section className="flex-2 flex h-190 w-full flex-col rounded-xl bg-white shadow-card">
             <ChatHeader />
-            <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-8">
+            <div
+                className="min-h-0 flex-1 space-y-5 overflow-y-auto p-8 select-none"
+                onCopy={(e) => e.preventDefault()}
+                onCut={(e) => e.preventDefault()}
+                onContextMenu={(e) => e.preventDefault()}
+            >
                 {messages.map((message, index) => (
                     <div key={index} className="space-y-5">
                         {message.role === "user" ?

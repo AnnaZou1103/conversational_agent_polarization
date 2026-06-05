@@ -88,13 +88,21 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
         }
     };
 
+    const didLoad = useRef(false);
+    const didInit = useRef(false);
+
     useEffect(() => {
+        // Guard against React Strict Mode double-invocation: a second
+        // loadConversation would reset messages and wipe the greeting.
+        if (didLoad.current) return;
+        didLoad.current = true;
         loadConversation(id);
         onChatObservationUpdate(id);
     }, []);
 
     useEffect(() => {
-        if (historyLoaded && partyLoaded) {
+        if (historyLoaded && partyLoaded && !didInit.current) {
+            didInit.current = true;
             initializeConversation(id);
         }
     }, [historyLoaded, partyLoaded]);

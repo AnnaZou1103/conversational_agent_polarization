@@ -130,9 +130,10 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
             }
         });
 
-        // End if no partisanship
+        // End if no partisanship — screen out and show the screened-out final page
         if (newResponses["partyIdentification"] === "Independent/Other" && Number(newResponses["closerParty"]) === 0) {
-            await routeToState(router, id, "complete");
+            await api.user.advanceUserState(id, { state: "complete" });
+            router.push(`/${id}/thankyou?screened=1`);
             return;
         }
 
