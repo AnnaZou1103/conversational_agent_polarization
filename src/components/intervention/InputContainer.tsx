@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export default function InputContainer({ addMessage, canContinue, isInitializing = false }: { addMessage: Function, canContinue: boolean; isInitializing?: boolean; }) {
+export default function InputContainer({ addMessage, canContinue, isInitializing = false, isResponding = false }: { addMessage: Function, canContinue: boolean; isInitializing?: boolean; isResponding?: boolean; }) {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [content, setContent] = useState("");
     const [multiline, setMultiline] = useState(false);
 
-    const submitDisabled = canContinue || isInitializing || content.trim().length === 0;
+    const submitDisabled = canContinue || isInitializing || isResponding || content.trim().length === 0;
 
     useEffect(() => {
         const textarea = textareaRef.current;
@@ -28,7 +28,7 @@ export default function InputContainer({ addMessage, canContinue, isInitializing
     }, [content]);
 
     const handleSubmit = async () => {
-        if (canContinue || isInitializing) return;
+        if (canContinue || isInitializing || isResponding) return;
 
         const submittedContent = content;
         setContent("");

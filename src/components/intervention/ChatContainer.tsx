@@ -122,7 +122,14 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
             }
         };
 
-        await api.chat.llmInference(id, { message: content, model: strategy ? ModelToCondition[strategy] : undefined, }, handleMessage);
+        try {
+            await api.chat.llmInference(id, { message: content, model: strategy ? ModelToCondition[strategy] : undefined, }, handleMessage);
+        } catch {
+            // Mark the streaming reply as done so the input is not locked forever.
+            setMessages(prev => prev.map((m, i) =>
+                i === prev.length - 1 ? { ...m, content: m.content || "Failed to connect. Please refresh the page.", status: "done" } : m
+            ));
+        }
     };
 
     const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -178,7 +185,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
                 </div>}
                 <div ref={bottomRef} />
             </div>
-            <InputContainer addMessage={addMessage} canContinue={canContinue} isInitializing={isInitializing} />
+            <InputContainer addMessage={addMessage} canContinue={canContinue} isInitializing={isInitializing} isResponding={messages[messages.length - 1]?.status === "streaming"} />
         </section>
     );
 }
