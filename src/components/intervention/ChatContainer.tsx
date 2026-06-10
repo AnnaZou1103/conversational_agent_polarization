@@ -86,6 +86,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
         if (didLoad.current) return;
         didLoad.current = true;
         loadConversation(id);
+        onChatObservationUpdate(id);
     }, []);
 
     useEffect(() => {

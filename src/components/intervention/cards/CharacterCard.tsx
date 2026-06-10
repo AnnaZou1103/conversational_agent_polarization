@@ -20,15 +20,18 @@ export default function CharacterCard({ observation }: { observation: PNObservat
     return (
         <div className="manipulation-card-container">
             {/* Title */}
-            <div className="mb-4 text-xs tracking-widest text-zinc-500 font-bold">
+            <div className="mb-4 pb-4 border-b border-zinc-200 text-xs tracking-widest text-zinc-500 font-bold">
                 Conversation Summary
             </div>
 
             {/* Name / label */}
-            <header
-                className="text-[18px] font-semibold capitalize text-black mb-4 pb-4 border-b border-zinc-200"
-            >
-                {personLabel ?? "—"}
+            <header className="mb-4 pb-4 border-b border-zinc-200">
+                <div className="text-xs font-semibold capitalize text-black">
+                    {personLabel ?? "—"}
+                </div>
+                <p className="m-0 mt-1 text-[12px] leading-snug text-zinc-500">
+                    A person from the other political party who came up in your conversation.
+                </p>
             </header>
 
             {/* Traits */}
@@ -76,7 +79,7 @@ export default function CharacterCard({ observation }: { observation: PNObservat
 function Section({ label, children }: { label: string, children: ReactNode; }) {
     return (
         <div className="mb-4">
-            <div className="mb-2 text-[11px] font-bold tracking-[0.08em] text-[#3a3a3a]">
+            <div className="mb-2 text-xs font-semibold tracking-[0.08em] text-[#3a3a3a]">
                 {label}
             </div>
             {children}
