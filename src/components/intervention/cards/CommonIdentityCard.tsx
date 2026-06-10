@@ -12,8 +12,8 @@ export default function CommonIdentityCard({ observation }: { observation: CIObs
 
     return (
         <div className="manipulation-card-container">
-            <header className="mb-4 text-xs uppercase tracking-widest text-zinc-500 font-bold">
-                Your View
+            <header className="mb-4 text-xs tracking-widest text-zinc-500 font-bold">
+                Conversation Summary
             </header>
 
             {/* User's feeling */}

@@ -19,6 +19,11 @@ export default function CharacterCard({ observation }: { observation: PNObservat
 
     return (
         <div className="manipulation-card-container">
+            {/* Title */}
+            <div className="mb-4 text-xs tracking-widest text-zinc-500 font-bold">
+                Conversation Summary
+            </div>
+
             {/* Name / label */}
             <header
                 className="text-[18px] font-semibold capitalize text-black mb-4 pb-4 border-b border-zinc-200"

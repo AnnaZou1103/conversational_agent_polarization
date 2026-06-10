@@ -2,12 +2,9 @@
 
 import Image from "next/image";
 import { useProgress } from "./ProgressContext";
-import { routeToState } from "@/src/lib/state/client";
-import { useRouter } from "next/navigation";
 
-export default function Header({ id }: { id: string; }) {
+export default function Header() {
     const { percentage } = useProgress();
-    const router = useRouter();
 
     return (
         <header className="sticky top-0 z-50">
@@ -20,12 +17,6 @@ export default function Header({ id }: { id: string; }) {
                     className="w-auto h-7/12 object-contain"
                     priority
                 />
-                <button
-                    type="button"
-                    className="btn-blue"
-                    onClick={() => routeToState(router, id, "complete")}>
-                    I wish to withdraw
-                </button>
             </div>
 
             <div className="w-full h-2 bg-[#E0E0E0]">

@@ -15,16 +15,7 @@ export default function ConcentFormPage({ id }: { id: string; }) {
 
     useEffect(() => {
         setCurrentStep(getStepOffset("consent") + 1);
-    }, []);
-
-    const downloadForm = () => {
-        const link = document.createElement("a");
-        link.href = "/consent form.pdf";
-        link.download = "consent form.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
+    }, [setCurrentStep]);
 
     const router = useRouter();
     return (
@@ -40,11 +31,6 @@ export default function ConcentFormPage({ id }: { id: string; }) {
                 <p>Thank you.</p>
 
                 <div className="flex gap-10 items-center">
-                    <button
-                        className="text-4xl hover:cursor-pointer"
-                        onClick={downloadForm}>
-                        ⬇️
-                    </button>
                     <button
                         className="btn-blue"
                         onClick={async () => await routeToState(router, id, "pre_survey")}>

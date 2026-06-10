@@ -7,8 +7,10 @@ export const transitionMessages = {
             <hr className="border-zinc-200 my-2" />
 
             <p className="text-subtitle">Task Instruction</p>
-            <p className="text-main-body">You will have a conversation with an AI conversational agent about your perceptions of people from the opposing political party.</p>
-            <p className="text-main-body">The conversation will take approximately <strong>5–8 minutes</strong>. A <strong>"Continue"</strong> button will appear when the conversation is complete.</p>
+            <p className="text-main-body"><strong>Your task:</strong> Have a conversation with an AI conversational agent about your perceptions of people from the opposing political party.</p>
+            <p className="text-main-body"><strong>Estimated time:</strong> The conversation will take approximately <strong>5–8 minutes</strong>.</p>
+            <p className="text-main-body"><strong>When to continue:</strong> A <strong>"Continue"</strong> button will appear when the conversation is complete.</p>
+            <p className="text-main-body"><strong>Loading note:</strong> Responses from the AI agent may take a little time to load. Please be patient while it responds.</p>
         </div>
     ),
     toPostSurvey: (

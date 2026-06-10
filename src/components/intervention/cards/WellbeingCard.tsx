@@ -12,9 +12,9 @@ export default function WellbeingCard({ observation }: { observation: ControlObs
             className="manipulation-card-container"
         >
             <div
-                className="text-xs uppercase tracking-widest text-zinc-500 font-bold mb-4 pb-4 border-b border-zinc-200"
+                className="text-xs tracking-widest text-zinc-500 font-bold mb-4 pb-4 border-b border-zinc-200"
             >
-                What you've shared
+                Conversation Summary
             </div>
 
             {currentMood && (

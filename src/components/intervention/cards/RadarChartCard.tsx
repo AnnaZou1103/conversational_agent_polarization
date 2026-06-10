@@ -39,6 +39,9 @@ export default function RadarChartCard({ questions }: { questions: QuizQuestion[
 
     return (
         <div>
+            <div className="mb-4 text-xs tracking-widest text-zinc-500 font-bold">
+                Conversation Summary
+            </div>
             <Box sx={{ width: '100%' }}>
                 <Stack
                     direction="row"
