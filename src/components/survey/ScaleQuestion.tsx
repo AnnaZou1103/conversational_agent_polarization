@@ -89,7 +89,7 @@ export default function ScaleQuestion({
                 required={true}
             />
 
-            <div className="mt-4 mx-20 space-y-4">
+            <div className="mt-4 mx-20 min-w-[560px] space-y-4">
                 {displayValue ? displayValue(currentValue) : (
                     <div className="text-center">
                         <span className="text-xl font-semibold text-blue-600">
