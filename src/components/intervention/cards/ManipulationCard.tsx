@@ -1,7 +1,7 @@
 import { ChatObservation, CIObservation, ControlObservation, MCObservation, PNObservation, Strategy } from "@/src/types/interfaces";
 import CommonIdentityCard from "./CommonIdentityCard";
 import CharacterCard from "./CharacterCard";
-import RadarChartCard from "./RadarChartCard";
+import QuizResultList from "./QuizResultList";
 import WellbeingCard from "./WellbeingCard";
 import PoliticsControlCard from "./PoliticsControlCard";
 
@@ -15,7 +15,7 @@ export default function ManipulationCard({ strategy, chatObservation }: { strate
             case "personal_narrative":
                 return <CharacterCard observation={chatObservation.observation as PNObservation} />;
             case "misperception_correction":
-                return <RadarChartCard questions={(chatObservation.observation as MCObservation).questions} />;
+                return <QuizResultList questions={(chatObservation.observation as MCObservation).questions} />;
             case "control":
                 return <WellbeingCard observation={chatObservation.observation as ControlObservation} />;
             case "control_politics":
