@@ -34,7 +34,7 @@ export default function QuizResultList({ questions }: { questions: QuizQuestion[
                             <span>
                                 Survey result:{' '}
                                 <span className="font-semibold text-[#3a3a3a]">
-                                    {labelFor(question.surveyAverage)} ({question.surveyAverage.toFixed(1)})
+                                    {question.surveyAverage}
                                 </span>
                             </span>
                         </div>
