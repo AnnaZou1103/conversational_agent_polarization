@@ -31,16 +31,12 @@ export default function QuizResultList({ questions }: { questions: QuizQuestion[
                         </p>
                         <div className="flex flex-col gap-1 text-[13px] text-[#777]">
                             <span>
-                                Your answer:{' '}
-                                <span className="font-semibold text-[#3a3a3a]">
-                                    {labelFor(question.userAnswer)}
-                                </span>
+                                <span className="font-semibold text-[#3a3a3a]">Your answer:</span>{' '}
+                                {labelFor(question.userAnswer)}
                             </span>
                             <span>
-                                Survey result:{' '}
-                                <span className="font-semibold text-[#3a3a3a]">
-                                    {labelFor(question.surveyAverage)}
-                                </span>
+                                <span className="font-semibold text-[#3a3a3a]">Survey result:</span>{' '}
+                                {labelFor(question.surveyAverage)}
                             </span>
                         </div>
                     </li>
