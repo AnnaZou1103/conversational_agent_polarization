@@ -52,8 +52,8 @@ export interface PNObservation {
 
 export interface QuizQuestion {
     label: string;
-    userAnswer: number;
-    surveyAverage: string;
+    userAnswer: number | string;
+    surveyAverage: number | string;
 }
 
 export interface MCObservation {

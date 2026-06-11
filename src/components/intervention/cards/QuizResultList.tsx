@@ -2,7 +2,12 @@ import { QuizQuestion } from '@/src/types/interfaces';
 
 const SCALE_LABELS = ['', 'Never', 'Probably not', 'Probably', 'Definitely'];
 
-const labelFor = (value: number) => SCALE_LABELS[Math.round(value)] ?? '—';
+// Accept either a numeric 1-4 score (mapped to its scale label) or a ready-made
+// string from the backend (rendered as-is).
+const labelFor = (value: number | string) => {
+    if (typeof value === 'string') return value;
+    return SCALE_LABELS[Math.round(value)] ?? '—';
+};
 
 export default function QuizResultList({ questions }: { questions: QuizQuestion[]; }) {
     if (!questions || questions.length === 0) {
@@ -34,7 +39,7 @@ export default function QuizResultList({ questions }: { questions: QuizQuestion[
                             <span>
                                 Survey result:{' '}
                                 <span className="font-semibold text-[#3a3a3a]">
-                                    {question.surveyAverage}
+                                    {labelFor(question.surveyAverage)}
                                 </span>
                             </span>
                         </div>
