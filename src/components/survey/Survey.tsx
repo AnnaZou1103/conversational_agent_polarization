@@ -239,7 +239,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
 
 
     return (
-        <main className="mx-auto my-10 w-[760px] min-w-[760px] space-y-6">
+        <main className="mx-auto my-10 w-full max-w-[760px] px-4 space-y-6">
             {pages[currentPage].paragraph && effectiveParty &&
                 <p className="text-question whitespace-pre-line">
                     {applyParty(pages[currentPage].paragraph, effectiveParty)}

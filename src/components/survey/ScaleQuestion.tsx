@@ -89,7 +89,7 @@ export default function ScaleQuestion({
                 required={true}
             />
 
-            <div className="mt-4 mx-20 min-w-[560px] space-y-4">
+            <div className="mt-4 mx-2 sm:mx-20 space-y-4">
                 {displayValue ? displayValue(currentValue) : (
                     <div className="text-center">
                         <span className="text-xl font-semibold text-blue-600">
@@ -109,19 +109,24 @@ export default function ScaleQuestion({
                     style={{ background }}
                 />
 
-                <div className="relative h-12">
+                <div className="relative h-16 sm:h-12">
                     {milestones.map((milestone, index) => {
                         const position = ((milestone.value - min) / (max - min)) * 100;
+                        const isFirst = index === 0;
+                        const isLast = index === milestones.length - 1;
+                        // Edge-align the end labels so they stay within the track bounds
+                        const transform = isFirst ? "none" : isLast ? "translateX(-100%)" : "translateX(-50%)";
+                        const align = isFirst ? "text-left" : isLast ? "text-right" : "text-center";
                         return (
                             <div
                                 key={index}
-                                className="absolute -translate-x-1/2 text-center whitespace-nowrap"
-                                style={{ left: `${position}%` }}
+                                className={`absolute max-w-[6rem] sm:max-w-none ${align}`}
+                                style={{ left: `${position}%`, transform }}
                             >
-                                <div className="text-sm text-zinc-600">
+                                <div className="text-xs sm:text-sm text-zinc-600">
                                     {Math.abs(milestone.value)}
                                 </div>
-                                <div className="text-sm font-semibold text-zinc-800 whitespace-pre">
+                                <div className="text-xs sm:text-sm font-semibold text-zinc-800 whitespace-normal sm:whitespace-pre">
                                     {milestone.label}
                                 </div>
                             </div>

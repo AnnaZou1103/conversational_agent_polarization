@@ -42,7 +42,7 @@ export default function InterventionPage({ id }: { id: string; }) {
     if (!studyType || !agentStrategy) return null;
 
     return (
-        <main className="px-40 py-6 flex gap-20">
+        <main className="flex flex-col gap-6 px-4 py-4 sm:px-6 lg:flex-row lg:gap-10 lg:px-12 lg:py-6 xl:px-24 xl:gap-20 2xl:px-40">
             {studyType.type === "study" ?
                 <ChatContainer id={id} strategy={agentStrategy.strategy} onChatObservationUpdate={handleChatObservationUpdate} />
                 :

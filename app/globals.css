@@ -35,7 +35,7 @@
     }
 
     .card-container {
-        @apply box-border w-[760px] min-w-[760px] px-6 py-4 rounded-xl bg-white shadow-card;
+        @apply box-border w-full max-w-[760px] px-6 py-4 rounded-xl bg-white shadow-card;
     }
 
     .text-question {

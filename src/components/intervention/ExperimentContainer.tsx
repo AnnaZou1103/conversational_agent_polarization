@@ -167,7 +167,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
     };
 
     return (
-        <section className="flex-2 flex h-190 w-full flex-col rounded-xl bg-white shadow-card">
+        <section className="flex-2 flex min-h-[85vh] lg:min-h-0 lg:h-190 w-full flex-col rounded-xl bg-white shadow-card">
             {showPartyModal && <PartyModal id={id} onSubmit={onSubmit} />}
 
             <ChatHeader />

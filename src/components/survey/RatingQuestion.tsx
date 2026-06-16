@@ -21,6 +21,7 @@ export default function RatingQuestion({
 }) {
     return (
         <QuestionCard question={question}>
+            <div className="overflow-x-auto">
             <div className="min-w-[640px] flex items-center justify-between border-0 rounded-full bg-blue-50 px-4 py-2">
                 <span className="text-sm font-semibold text-zinc-800">{min} = {minLabel}</span>
                 <div className="flex justify-between items-center space-x-12">
@@ -39,6 +40,7 @@ export default function RatingQuestion({
                     ))}
                 </div>
                 <span className="text-sm font-semibold text-zinc-800 ml-6">{max} = {maxLabel}</span>
+            </div>
             </div>
 
             {allowNotApplicable &&
