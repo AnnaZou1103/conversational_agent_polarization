@@ -89,7 +89,7 @@ export default function ScaleQuestion({
                 required={true}
             />
 
-            <div className="mt-4 mx-2 sm:mx-20 space-y-4">
+            <div className="mt-4 mx-2 sm:mx-6 space-y-4">
                 {displayValue ? displayValue(currentValue) : (
                     <div className="text-center">
                         <span className="text-xl font-semibold text-blue-600">
@@ -109,24 +109,30 @@ export default function ScaleQuestion({
                     style={{ background }}
                 />
 
-                <div className="relative h-16 sm:h-12">
+                <div className="relative h-24 sm:h-16">
                     {milestones.map((milestone, index) => {
                         const position = ((milestone.value - min) / (max - min)) * 100;
                         const isFirst = index === 0;
                         const isLast = index === milestones.length - 1;
-                        // Edge-align the end labels so they stay within the track bounds
-                        const transform = isFirst ? "none" : isLast ? "translateX(-100%)" : "translateX(-50%)";
+                        // Anchor end labels to the track edges (right:0 for the last so it has
+                        // room to fill its max-width instead of collapsing to min-content),
+                        // and center-align interior labels on their position.
                         const align = isFirst ? "text-left" : isLast ? "text-right" : "text-center";
+                        const style = isFirst
+                            ? { left: 0 }
+                            : isLast
+                                ? { right: 0 }
+                                : { left: `${position}%`, transform: "translateX(-50%)" };
                         return (
                             <div
                                 key={index}
-                                className={`absolute max-w-[6rem] sm:max-w-none ${align}`}
-                                style={{ left: `${position}%`, transform }}
+                                className={`absolute max-w-[30%] ${align}`}
+                                style={style}
                             >
                                 <div className="text-xs sm:text-sm text-zinc-600">
                                     {Math.abs(milestone.value)}
                                 </div>
-                                <div className="text-xs sm:text-sm font-semibold text-zinc-800 whitespace-normal sm:whitespace-pre">
+                                <div className="text-xs sm:text-sm font-semibold text-zinc-800 whitespace-pre-line">
                                     {milestone.label}
                                 </div>
                             </div>
