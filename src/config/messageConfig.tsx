@@ -27,7 +27,7 @@ export const thankyouMessage = (
     <div className="space-y-3">
         <h1 className="text-title">Congratulations!</h1>
         <p className="text-main-body">You have finished all parts of the study.</p>
-        <p className="text-main-body">You may now close this tab.</p>
+        <p className="text-main-body">Please click the button below to return to Prolific.</p>
         <p className="text-main-body">Thank you for your participation.</p>
     </div>
 );
@@ -38,7 +38,12 @@ export const screenedOutMessage = (
         <p className="text-main-body">
             Based on your response, we have already reached our target number of participants for this group, so you do not need to complete the remaining portions of the study.
         </p>
-        <p className="text-main-body">You may now close this tab.</p>
+        <p className="text-main-body">Please click the button below to return to Prolific.</p>
         <p className="text-main-body">Thank you for your participation.</p>
     </div>
 );
+
+export const prolificRedirectUrls = {
+    completed: "https://app.prolific.com/submissions/complete?cc=C19KD0EV",
+    screenedOut: "https://app.prolific.com/submissions/complete?cc=C2ZEP3YP",
+};
