@@ -7,7 +7,11 @@ async function getUserPath(id: string) {
     const response = await api.user.getUserState(id);
     if (!response.ok) redirect("/");
     const data: UserState = await response.json();
-    return statePath[data.state];
+    const path = statePath[data.state];
+    if (data.state === "complete" && data.screened) {
+        return `${path}?screened=1`;
+    }
+    return path;
 }
 
 export default async function RootPage({ params }: { params: Promise<{ id: string; }>; }) {

@@ -20,7 +20,7 @@ export default function ExperimentPage() {
     const handleStart = async () => {
         setLoading(true);
         const id = await api.experiment.generateExperimentUser(selected || undefined);
-        router.push(`/${id}`);
+        router.replace(`/${id}`);
     };
 
     return (
