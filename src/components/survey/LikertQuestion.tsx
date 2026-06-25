@@ -1,26 +1,36 @@
 import QuestionCard from "../common/QuestionCard";
 
 export default function LikertQuestion({
+    question,
     min,
     max,
+    milestones,
     statements,
     responses,
 }: {
+    question?: string,
     min: number,
     max: number,
+    milestones?: { value: number, label: string; }[],
     statements: { name: string, content: string; }[];
     responses?: Record<string, string>;
+    randomized?: boolean;
 }) {
     const scale = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+    const labelByValue = new Map(milestones?.map(m => [m.value, m.label]));
     return (
-        <QuestionCard question="">
+        <QuestionCard question={question ?? ""}>
             <div
-                className="grid items-center gap-1 mb-3"
+                className="grid items-end gap-1 mb-3"
                 style={{ gridTemplateColumns: `1fr repeat(${scale.length}, 64px)` }}
             >
                 <div />
                 {scale.map(value => (
-                    <div key={value} className="text-center text-sm font-semibold text-zinc-600">{value}</div>
+                    <div key={value} className="text-center">
+                        <div className="text-sm font-semibold text-zinc-600">{value}</div>
+                        {labelByValue.has(value) &&
+                            <div className="text-xs text-zinc-500 mt-0.5 leading-tight">{labelByValue.get(value)}</div>}
+                    </div>
                 ))}
             </div>
 

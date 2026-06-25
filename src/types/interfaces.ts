@@ -110,8 +110,10 @@ export interface ScaleQuestion extends BaseQuestion {
 export interface LikertQuestion {
     type: "likert";
     name: string;
+    question?: string;
     min: number;
     max: number;
+    milestones?: { value: number; label: string; }[];
     statements: {
         name: string;
         content: string;
@@ -119,6 +121,7 @@ export interface LikertQuestion {
     showIf?: (responses: Record<string, string>) => boolean;
     hidden?: boolean;
     questionLabel?: string;
+    randomized?: boolean;
 }
 
 export interface TextQuestion extends BaseQuestion {
@@ -126,16 +129,36 @@ export interface TextQuestion extends BaseQuestion {
     placeholder?: string;
 }
 
+export interface SemanticDifferentialQuestion {
+    type: "semanticDifferential";
+    name: string;
+    question?: string;
+    min: number;
+    max: number;
+    milestones?: { value: number; label: string; }[];
+    statements: {
+        name: string;
+        leftLabel: string;
+        rightLabel: string;
+    }[];
+    showIf?: (responses: Record<string, string>) => boolean;
+    hidden?: boolean;
+    questionLabel?: string;
+    randomized?: boolean;
+}
+
 export type SurveyQuestion =
     | ChoiceQuestion
     | ScaleQuestion
     | RatingQuestion
     | LikertQuestion
-    | TextQuestion;
+    | TextQuestion
+    | SemanticDifferentialQuestion;
 
 export interface SurveyPage {
     questions: SurveyQuestion[];
     paragraph?: string;
+    bullets?: string[];
     randomized?: boolean;
 }
 

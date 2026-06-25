@@ -9,9 +9,10 @@ import ScaleQuestion from "@/src/components/survey/ScaleQuestion";
 import { SurveyQuestion, SurveyType, State, Party } from "@/src/types/interfaces";
 import api from "@/src/lib/api";
 import LikertQuestion from "./LikertQuestion";
+import SemanticDifferentialQuestion from "./SemanticDifferentialQuestion";
 import TextQuestion from "./TextQuestion";
 import { routeToState } from "@/src/lib/state/client";
-import { applyParty, shuffleWithSeed } from "@/src/lib/utils";
+import { applyParty, renderBold, shuffleWithSeed } from "@/src/lib/utils";
 import { useProgress } from "../layout/ProgressContext";
 import { getStepOffset } from "@/src/config/progressConfig";
 import { postSurveyPages, preSurveyPages } from "@/src/config/surveyConfig";
@@ -32,6 +33,14 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
                 if (q.type === "choice" && q.randomized) {
                     const seed = `${id}|${surveyType}|${pageIndex}|${questionIndex}|${q.name}|options`;
                     return { ...q, options: shuffleWithSeed(q.options, seed) };
+                }
+                if (q.type === "likert" && q.randomized) {
+                    const seed = `${id}|${surveyType}|${pageIndex}|${questionIndex}|${q.name}|statements`;
+                    return { ...q, statements: shuffleWithSeed(q.statements, seed) };
+                }
+                if (q.type === "semanticDifferential" && q.randomized) {
+                    const seed = `${id}|${surveyType}|${pageIndex}|${questionIndex}|${q.name}|statements`;
+                    return { ...q, statements: shuffleWithSeed(q.statements, seed) };
                 }
                 return q;
             });
@@ -132,10 +141,9 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
 
         const isLowAiFrequency = newResponses["aiFrequency"] === "1 - Never" || newResponses["aiFrequency"] === "2 - Less than once a month";
         const isIndependent = newResponses["partyIdentification"] === "Independent/Other";
-        const isWeakPartisan = ["strongRepublican", "strongDemocrat"].some(name => {
-            const value = newResponses[name];
-            return value !== undefined && Number(value) <= 50;
-        });
+        const isWeakRepublican = newResponses["strongRepublican"] === "Not very strong Republican";
+        const isWeakDemocrat = newResponses["strongDemocrat"] === "Not very strong Democrat";
+        const isWeakPartisan = isWeakRepublican || isWeakDemocrat;
         const shouldScreenOut = isLowAiFrequency || isIndependent || isWeakPartisan;
 
         // Let participants answer the party-strength/closerParty page before screening out
@@ -166,12 +174,12 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
     };
 
     const applyPartyToQuestion = (q: SurveyQuestion): SurveyQuestion => {
-        if (q.type === "likert" || q.type === "text" || !effectiveParty) return q;
+        if (q.type === "text" || !effectiveParty || !q.question) return q;
         return { ...q, question: applyParty(q.question, effectiveParty!) };
     };
 
     const withNumber = (q: SurveyQuestion): SurveyQuestion => {
-        if (q.type === "likert") return q;
+        if (!q.question) return q;
         const num = questionNumberMap[q.name];
         if (num === undefined) return q;
         const prefix = typeof num === "string" ? `${num}. ` : `Q${num}. `;
@@ -225,8 +233,23 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
                 return (
                     <LikertQuestion
                         key={q.name}
+                        question={q.question}
                         min={q.min}
                         max={q.max}
+                        milestones={q.milestones}
+                        statements={q.statements}
+                        responses={responses}
+                    />
+                );
+
+            case "semanticDifferential":
+                return (
+                    <SemanticDifferentialQuestion
+                        key={q.name}
+                        question={q.question}
+                        min={q.min}
+                        max={q.max}
+                        milestones={q.milestones}
                         statements={q.statements}
                         responses={responses}
                     />
@@ -250,8 +273,15 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
         <main className="mx-auto my-10 w-full max-w-[760px] px-4 space-y-6">
             {pages[currentPage].paragraph && effectiveParty &&
                 <p className="text-question whitespace-pre-line">
-                    {applyParty(pages[currentPage].paragraph, effectiveParty)}
+                    {renderBold(applyParty(pages[currentPage].paragraph, effectiveParty))}
                 </p>}
+
+            {pages[currentPage].bullets && effectiveParty &&
+                <ul className="list-disc pl-5 space-y-1 text-question">
+                    {pages[currentPage].bullets!.map((bullet, i) =>
+                        <li key={i}>{renderBold(applyParty(bullet, effectiveParty))}</li>
+                    )}
+                </ul>}
 
 
             <form onSubmit={handleNextClick} className="space-y-6">

@@ -14,7 +14,7 @@ function ThankYouContent() {
 
     useEffect(() => {
         setCurrentStep(getStepOffset("thankyou") + 1);
-    }, []);
+    }, [setCurrentStep]);
 
     const redirectUrl = screenedOut ? cloudResearchRedirectUrls.screenedOut : cloudResearchRedirectUrls.completed;
 

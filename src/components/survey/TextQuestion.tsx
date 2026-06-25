@@ -19,6 +19,7 @@ export default function TextQuestion({
                 defaultValue={selectedValue ?? ""}
                 placeholder={placeholder}
                 rows={4}
+                required={true}
                 className="w-full rounded-lg border border-zinc-300 px-4 py-3 text-sm text-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
             />
         </QuestionCard>

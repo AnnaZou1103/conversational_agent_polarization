@@ -1,3 +1,4 @@
+import React from "react";
 import { Party } from "../types/interfaces";
 
 function hashStringToUint32(str: string) {
@@ -33,5 +34,11 @@ export function applyParty(text: string, party: Party): string {
     const normalizedParty = party.toLowerCase();
     return text.replace(/\[([^\]]+)\/([^\]]+)\]/g, (_, repText, demText) =>
         normalizedParty === "republican" ? repText : demText
+    );
+}
+
+export function renderBold(text: string): React.ReactNode[] {
+    return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+        i % 2 === 1 ? React.createElement("strong", { key: i }, part) : part
     );
 }

@@ -48,7 +48,7 @@ export const consentFormItems: ConsentFormItem[] = [
                     </li>
                 </ul>
                 <br />
-                <p>The study will take approximately <strong>15–20 minutes</strong> to complete. You will receive <strong>$3</strong> via CloudResearch upon completion (~$12/hour).</p>
+                <p>The study will take approximately <strong>15–20 minutes</strong> to complete. You will receive <strong>$3</strong> via CloudResearch upon completion (~$9/hour).</p>
             </>
         ),
     },
