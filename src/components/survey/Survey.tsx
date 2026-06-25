@@ -130,8 +130,16 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
             }
         });
 
-        // End if no partisanship — screen out and show the screened-out final page
-        if (newResponses["partyIdentification"] === "Independent/Other" && Number(newResponses["closerParty"]) === 0) {
+        const isLowAiFrequency = newResponses["aiFrequency"] === "1 - Never" || newResponses["aiFrequency"] === "2 - Less than once a month";
+        const isIndependent = newResponses["partyIdentification"] === "Independent/Other";
+        const isWeakPartisan = ["strongRepublican", "strongDemocrat"].some(name => {
+            const value = newResponses[name];
+            return value !== undefined && Number(value) <= 50;
+        });
+        const shouldScreenOut = isLowAiFrequency || isIndependent || isWeakPartisan;
+
+        // Let participants answer the party-strength/closerParty page before screening out
+        if (shouldScreenOut && currentPage >= 1) {
             await api.user.advanceUserState(id, { state: "complete", screened: true });
             router.replace(`/${id}/thankyou?screened=1`);
             return;

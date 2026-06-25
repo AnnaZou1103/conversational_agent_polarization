@@ -36,6 +36,7 @@ export default function LikertQuestion({
                         <label key={value} className="flex flex-col items-center cursor-pointer space-y-2">
                             <input
                                 type="radio"
+                                suppressHydrationWarning
                                 name={statement.name}
                                 value={value}
                                 required={true}

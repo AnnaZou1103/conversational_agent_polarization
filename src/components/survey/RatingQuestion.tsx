@@ -30,6 +30,7 @@ export default function RatingQuestion({
                             <span className="text-sm text-zinc-600">{value}</span>
                             <input
                                 type="radio"
+                                suppressHydrationWarning
                                 name={name}
                                 value={value}
                                 required={true}
@@ -47,6 +48,7 @@ export default function RatingQuestion({
                 <label key="Not applicable" className="flex items-center justify-start cursor-pointer space-x-2 mt-3 ml-3">
                     <input
                         type="radio"
+                        suppressHydrationWarning
                         name={name}
                         value={"Not Applicable"}
                         required={true}

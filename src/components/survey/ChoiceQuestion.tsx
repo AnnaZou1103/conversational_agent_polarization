@@ -18,6 +18,7 @@ export default function ChoiceQuestion({
                     <label key={option} className="flex items-center space-x-2 cursor-pointer">
                         <input
                             type="radio"
+                            suppressHydrationWarning
                             name={name}
                             value={option}
                             required={true}

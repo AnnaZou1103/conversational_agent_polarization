@@ -48,7 +48,7 @@ export const consentFormItems: ConsentFormItem[] = [
                     </li>
                 </ul>
                 <br />
-                <p>The study will take approximately <strong>15–20 minutes</strong> to complete. You will receive <strong>$3</strong> via Prolific upon completion (~$12/hour).</p>
+                <p>The study will take approximately <strong>15–20 minutes</strong> to complete. You will receive <strong>$3</strong> via CloudResearch upon completion (~$12/hour).</p>
             </>
         ),
     },
@@ -58,7 +58,7 @@ export const consentFormItems: ConsentFormItem[] = [
     },
     {
         title: "Privacy & Confidentiality",
-        content: "No directly identifiable information will be collected. If recruited via Prolific, your platform ID will be used for payment only and removed from the dataset afterward. Research data is stored securely and accessible only to the research team. Anonymized data may be used in future research without additional consent.",
+        content: "No directly identifiable information will be collected. If recruited via CloudResearch, your platform ID will be used for payment only and removed from the dataset afterward. Research data is stored securely and accessible only to the research team. Anonymized data may be used in future research without additional consent.",
     },
     {
         title: "Participation & Withdrawal",
