@@ -5,7 +5,7 @@ export const preSurveyPages: SurveyPage[] = [
         questions: [
             {
                 type: "choice",
-                name: "aiFrequency",
+                name: "AIFrequency",
                 question: "How often do you use AI tools such as ChatGPT, Gemini, Claude, or similar systems?",
                 options: ["1 - Never", "2 - Less than once a month", "3 - A few times per month", "4 - A few times per week", "5 - Daily or almost daily"],
             },
@@ -61,7 +61,7 @@ export const preSurveyPages: SurveyPage[] = [
             },
             {
                 type: "scale",
-                name: "partyImportancePost",
+                name: "partyImportance",
                 question: "How important is being a [Republican/Democrat] to you?",
                 min: 0,
                 max: 100,
@@ -267,7 +267,7 @@ export const postSurveyPages: SurveyPage[] = [
             },
             {
                 type: "scale",
-                name: "violanceForGoals",
+                name: "violenceForGoals",
                 question: "How much do you feel it is justified for [Republicans/Democrats] to use violence in advancing their political goals these days?",
                 min: 0,
                 max: 100,
@@ -275,7 +275,7 @@ export const postSurveyPages: SurveyPage[] = [
             },
             {
                 type: "scale",
-                name: "violanceForElection",
+                name: "violenceForElection",
                 question: "How much do you feel it is justified for [Republicans/Democrats] to use violence if the [Democrat/Republican] party wins more races in the next election?",
                 min: 0,
                 max: 100,
@@ -455,12 +455,12 @@ export const postSurveyPages: SurveyPage[] = [
                     { value: 7, label: "Strongly agree" },
                 ],
                 statements: [
-                    { name: "pmChangingViews", content: "The agent was trying to change my political views." },
-                    { name: "pmHiddenAgenda", content: "I felt like the agent had a hidden agenda." },
-                    { name: "pmHonestIntentions", content: "The agent was honest about its intentions." },
-                    { name: "weWillingToDiscuss", content: "After this conversation, I would be more willing to discuss politics with someone from the opposing party." },
-                    { name: "weMoreOpen", content: "I feel more open to hearing the opposing party's perspective than before." },
-                    { name: "weMoreConversations", content: "I would be interested in having more conversations like this one." },
+                    { name: "maeChangingViews", content: "The agent was trying to change my political views." },
+                    { name: "maeHiddenAgenda", content: "I felt like the agent had a hidden agenda." },
+                    { name: "maeHonestIntentions", content: "The agent was honest about its intentions." },
+                    { name: "maeWillingToDiscuss", content: "After this conversation, I would be more willing to discuss politics with someone from the opposing party." },
+                    { name: "maeMoreOpen", content: "I feel more open to hearing the opposing party's perspective than before." },
+                    { name: "maeMoreConversations", content: "I would be interested in having more conversations like this one." },
                 ],
                 randomized: true
             },
@@ -481,7 +481,7 @@ export const postSurveyPages: SurveyPage[] = [
             },
             {
                 type: "text",
-                name: "weWillingFutureWhy",
+                name: "oqWillingFutureWhy",
                 question: "Please briefly explain why you would or would not be willing to discuss similar topics with an AI agent like this in the future.",
             },
             {
@@ -495,7 +495,7 @@ export const postSurveyPages: SurveyPage[] = [
             },
             {
                 type: "text",
-                name: "saSatisfiedWhy",
+                name: "oqSatisfiedWhy",
                 question: "Please briefly explain what made you satisfied or dissatisfied with your conversation experience with the AI agent.",
             },
             {
