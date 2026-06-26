@@ -142,7 +142,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
             }
         });
 
-        const isLowAiFrequency = newResponses["aiFrequency"] === "1 - Never" || newResponses["aiFrequency"] === "2 - Less than once a month";
+        const isLowAiFrequency = newResponses["AIFrequency"] === "1 - Never" || newResponses["AIFrequency"] === "2 - Less than once a month";
         const isIndependent = newResponses["partyIdentification"] === "Independent/Other";
         const isWeakRepublican = newResponses["strongRepublican"] === "Not very strong Republican";
         const isWeakDemocrat = newResponses["strongDemocrat"] === "Not very strong Democrat";
