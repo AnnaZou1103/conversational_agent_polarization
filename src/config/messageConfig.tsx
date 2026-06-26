@@ -2,15 +2,19 @@ export const transitionMessages = {
     toIntervention: (
         <div className="w-full space-y-4">
             <p className="text-title">Congratulations!</p>
-            <p className="text-main-body">You have finished the first part. Please make sure you do not close this tab.</p>
+            <p className="text-main-body">You have finished the first part.</p>
+
+            <p className="text-main-body"><strong>⚠️ IMPORTANT:</strong> Please do not close or refresh this tab.</p>
 
             <hr className="border-zinc-200 my-2" />
 
-            <p className="text-subtitle">Task Instruction</p>
-            <p className="text-main-body"><strong>Your task:</strong> Have a conversation with an AI conversational agent about your perceptions of people from the opposing political party.</p>
-            <p className="text-main-body"><strong>Estimated time:</strong> The conversation will take approximately <strong>5–8 minutes</strong>.</p>
-            <p className="text-main-body"><strong>When to continue:</strong> A <strong>"Continue"</strong> button will appear when the conversation is complete.</p>
-            <p className="text-main-body"><strong>Loading note:</strong> Responses from the AI agent may take a little time to load. Please be patient while it responds.</p>
+            <p className="text-subtitle">📌 TASK INSTRUCTIONS</p>
+
+            <p className="text-main-body"><strong>🎯 YOUR TASK</strong><br />You will have a conversation with an AI conversational agent about your perceptions of people from the opposing political party.</p>
+            <p className="text-main-body"><strong>⏱️ ESTIMATED TIME</strong><br />The conversation will take approximately 5–8 minutes.</p>
+            <p className="text-main-body"><strong>✅ WHEN TO CONTINUE</strong><br />A "Continue" button will appear when the conversation is complete. Please continue only after the conversation is finished.</p>
+            <p className="text-main-body"><strong>⏳ LOADING NOTE</strong><br />Responses from the AI agent may take a little time to load. Please be patient while it responds.</p>
+            <p className="text-main-body"><strong>⚠️ IMPORTANT REMINDER</strong><br />Do not close or refresh this tab during the conversation.</p>
         </div>
     ),
     toPostSurvey: (

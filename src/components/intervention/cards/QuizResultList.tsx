@@ -10,17 +10,13 @@ const labelFor = (value: number | string) => {
 };
 
 export default function QuizResultList({ questions }: { questions: QuizQuestion[]; }) {
-    if (!questions || questions.length === 0) {
-        return null;
-    }
-
     return (
         <div className="manipulation-card-container">
             <header className="mb-4 pb-4 border-b border-zinc-200 text-xs tracking-widest text-zinc-500 font-bold">
                 Conversation Summary
             </header>
 
-            <ul className="flex flex-col gap-4">
+            {questions && questions.length > 0 && <ul className="flex flex-col gap-4">
                 {questions.map((question, index) => (
                     <li
                         key={index}
@@ -41,7 +37,7 @@ export default function QuizResultList({ questions }: { questions: QuizQuestion[
                         </div>
                     </li>
                 ))}
-            </ul>
+            </ul>}
         </div>
     );
 }

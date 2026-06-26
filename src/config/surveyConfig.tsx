@@ -106,7 +106,7 @@ export const preSurveyPages: SurveyPage[] = [
         questions: [
             {
                 type: "choice",
-                name: "attentionCheckPre",
+                name: "preSurveyAttentionCheck",
                 question: `To help keep track of who is paying attention, please select "4 - Somewhat disagree" in the options below.`,
                 options: ["1 - Strongly agree", "2 - Somewhat agree", "3 - No opinion", "4 - Somewhat disagree", "5 - Strongly disagree"]
             }
@@ -237,12 +237,10 @@ export const postSurveyPages: SurveyPage[] = [
                 milestones: [{ value: 0, label: "Strongly disagree" }, { value: 50, label: "Neither disagree nor agree" }, { value: 100, label: "Strongly agree" }]
             },
             {
-                type: "scale",
-                name: "attentionCheckPost",
-                question: "To help keep track of who is paying attention, please move this slider to \"Strongly agree\" for this statement.",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "Strongly disagree" }, { value: 50, label: "Neither disagree nor agree" }, { value: 100, label: "Strongly agree" }]
+                type: "choice",
+                name: "postSurveyAttentionCheck1",
+                question: `To help keep track of who is paying attention, please select "2-Somewhat agree" in the options below.`,
+                options: ["1-Strongly agree", "2-Somewhat agree", "3-No opinion", "4-Somewhat disagree", "5-Strongly disagree"]
             }
         ],
         randomized: true,
@@ -349,18 +347,18 @@ export const postSurveyPages: SurveyPage[] = [
                 max: 7,
                 milestones: [
                     { value: 1, label: "Strongly disagree" },
-                    { value: 2, label: "Somewhat disagree" },
-                    { value: 3, label: "Disagree" },
+                    { value: 2, label: "Disagree" },
+                    { value: 3, label: "Somewhat disagree" },
                     { value: 4, label: "Neither agree nor disagree" },
-                    { value: 5, label: "Agree" },
-                    { value: 6, label: "Somewhat agree" },
+                    { value: 5, label: "Somewhat agree" },
+                    { value: 6, label: "Agree" },
                     { value: 7, label: "Strongly agree" },
                 ],
                 statements: [
                     { name: "ceEasyToUnderstand", content: "The agent's responses were easy to understand." },
                     { name: "ceClearCommunication", content: "Communicating with the agent was clear." },
                     { name: "ceKeptContext", content: "The agent was able to keep track of context." },
-                    { name: "attentionCheckConversation", content: `To show that you are paying attention, please select "2-Somewhat disagree" for this question.` },
+                    { name: "postSurveyAttentionCheck2", content: `To show that you are paying attention, please select "3-Somewhat disagree" for this question.` },
                 ],
                 randomized: true
             },
@@ -394,11 +392,11 @@ export const postSurveyPages: SurveyPage[] = [
                 max: 7,
                 milestones: [
                     { value: 1, label: "Strongly disagree" },
-                    { value: 2, label: "Somewhat disagree" },
-                    { value: 3, label: "Disagree" },
+                    { value: 2, label: "Disagree" },
+                    { value: 3, label: "Somewhat disagree" },
                     { value: 4, label: "Neither agree nor disagree" },
-                    { value: 5, label: "Agree" },
-                    { value: 6, label: "Somewhat agree" },
+                    { value: 5, label: "Somewhat agree" },
+                    { value: 6, label: "Agree" },
                     { value: 7, label: "Strongly agree" },
                 ],
                 statements: [
@@ -423,11 +421,11 @@ export const postSurveyPages: SurveyPage[] = [
                 max: 7,
                 milestones: [
                     { value: 1, label: "Strongly disagree" },
-                    { value: 2, label: "Somewhat disagree" },
-                    { value: 3, label: "Disagree" },
+                    { value: 2, label: "Disagree" },
+                    { value: 3, label: "Somewhat disagree" },
                     { value: 4, label: "Neither agree nor disagree" },
-                    { value: 5, label: "Agree" },
-                    { value: 6, label: "Somewhat agree" },
+                    { value: 5, label: "Somewhat agree" },
+                    { value: 6, label: "Agree" },
                     { value: 7, label: "Strongly agree" },
                 ],
                 statements: [
@@ -449,11 +447,11 @@ export const postSurveyPages: SurveyPage[] = [
                 max: 7,
                 milestones: [
                     { value: 1, label: "Strongly disagree" },
-                    { value: 2, label: "Somewhat disagree" },
-                    { value: 3, label: "Disagree" },
+                    { value: 2, label: "Disagree" },
+                    { value: 3, label: "Somewhat disagree" },
                     { value: 4, label: "Neither agree nor disagree" },
-                    { value: 5, label: "Agree" },
-                    { value: 6, label: "Somewhat agree" },
+                    { value: 5, label: "Somewhat agree" },
+                    { value: 6, label: "Agree" },
                     { value: 7, label: "Strongly agree" },
                 ],
                 statements: [

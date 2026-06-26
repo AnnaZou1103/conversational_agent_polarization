@@ -4,10 +4,6 @@ export default function PoliticsControlCard({ observation }: { observation: Cont
     const topicsShared = observation.topicsShared;
     const currentMood = observation.currentMood;
 
-    const hasContent = topicsShared.length > 0 || currentMood;
-    if (!hasContent) return null;
-
-
     return (
         <div
             className="manipulation-card-container"

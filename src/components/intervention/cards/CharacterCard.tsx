@@ -9,14 +9,6 @@ export default function CharacterCard({ observation }: { observation: PNObservat
     const personMemories = observation.personMemories;
     const personPoliticalOrigin = observation.personPoliticalOrigin;
 
-    const hasAnyContent =
-        personTraits.length > 0 ||
-        personCaresAbout.length > 0 ||
-        personMemories.length > 0 ||
-        personPoliticalOrigin;
-
-    if (!personLabel && !hasAnyContent) return null;
-
     return (
         <div className="manipulation-card-container">
             {/* Title */}

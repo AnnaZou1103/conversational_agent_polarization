@@ -32,7 +32,10 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
             let questions = p.questions.map((q, questionIndex) => {
                 if (q.type === "choice" && q.randomized) {
                     const seed = `${id}|${surveyType}|${pageIndex}|${questionIndex}|${q.name}|options`;
-                    return { ...q, options: shuffleWithSeed(q.options, seed) };
+                    const noneOfAbove = q.options.filter(o => o.toLowerCase().includes("none of above"));
+                    const rest = q.options.filter(o => !o.toLowerCase().includes("none of above"));
+                    const shuffled = shuffleWithSeed(rest, seed);
+                    return { ...q, options: [...shuffled, ...noneOfAbove] };
                 }
                 if (q.type === "likert" && q.randomized) {
                     const seed = `${id}|${surveyType}|${pageIndex}|${questionIndex}|${q.name}|statements`;

@@ -7,9 +7,6 @@ export default function CommonIdentityCard({ observation }: { observation: CIObs
     const showSurvey = observation.showSurvey;
     const surveyText = observation.surveyText;
 
-    const hasAnyContent = userFeelingText || userMediaText || showSurvey;
-    if (!hasAnyContent) return null;
-
     return (
         <div className="manipulation-card-container">
             <header className="mb-4 pb-4 border-b border-zinc-200 text-xs tracking-widest text-zinc-500 font-bold">
