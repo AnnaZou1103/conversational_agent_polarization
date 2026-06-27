@@ -2,12 +2,27 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export default function InputContainer({ addMessage, canContinue, isInitializing = false, isResponding = false }: { addMessage: Function, canContinue: boolean; isInitializing?: boolean; isResponding?: boolean; }) {
+export default function InputContainer({ addMessage, canContinue, isInitializing = false, isResponding = false, quickReply = null, onClearSelection }: { addMessage: Function, canContinue: boolean; isInitializing?: boolean; isResponding?: boolean; quickReply?: { text: string; nonce: number } | null; onClearSelection?: () => void; }) {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [content, setContent] = useState("");
+    // The quiz-option pick is kept as its own locked badge, separate from the
+    // freeform reasoning text — so editing the reasoning can never accidentally
+    // change (or contradict) the number that was actually clicked.
+    const [lockedAnswer, setLockedAnswer] = useState<string | null>(null);
     const [multiline, setMultiline] = useState(false);
 
-    const submitDisabled = canContinue || isInitializing || isResponding || content.trim().length === 0;
+    const submitDisabled = canContinue || isInitializing || isResponding || (content.trim().length === 0 && !lockedAnswer);
+
+    useEffect(() => {
+        if (!quickReply) return;
+        setLockedAnswer(quickReply.text);
+        textareaRef.current?.focus();
+    }, [quickReply?.nonce]);
+
+    const clearLockedAnswer = () => {
+        setLockedAnswer(null);
+        onClearSelection?.();
+    };
 
     useEffect(() => {
         const textarea = textareaRef.current;
@@ -28,10 +43,14 @@ export default function InputContainer({ addMessage, canContinue, isInitializing
     }, [content]);
 
     const handleSubmit = async () => {
-        if (canContinue || isInitializing || isResponding) return;
+        if (submitDisabled) return;
 
-        const submittedContent = content;
+        const reasoning = content.trim();
+        const submittedContent = lockedAnswer
+            ? (reasoning ? `${lockedAnswer} ${reasoning}` : lockedAnswer)
+            : content;
         setContent("");
+        setLockedAnswer(null);
 
         addMessage(submittedContent);
     };
@@ -40,11 +59,24 @@ export default function InputContainer({ addMessage, canContinue, isInitializing
         <section className="border-t border-zinc-200 rounded-b-xl bg-white px-4 py-4">
             <div className="flex justify-end items-start gap-3">
                 <div className={`
-                        flex-1 flex border border-zinc-300 bg-[#fdf8f3] px-4 py-3 shadow-sm
+                        flex-1 flex flex-wrap items-center gap-2 border border-zinc-300 bg-[#fdf8f3] px-4 py-3 shadow-sm
                         focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200
                         transition-colors duration-150
                         ${multiline ? "rounded-2xl" : "rounded-full"}
                     `}>
+                    {lockedAnswer && (
+                        <span className="flex items-center gap-1.5 shrink-0 rounded-full bg-blue-500 text-white text-sm pl-3 pr-2 py-1">
+                            {lockedAnswer}
+                            <button
+                                type="button"
+                                onClick={clearLockedAnswer}
+                                className="leading-none cursor-pointer text-white/80 hover:text-white"
+                                aria-label="Clear selected answer"
+                            >
+                                ×
+                            </button>
+                        </span>
+                    )}
                     <textarea
                         ref={textareaRef}
                         value={content}
@@ -59,8 +91,8 @@ export default function InputContainer({ addMessage, canContinue, isInitializing
                             }
                         }}
                         disabled={canContinue || isInitializing}
-                        placeholder={canContinue ? "Conversation ended" : isInitializing ? "Please wait..." : "Type your message..."}
-                        className="flex-1 resize-none overflow-y-hidden text-base placeholder:text-zinc-400 outline-none" />
+                        placeholder={canContinue ? "Conversation ended" : isInitializing ? "Please wait..." : lockedAnswer ? "Add a brief reason (optional)..." : "Type your message..."}
+                        className="flex-1 min-w-[80px] resize-none overflow-y-hidden text-base placeholder:text-zinc-400 outline-none" />
                 </div>
 
                 <button
