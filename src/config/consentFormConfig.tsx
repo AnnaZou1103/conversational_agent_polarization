@@ -10,10 +10,10 @@ export const consentFormItems: ConsentFormItem[] = [
                     You are invited to participate in a research study about how people interact with AI conversational agents on topics related to political attitudes.
                     This study is conducted by Professor Chenyan Jia and Ph.D. student Min Ge at Northeastern University.
                     Contact us at{" "}
-                    <a href="mailto:chenyanjia@northeastern.edu" className="text-blue-600 underline">
+                    {/* <a href="mailto:chenyanjia@northeastern.edu" className="text-blue-600 underline">
                         chenyanjia@northeastern.edu
                     </a>
-                    {" or "}
+                    {" or "} */}
                     <a href="mailto:ge.min@northeastern.edu" className="text-blue-600 underline">
                         ge.min@northeastern.edu
                     </a>.
@@ -70,8 +70,8 @@ export const consentFormItems: ConsentFormItem[] = [
             <>
                 <p>
                     Questions about the study:{" "}
-                    <a href="mailto:chenyanjia@northeastern.edu" className="text-blue-600 underline">chenyanjia@northeastern.edu</a>
-                    {" or "}
+                    {/* <a href="mailto:chenyanjia@northeastern.edu" className="text-blue-600 underline">chenyanjia@northeastern.edu</a>
+                    {" or "} */}
                     <a href="mailto:ge.min@northeastern.edu" className="text-blue-600 underline">ge.min@northeastern.edu</a>
                 </p>
                 <br />
