@@ -200,6 +200,9 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
     }, [messages]);
 
 
+    const quizPlan = buildQuizRenderPlan(messages, strategy, mcObservation, mcTimeline, historyAssistantCount.current, canContinue);
+    const requiresChipSelection = quizPlan.some(info => info.isActive);
+
     return (
         <section className="flex-2 flex min-h-[85vh] lg:min-h-0 lg:h-190 w-full flex-col rounded-xl bg-white shadow-card">
             <ChatHeader />
@@ -210,8 +213,6 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
                 onContextMenu={(e) => e.preventDefault()}
             >
                 {(() => {
-                    const quizPlan = buildQuizRenderPlan(messages, strategy, mcObservation, mcTimeline, historyAssistantCount.current, canContinue);
-
                     return messages.map((message, index) => {
                         const info = quizPlan[index];
                         const displayMessage = info.isQuizQuestion
@@ -246,7 +247,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
                 </div>}
                 <div ref={bottomRef} />
             </div>
-            <InputContainer addMessage={addMessage} canContinue={canContinue} isInitializing={isInitializing} isResponding={messages[messages.length - 1]?.status === "streaming"} quickReply={quickReply} onClearSelection={() => setPendingAnswer(null)} />
+            <InputContainer addMessage={addMessage} canContinue={canContinue} isInitializing={isInitializing} isResponding={messages[messages.length - 1]?.status === "streaming"} quickReply={quickReply} onClearSelection={() => setPendingAnswer(null)} requiresChipSelection={requiresChipSelection} />
         </section>
     );
 }

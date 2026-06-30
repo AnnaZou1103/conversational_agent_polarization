@@ -82,23 +82,23 @@ export const preSurveyPages: SurveyPage[] = [
                 min: 0,
                 max: 100,
                 milestones: [{ value: 0, label: "No empathy at all" }, { value: 50, label: "A moderate amount of empathy" }, { value: 100, label: "A great deal of empathy" }]
-            },
-            {
-                type: "scale",
-                name: "commonEnemy",
-                question: "To what extent should Democrats and Republicans see themselves as united against a common enemy?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "A moderate amount" }, { value: 100, label: "A great deal" }]
-            },
-            {
-                type: "scale",
-                name: "threatPerception",
-                question: "To what extent do you view [Democrats/Republicans] as a serious threat to the country's well-being?",
-                min: 0,
-                max: 100,
-                milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "A moderate amount" }, { value: 100, label: "A great deal" }]
             }
+            // {
+            //     type: "scale",
+            //     name: "commonEnemy",
+            //     question: "To what extent should Democrats and Republicans see themselves as united against a common enemy?",
+            //     min: 0,
+            //     max: 100,
+            //     milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "A moderate amount" }, { value: 100, label: "A great deal" }]
+            // },
+            // {
+            //     type: "scale",
+            //     name: "threatPerception",
+            //     question: "To what extent do you view [Democrats/Republicans] as a serious threat to the country's well-being?",
+            //     min: 0,
+            //     max: 100,
+            //     milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "A moderate amount" }, { value: 100, label: "A great deal" }]
+            // }
         ],
         randomized: true
     },

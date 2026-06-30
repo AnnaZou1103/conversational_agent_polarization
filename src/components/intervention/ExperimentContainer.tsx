@@ -208,6 +208,9 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
         setShowPartyModal(false);
     };
 
+    const quizPlan = buildQuizRenderPlan(messages, strategy, mcObservation, mcTimeline, historyAssistantCount.current, canContinue);
+    const requiresChipSelection = quizPlan.some(info => info.isActive);
+
     return (
         <section className="flex-2 flex min-h-[85vh] lg:min-h-0 lg:h-190 w-full flex-col rounded-xl bg-white shadow-card">
             {showPartyModal && <PartyModal id={id} onSubmit={onSubmit} />}
@@ -215,8 +218,6 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
             <ChatHeader />
             <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-8">
                 {(() => {
-                    const quizPlan = buildQuizRenderPlan(messages, strategy, mcObservation, mcTimeline, historyAssistantCount.current, canContinue);
-
                     return messages.map((message, index) => {
                         const info = quizPlan[index];
                         const displayMessage = info.isQuizQuestion
@@ -250,7 +251,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
                 </div>}
                 <div ref={bottomRef} />
             </div>
-            <InputContainer addMessage={addMessage} canContinue={canContinue} isInitializing={isInitializing} quickReply={quickReply} onClearSelection={() => setPendingAnswer(null)} />
+            <InputContainer addMessage={addMessage} canContinue={canContinue} isInitializing={isInitializing} quickReply={quickReply} onClearSelection={() => setPendingAnswer(null)} requiresChipSelection={requiresChipSelection} />
         </section>
     );
 }

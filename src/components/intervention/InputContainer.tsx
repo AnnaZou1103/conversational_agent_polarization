@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export default function InputContainer({ addMessage, canContinue, isInitializing = false, isResponding = false, quickReply = null, onClearSelection }: { addMessage: Function, canContinue: boolean; isInitializing?: boolean; isResponding?: boolean; quickReply?: { text: string; nonce: number } | null; onClearSelection?: () => void; }) {
+export default function InputContainer({ addMessage, canContinue, isInitializing = false, isResponding = false, quickReply = null, onClearSelection, requiresChipSelection = false }: { addMessage: Function, canContinue: boolean; isInitializing?: boolean; isResponding?: boolean; quickReply?: { text: string; nonce: number } | null; onClearSelection?: () => void; requiresChipSelection?: boolean; }) {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [content, setContent] = useState("");
     // The quiz-option pick is kept as its own locked badge, separate from the
@@ -11,7 +11,7 @@ export default function InputContainer({ addMessage, canContinue, isInitializing
     const [lockedAnswer, setLockedAnswer] = useState<string | null>(null);
     const [multiline, setMultiline] = useState(false);
 
-    const submitDisabled = canContinue || isInitializing || isResponding || (content.trim().length === 0 && !lockedAnswer);
+    const submitDisabled = canContinue || isInitializing || isResponding || (content.trim().length === 0 && !lockedAnswer) || (requiresChipSelection && !lockedAnswer);
 
     useEffect(() => {
         if (!quickReply) return;
@@ -91,7 +91,7 @@ export default function InputContainer({ addMessage, canContinue, isInitializing
                             }
                         }}
                         disabled={canContinue || isInitializing}
-                        placeholder={canContinue ? "Conversation ended" : isInitializing ? "Please wait..." : lockedAnswer ? "Add a brief reason (optional)..." : "Type your message..."}
+                        placeholder={canContinue ? "Conversation ended" : isInitializing ? "Please wait..." : lockedAnswer ? "Add a brief reason (optional)..." : requiresChipSelection ? "Select an option above to continue..." : "Type your message..."}
                         className="flex-1 min-w-[80px] resize-none overflow-y-hidden text-base placeholder:text-zinc-400 outline-none" />
                 </div>
 
