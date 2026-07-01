@@ -64,11 +64,18 @@ export interface MCObservation {
 export interface ControlObservation {
     topicsShared: string[];
     currentMood: string | null;
+    mainTakeaway: string | null;
+}
+
+export interface ControlPoliticsObservation {
+    topicsShared: string[];
+    currentMood: string | null;
+    mainConcern: string | null;
 }
 
 export interface ChatObservation {
     stage: string;
-    observation: CIObservation | PNObservation | MCObservation | ControlObservation;
+    observation: CIObservation | PNObservation | MCObservation | ControlObservation | ControlPoliticsObservation;
 }
 
 

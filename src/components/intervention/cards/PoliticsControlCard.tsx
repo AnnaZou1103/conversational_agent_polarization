@@ -1,8 +1,11 @@
-import { ControlObservation } from "@/src/types/interfaces";
+import { ControlPoliticsObservation } from "@/src/types/interfaces";
 
-export default function PoliticsControlCard({ observation }: { observation: ControlObservation; }) {
+export default function PoliticsControlCard({ observation }: { observation: ControlPoliticsObservation; }) {
     const topicsShared = observation.topicsShared;
     const currentMood = observation.currentMood;
+    const mainConcern = observation.mainConcern;
+
+    const hasMore = topicsShared.length > 0 || !!mainConcern;
 
     return (
         <div
@@ -15,12 +18,23 @@ export default function PoliticsControlCard({ observation }: { observation: Cont
             </div>
 
             {currentMood && (
-                <div className={topicsShared.length > 0 ? "mb-4" : "mb-0"}>
+                <div className={hasMore ? "mb-4" : "mb-0"}>
                     <div className="mb-2 text-xs tracking-[0.08em] text-[#3a3a3a] font-semibold">
                         Your overall take
                     </div>
                     <p className="m-0 border-l-2 border-zinc-300 pl-3 text-[13px] italic leading-normal text-black">
                         "{currentMood}"
+                    </p>
+                </div>
+            )}
+
+            {mainConcern && topicsShared.length >= 3 && (
+                <div className={topicsShared.length > 0 ? "mb-4" : "mb-0"}>
+                    <div className="mb-2 text-xs tracking-[0.08em] text-[#3a3a3a] font-semibold">
+                        What matters most
+                    </div>
+                    <p className="m-0 border-l-2 border-zinc-300 pl-3 text-[13px] italic leading-normal text-black">
+                        "{mainConcern}"
                     </p>
                 </div>
             )}

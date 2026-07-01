@@ -3,6 +3,9 @@ import { ControlObservation } from "@/src/types/interfaces";
 export default function WellbeingCard({ observation }: { observation: ControlObservation; }) {
     const topicsShared = observation.topicsShared;
     const currentMood = observation.currentMood;
+    const mainTakeaway = observation.mainTakeaway;
+
+    const hasMore = topicsShared.length > 0 || !!mainTakeaway;
 
     return (
         <div
@@ -15,12 +18,23 @@ export default function WellbeingCard({ observation }: { observation: ControlObs
             </div>
 
             {currentMood && (
-                <div className={topicsShared.length > 0 ? "mb-4" : "mb-0"}>
+                <div className={hasMore ? "mb-4" : "mb-0"}>
                     <div className="mb-2 text-xs tracking-[0.08em] text-[#3a3a3a] font-semibold">
                         How you're feeling
                     </div>
                     <p className="m-0 border-l-2 border-zinc-300 pl-3 text-[13px] italic leading-normal text-black">
                         "{currentMood}"
+                    </p>
+                </div>
+            )}
+
+            {mainTakeaway && topicsShared.length >= 3 && (
+                <div className={topicsShared.length > 0 ? "mb-4" : "mb-0"}>
+                    <div className="mb-2 text-xs tracking-[0.08em] text-[#3a3a3a] font-semibold">
+                        Something you shared
+                    </div>
+                    <p className="m-0 border-l-2 border-zinc-300 pl-3 text-[13px] italic leading-normal text-black">
+                        "{mainTakeaway}"
                     </p>
                 </div>
             )}

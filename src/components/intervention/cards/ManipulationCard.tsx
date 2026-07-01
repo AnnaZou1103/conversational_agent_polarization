@@ -1,4 +1,4 @@
-import { ChatObservation, CIObservation, ControlObservation, MCObservation, PNObservation, Strategy } from "@/src/types/interfaces";
+import { ChatObservation, CIObservation, ControlObservation, ControlPoliticsObservation, MCObservation, PNObservation, Strategy } from "@/src/types/interfaces";
 import CommonIdentityCard from "./CommonIdentityCard";
 import CharacterCard from "./CharacterCard";
 import QuizResultList from "./QuizResultList";
@@ -19,7 +19,7 @@ export default function ManipulationCard({ strategy, chatObservation }: { strate
             case "control":
                 return <WellbeingCard observation={chatObservation.observation as ControlObservation} />;
             case "control_politics":
-                return <PoliticsControlCard observation={chatObservation.observation as ControlObservation} />;
+                return <PoliticsControlCard observation={chatObservation.observation as ControlPoliticsObservation} />;
         }
     };
 
