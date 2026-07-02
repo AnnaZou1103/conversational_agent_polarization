@@ -26,17 +26,10 @@ export default function CharacterCard({ observation }: { observation: PNObservat
                 </p>
             </header>
 
-            {/* Traits */}
-            {personTraits.length > 0 && (
-                <Section label="Personality">
-                    <TagList items={personTraits} color="#a78bfa" />
-                </Section>
-            )}
-
-            {/* Cares about */}
-            {personCaresAbout.length > 0 && (
-                <Section label="Cares about">
-                    <TagList items={personCaresAbout} color="#60a5fa" />
+            {/* Traits + Cares about */}
+            {(personTraits.length > 0 || personCaresAbout.length > 0) && (
+                <Section label="About them">
+                    <TagList items={[...personTraits, ...personCaresAbout]} color="#a78bfa" />
                 </Section>
             )}
 
