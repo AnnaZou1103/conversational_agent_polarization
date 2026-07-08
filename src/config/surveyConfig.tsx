@@ -1,5 +1,18 @@
 import { SurveyPage } from "@/src/types/interfaces";
 
+// If you add, remove, or reorder a question `name` below (in preSurveyPages
+// or postSurveyPages), mirror the same change in PRE_SURVEY_ORDER /
+// POST_SURVEY_ORDER in app/survey_order.py in the backend repo
+// (conversational_agent_polarization_backend). That list controls the
+// sequence-number prefix (e.g. "01_AIFrequency") the backend stores each
+// answer key under, which is what keeps MongoDB/CSV exports in survey
+// order instead of alphabetical order. A question missing from that list
+// still gets saved, just pushed after all the known ones.
+//
+// Example: adding a new "petOwnership" question right after "AIFrequency"
+// below also means inserting "petOwnership" right after "AIFrequency" in
+// PRE_SURVEY_ORDER in app/survey_order.py.
+
 export const preSurveyPages: SurveyPage[] = [
     {
         questions: [
@@ -114,6 +127,8 @@ export const preSurveyPages: SurveyPage[] = [
     },
 ];
 
+// Reminder: keep POST_SURVEY_ORDER in app/survey_order.py (backend repo) in
+// sync with the question `name`s below — see note above preSurveyPages.
 export const postSurveyPages: SurveyPage[] = [
     // Page 1 – General affect & manipulation check
     {
