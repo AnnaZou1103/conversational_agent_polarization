@@ -52,10 +52,14 @@ const userAPI = {
         const response = await fetch(`${apiUrl}/user/type/${id}`);
         return response;
     },
-    createStudyUser: async (strategy?: string) => {
-        const url = strategy
-            ? `${apiUrl}/user/create?strategy=${encodeURIComponent(strategy)}`
-            : `${apiUrl}/user/create`;
+    createStudyUser: async (strategy?: string, cloudResearchIds?: { participantId?: string; assignmentId?: string; projectId?: string }) => {
+        const params = new URLSearchParams();
+        if (strategy) params.set("strategy", strategy);
+        if (cloudResearchIds?.participantId) params.set("participantId", cloudResearchIds.participantId);
+        if (cloudResearchIds?.assignmentId) params.set("assignmentId", cloudResearchIds.assignmentId);
+        if (cloudResearchIds?.projectId) params.set("projectId", cloudResearchIds.projectId);
+        const query = params.toString();
+        const url = query ? `${apiUrl}/user/create?${query}` : `${apiUrl}/user/create`;
         const response = await fetch(url, { method: "POST" });
         if (!response.ok) throw new Error(`Failed to create study user: ${response.status} at ${url}`);
         const data: newStudyUserResponse = await response.json();
