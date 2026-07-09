@@ -10,8 +10,8 @@ export const transitionMessages = {
 
             <p className="text-subtitle">📌 TASK INSTRUCTIONS</p>
 
-            <p className="text-main-body"><strong>🎯 YOUR TASK</strong><br />You will have a conversation with an AI conversational agent about your perceptions of people from the opposing political party.</p>
-            <p className="text-main-body"><strong>⏱️ ESTIMATED TIME</strong><br />The conversation will take approximately 5–8 minutes.</p>
+            <p className="text-main-body"><strong>🎯 YOUR TASK</strong><br />You will have a conversation with an AI conversational agent about your thoughts, feelings and perceptions.</p>
+            <p className="text-main-body"><strong>⏱️ ESTIMATED TIME</strong><br />The conversation will take approximately 8-10 minutes.</p>
             <p className="text-main-body"><strong>✅ WHEN TO CONTINUE</strong><br />A "Continue" button will appear when the conversation is complete. Please continue only after the conversation is finished.</p>
             <p className="text-main-body"><strong>⏳ LOADING NOTE</strong><br />Responses from the AI agent may take a little time to load. Please be patient while it responds.</p>
             <p className="text-main-body"><strong>⚠️ IMPORTANT REMINDER</strong><br />Do not close or refresh this tab during the conversation.</p>

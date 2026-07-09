@@ -115,6 +115,34 @@ export const preSurveyPages: SurveyPage[] = [
         ],
         randomized: true
     },
+    // Page 3: Feeling Thermometer
+    {
+        questions: [
+            {
+                type: "scale",
+                name: "rateRepublicansPre",
+                question: "How would you rate Republicans?",
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Very cold\nor unfavorable feeling" }, { value: 50, label: "Neutral" }, { value: 100, label: "Very warm\nor favorable feeling" }]
+            },
+            {
+                type: "scale",
+                name: "rateDemocratsPre",
+                question: "How would you rate Democrats?",
+                min: 0,
+                max: 100,
+                milestones: [{ value: 0, label: "Very cold\nor unfavorable feeling" }, { value: 50, label: "Neutral" }, { value: 100, label: "Very warm\nor favorable feeling" }]
+            }
+        ],
+        randomized: true,
+        paragraph: "We would like to get your feelings toward both Democrats and Republicans using something we call the feeling thermometer.",
+        bullets: [
+            "**50–100 degrees**: You feel favorable and warm toward them.",
+            "**0–50 degrees**: You don't feel favorable toward them and don't care too much for them.",
+            "**50 degrees**: You don't feel particularly warm or cold toward them."
+        ]
+    },
     {
         questions: [
             {
@@ -161,8 +189,8 @@ export const postSurveyPages: SurveyPage[] = [
             {
                 type: "choice",
                 name: "completedTask",
-                question: "During my conversation with the AI agent, the main task I completed was:",
-                options: ["Reflecting on shared identities.", "Thinking about someone from the opposing party.", "Completing a quiz about the opposing party’s beliefs.", "None of above"],
+                question: "What was the main topic of your conversation with the AI agent?",
+                options: ["Frustration and exhaustion with political conflict.", "A person from the opposing party whom I liked.", "A quiz about the opposing party's beliefs.", "None of above"],
                 randomized: true
             },
         ]
@@ -173,7 +201,7 @@ export const postSurveyPages: SurveyPage[] = [
         questions: [
             {
                 type: "scale",
-                name: "rateRepublicans",
+                name: "rateRepublicansPost",
                 question: "How would you rate Republicans?",
                 min: 0,
                 max: 100,
@@ -181,7 +209,7 @@ export const postSurveyPages: SurveyPage[] = [
             },
             {
                 type: "scale",
-                name: "rateDemocrats",
+                name: "rateDemocratsPost",
                 question: "How would you rate Democrats?",
                 min: 0,
                 max: 100,
@@ -514,9 +542,27 @@ export const postSurveyPages: SurveyPage[] = [
                 question: "Please briefly explain what made you satisfied or dissatisfied with your conversation experience with the AI agent.",
             },
             {
+                type: "rating",
+                name: "attitudeChangeSelf",
+                question: "To what extent did the conversation change how you think about the opposing party?",
+                min: 1,
+                max: 7,
+                minLabel: "Not at all",
+                maxLabel: "A great deal"
+            },
+            {
                 type: "text",
-                name: "oqAttitudeChange",
-                question: "Did the conversation change how you think about the opposing party in any way? If so, how?",
+                name: "oqAttitudeChangeSelfWhy",
+                question: "Please briefly explain how, if at all, the conversation changed how you think about the opposing party.",
+            },
+            {
+                type: "rating",
+                name: "attitudeChangeOthers",
+                question: "To what extent do you think the conversation would change how other people think about the opposing party?",
+                min: 1,
+                max: 7,
+                minLabel: "Not at all",
+                maxLabel: "A great deal"
             },
             {
                 type: "text",

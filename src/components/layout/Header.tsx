@@ -10,10 +10,10 @@ export default function Header() {
         <header className="sticky top-0 z-50">
             <div className="bg-[#F5F5F5] h-17.5 flex items-center justify-between px-5">
                 <Image
-                    src="/hat.png"
-                    alt="HAT Logo"
-                    width={100}
-                    height={100}
+                    src="/Socibot.png"
+                    alt="Socibot Logo"
+                    width={1486}
+                    height={363}
                     className="w-auto h-7/12 object-contain"
                     priority
                 />

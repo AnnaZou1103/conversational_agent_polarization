@@ -27,8 +27,8 @@ export const consentFormItems: ConsentFormItem[] = [
         title: "What You Will Do",
         content: (
             <>
-                <p>Participation will involve:</p>
-                <br />
+                {/* <p>Participation will involve:</p>
+                <br /> */}
                 <ul className="space-y-2">
                     <li className="flex gap-5">
                         <span>•</span>
@@ -36,7 +36,7 @@ export const consentFormItems: ConsentFormItem[] = [
                     </li>
                     <li className="flex gap-5">
                         <span>•</span>
-                        <span>Having a text-based conversation with an AI conversational agent. The agent will engage you in a discussion related to your perceptions of people from the opposing political party.</span>
+                        <span>Having a text-based conversation with an AI conversational agent. The agent will engage you in a discussion about your thoughts, feelings and perceptions.</span>
                     </li>
                     <li className="flex gap-5">
                         <span>•</span>
