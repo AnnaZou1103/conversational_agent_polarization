@@ -15,8 +15,10 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | `partyImportance` | scale | How important is being a [Republican/Democrat] to you? | 0 to 100 (0 = Not important at all, 50 = Moderately important, 100 = Extremely important) |
 | `angerTowardOutgroup` | scale | How much anger do you feel toward [Democrats/Republicans]? | 0 to 100 (0 = No anger at all, 50 = A moderate amount, 100 = A great deal) |
 | `empathyTowardOutgroup` | scale | How much empathy do you feel toward [Democrats/Republicans]? | 0 to 100 (0 = No empathy at all, 50 = A moderate amount, 100 = A great deal) |
-| `commonEnemy` | scale | To what extent should Democrats and Republicans see themselves as united against a common enemy? | 0 to 100 (0 = Not at all, 50 = A moderate amount, 100 = A great deal) |
-| `threatPerception` | scale | To what extent do you view [Democrats/Republicans] as a serious threat to the country's well-being? | 0 to 100 (0 = Not at all, 50 = A moderate amount, 100 = A great deal) |
+| `commonEnemy` | scale | *(currently commented out)* To what extent should Democrats and Republicans see themselves as united against a common enemy? | 0 to 100 (0 = Not at all, 50 = A moderate amount, 100 = A great deal) |
+| `threatPerception` | scale | *(currently commented out)* To what extent do you view [Democrats/Republicans] as a serious threat to the country's well-being? | 0 to 100 (0 = Not at all, 50 = A moderate amount, 100 = A great deal) |
+| `rateRepublicansPre` | scale | How would you rate Republicans? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
+| `rateDemocratsPre` | scale | How would you rate Democrats? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
 | `preSurveyAttentionCheck` | choice | Attention check: "select '4 - Somewhat disagree'" | "1 - Strongly agree" \| "2 - Somewhat agree" \| "3 - No opinion" \| "4 - Somewhat disagree" \| "5 - Strongly disagree" |
 
 ## Post-Survey
@@ -30,9 +32,9 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | &nbsp;&nbsp;`emotionDull` | (statement) | Dull | 1–7 |
 | &nbsp;&nbsp;`emotionAngry` | (statement) | Angry | 1–7 |
 | &nbsp;&nbsp;`emotionSad` | (statement) | Sad | 1–7 |
-| `completedTask` | choice | During my conversation with the AI agent, the main task I completed was: | "Reflecting on shared identities." \| "Thinking about someone from the opposing party." \| "Completing a quiz about the opposing party's beliefs." \| "None of above" |
-| `rateRepublicans` | scale | How would you rate Republicans? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
-| `rateDemocrats` | scale | How would you rate Democrats? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
+| `completedTask` | choice | What was the main topic of your conversation with the AI agent? | "Frustration and exhaustion with political conflict." \| "A person from the opposing party whom I liked." \| "A quiz about the opposing party's beliefs." \| "None of above" |
+| `rateRepublicansPost` | scale | How would you rate Republicans? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
+| `rateDemocratsPost` | scale | How would you rate Democrats? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
 | `giveCents` | scale | How many cents (if any) would you give to the [Democrat/Republican] participant? | 0 to 50 |
 | `reducePollStations` | scale | [Republicans/Democrats] should reduce the number of polling stations in areas that support [Democrats/Republicans]. | 0 to 100 (0 = Strongly disagree, 50 = Neither, 100 = Strongly agree) |
 | `ignoreUnfavorableJudges` | scale | [Republican/Democrat] governors should ignore unfavorable court rulings by [Democratic/Republican]-appointed judges. | 0 to 100 (0 = Strongly disagree, 50 = Neither, 100 = Strongly agree) |
@@ -77,5 +79,7 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | `oqWillingFutureWhy` | text | Please briefly explain why you would or would not be willing to discuss similar topics with an AI agent like this in the future. | free text |
 | `saSatisfiedOverall` | rating | Overall, I was satisfied with my conversation experience with the AI agent. | 1 to 7 (1 = Strongly disagree, 7 = Strongly agree) |
 | `oqSatisfiedWhy` | text | Please briefly explain what made you satisfied or dissatisfied with your conversation experience with the AI agent. | free text |
-| `oqAttitudeChange` | text | Did the conversation change how you think about the opposing party in any way? If so, how? | free text |
+| `attitudeChangeSelf` | rating | To what extent did the conversation change how you think about the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
+| `oqAttitudeChangeSelfWhy` | text | Please briefly explain how, if at all, the conversation changed how you think about the opposing party. | free text |
+| `attitudeChangeOthers` | rating | To what extent do you think the conversation would change how other people think about the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
 | `oqImprove` | text | Is there anything else you would like to share about how we could improve the AI agent? | free text |
