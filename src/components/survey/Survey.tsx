@@ -121,7 +121,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
 
         const newResponses = { ...responses };
         pages[currentPage].questions.forEach(q => {
-            if (q.type === "likert") {
+            if (q.type === "likert" || q.type === "semanticDifferential") {
                 q.statements!.forEach(statement => {
                     const value = formData.get(statement.name) as string;
                     if (value) newResponses[statement.name] = value;
