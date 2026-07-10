@@ -129,6 +129,7 @@ export interface LikertQuestion {
     hidden?: boolean;
     questionLabel?: string;
     randomized?: boolean;
+    size?: "sm" | "lg";
 }
 
 export interface TextQuestion extends BaseQuestion {

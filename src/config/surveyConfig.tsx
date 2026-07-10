@@ -167,6 +167,7 @@ export const postSurveyPages: SurveyPage[] = [
                 question: "After the conversation, how much do you feel each of the following emotions?",
                 min: 1,
                 max: 7,
+                size: "lg",
                 milestones: [
                     { value: 1, label: "Not at all" },
                     { value: 2, label: "A little" },
