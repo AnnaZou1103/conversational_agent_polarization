@@ -41,16 +41,20 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | `prosecuteJournalists` | scale | [Republican/Democratic] governors should prosecute journalists who accuse [Republican/Democratic] politicians of misconduct without revealing sources. | 0 to 100 (0 = Strongly disagree, 50 = Neither, 100 = Strongly agree) |
 | `acceptElectionResults` | scale | [Republicans/Democrats] should not accept the results of elections if they lose. | 0 to 100 (0 = Strongly disagree, 50 = Neither, 100 = Strongly agree) |
 | `postSurveyAttentionCheck1` | choice | Attention check: "select '2-Somewhat agree'" | "1-Strongly agree" \| "2-Somewhat agree" \| "3-No opinion" \| "4-Somewhat disagree" \| "5-Strongly disagree" |
-| `sendThreateningMessages` | scale | When, if ever, is it OK for [Republicans/Democrats] to send threatening and intimidating messages to [Democrat/Republican] party leaders? | 0 to 100 (0 = Never, 100 = Always) |
-| `publicHarass` | scale | When, if ever, is it OK for an ordinary [Republican/Democrat] in the public to harass an ordinary [Democrat/Republican] on the Internet, in a way that makes the target feel frightened? | 0 to 100 (0 = Never, 100 = Always) |
-| `violenceForGoals` | scale | How much do you feel it is justified for [Republicans/Democrats] to use violence in advancing their political goals these days? | 0 to 100 (0 = Not justified at all, 50 = Moderately justified, 100 = Extremely justified) |
-| `violenceForElection` | scale | How much do you feel it is justified for [Republicans/Democrats] to use violence if the [Democrat/Republican] party wins more races in the next election? | 0 to 100 (0 = Not justified at all, 50 = Moderately justified, 100 = Extremely justified) |
+| `sendThreateningMessages` | scale | *(replaced by the Opposition to Bipartisanship & Social Distance page below)* When, if ever, is it OK for [Republicans/Democrats] to send threatening and intimidating messages to [Democrat/Republican] party leaders? | 0 to 100 (0 = Never, 100 = Always) |
+| `publicHarass` | scale | *(replaced by the Opposition to Bipartisanship & Social Distance page below)* When, if ever, is it OK for an ordinary [Republican/Democrat] in the public to harass an ordinary [Democrat/Republican] on the Internet, in a way that makes the target feel frightened? | 0 to 100 (0 = Never, 100 = Always) |
+| `violenceForGoals` | scale | *(replaced by the Opposition to Bipartisanship & Social Distance page below)* How much do you feel it is justified for [Republicans/Democrats] to use violence in advancing their political goals these days? | 0 to 100 (0 = Not justified at all, 50 = Moderately justified, 100 = Extremely justified) |
+| `violenceForElection` | scale | *(replaced by the Opposition to Bipartisanship & Social Distance page below)* How much do you feel it is justified for [Republicans/Democrats] to use violence if the [Democrat/Republican] party wins more races in the next election? | 0 to 100 (0 = Not justified at all, 50 = Moderately justified, 100 = Extremely justified) |
+| `bipartisanRepsCooperation` | scale | To what extent would you like to see Democratic and Republican elected representatives work together? | 0 to 100 (0 = Not at all, 50 = Somewhat, 100 = A great deal) |
+| `bipartisanCompromiseCooperation` | scale | To what extent would you like the Democratic and Republican parties to cooperate more, even if it means compromising on issues you care about? | 0 to 100 (0 = Not at all, 50 = Somewhat, 100 = A great deal) |
+| `comfortFriendsOutgroup` | scale | How comfortable are you having close personal friends who are [Democrats/Republicans]? | 0 to 100 (0 = Not at all comfortable, 50 = Moderately comfortable, 100 = Extremely comfortable) |
+| `comfortNeighborsOutgroup` | scale | How comfortable are you having neighbors on your street who are [Democrats/Republicans]? | 0 to 100 (0 = Not at all comfortable, 50 = Moderately comfortable, 100 = Extremely comfortable) |
 | `conversationExperience` | likert | Please indicate how much you agree with each of the following statements about your conversation with the AI agent. | 1 to 7 (1 = Strongly disagree ... 7 = Strongly agree) |
 | &nbsp;&nbsp;`ceEasyToUnderstand` | (statement) | The agent's responses were easy to understand. | 1–7 |
 | &nbsp;&nbsp;`ceClearCommunication` | (statement) | Communicating with the agent was clear. | 1–7 |
 | &nbsp;&nbsp;`ceKeptContext` | (statement) | The agent was able to keep track of context. | 1–7 |
 | &nbsp;&nbsp;`postSurveyAttentionCheck2` | (statement) | Attention check: "select '3-Somewhat disagree'" | 1–7 |
-| `agentImpression` | semanticDifferential | Please rate your impression of the AI agent during the conversation. | 1 to 7 (1 = left label ... 7 = right label) |
+| `agentImpression` | semanticDifferential | Based on your interaction with the AI agent, please indicate where your impression falls between each pair of adjectives below. | 1 to 7 (1 = left label ... 7 = right label) |
 | &nbsp;&nbsp;`impressionFakeNatural` | (statement) | Fake — Natural | 1–7 |
 | &nbsp;&nbsp;`impressionMachinelikeHumanlike` | (statement) | Machinelike — Humanlike | 1–7 |
 | &nbsp;&nbsp;`impressionUnconsciousConscious` | (statement) | Unconscious — Conscious | 1–7 |
@@ -69,12 +73,17 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | &nbsp;&nbsp;`taReliable` | (statement) | The agent is reliable. | 1–7 |
 | &nbsp;&nbsp;`taTrust` | (statement) | I can trust the agent. | 1–7 |
 | `manipulationAndEngagement` | likert | Please indicate how much you agree with each of the following statements. | 1 to 7 (1 = Strongly disagree ... 7 = Strongly agree) |
-| &nbsp;&nbsp;`maeChangingViews` | (statement) | The agent was trying to change my political views. | 1–7 |
-| &nbsp;&nbsp;`maeHiddenAgenda` | (statement) | I felt like the agent had a hidden agenda. | 1–7 |
-| &nbsp;&nbsp;`maeHonestIntentions` | (statement) | The agent was honest about its intentions. | 1–7 |
-| &nbsp;&nbsp;`maeWillingToDiscuss` | (statement) | After this conversation, I would be more willing to discuss politics with someone from the opposing party. | 1–7 |
-| &nbsp;&nbsp;`maeMoreOpen` | (statement) | I feel more open to hearing the opposing party's perspective than before. | 1–7 |
-| &nbsp;&nbsp;`maeMoreConversations` | (statement) | I would be interested in having more conversations like this one. | 1–7 |
+| &nbsp;&nbsp;`maeChangingViews` | (statement) | *(replaced by the statements below)* The agent was trying to change my political views. | 1–7 |
+| &nbsp;&nbsp;`maeHiddenAgenda` | (statement) | *(replaced by the statements below)* I felt like the agent had a hidden agenda. | 1–7 |
+| &nbsp;&nbsp;`maeHonestIntentions` | (statement) | *(replaced by the statements below)* The agent was honest about its intentions. | 1–7 |
+| &nbsp;&nbsp;`maeWillingToDiscuss` | (statement) | *(replaced by the statements below)* After this conversation, I would be more willing to discuss politics with someone from the opposing party. | 1–7 |
+| &nbsp;&nbsp;`maeMoreOpen` | (statement) | *(replaced by the statements below)* I feel more open to hearing the opposing party's perspective than before. | 1–7 |
+| &nbsp;&nbsp;`maeMoreConversations` | (statement) | *(replaced by the statements below)* I would be interested in having more conversations like this one. | 1–7 |
+| &nbsp;&nbsp;`maePersuasionAcceptable` | (statement) | The way the agent tried to persuade me seemed acceptable. | 1–7 |
+| &nbsp;&nbsp;`maeUnwantedManipulation` | (statement) | The agent tried to manipulate me in ways that I didn't like. | 1–7 |
+| &nbsp;&nbsp;`maeAnnoyedControl` | (statement) | I was annoyed because the agent seemed to be trying to inappropriately manage or control the conversation. | 1–7 |
+| &nbsp;&nbsp;`maeApproachOkay` | (statement) | I didn't mind the agent's approach; it tried to be persuasive without being excessively manipulative. | 1–7 |
+| &nbsp;&nbsp;`maeFair` | (statement) | The agent was fair in what it said. | 1–7 |
 | `weWillingFuture` | rating | I would be willing to discuss similar topics with an AI agent like this in the future. | 1 to 7 (1 = Strongly disagree, 7 = Strongly agree) |
 | `oqWillingFutureWhy` | text | Please briefly explain why you would or would not be willing to discuss similar topics with an AI agent like this in the future. | free text |
 | `saSatisfiedOverall` | rating | Overall, I was satisfied with my conversation experience with the AI agent. | 1 to 7 (1 = Strongly disagree, 7 = Strongly agree) |
@@ -82,4 +91,5 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | `attitudeChangeSelf` | rating | To what extent did the conversation change how you think about the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
 | `oqAttitudeChangeSelfWhy` | text | Please briefly explain how, if at all, the conversation changed how you think about the opposing party. | free text |
 | `attitudeChangeOthers` | rating | To what extent do you think the conversation would change how other people think about the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
-| `oqImprove` | text | Is there anything else you would like to share about how we could improve the AI agent? | free text |
+| `oqImprove` | text | *(replaced by the row below)* Is there anything else you would like to share about how we could improve the AI agent? | free text |
+| `oqAttitudeChangeOthersWhy` | text | Please briefly explain how, if at all, the conversation would change how other people think about the opposing party. | free text |

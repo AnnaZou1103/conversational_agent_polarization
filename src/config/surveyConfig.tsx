@@ -190,8 +190,8 @@ export const postSurveyPages: SurveyPage[] = [
             {
                 type: "choice",
                 name: "completedTask",
-                question: "What was the main topic of your conversation with the AI agent?",
-                options: ["Frustration and exhaustion with political conflict.", "A person from the opposing party whom I liked.", "A quiz about the opposing party's beliefs.", "None of above"],
+                question: "What was the main topic of your conversation with the AI agent? It’s okay if you didn’t encounter any of them.",
+                options: ["Common ground with people from the opposing party.", "A person from the opposing party whom I liked.", "A quiz about the opposing party's beliefs.", "None of above"],
                 randomized: true
             },
         ]
@@ -290,40 +290,40 @@ export const postSurveyPages: SurveyPage[] = [
         randomized: true,
         paragraph: "Please indicate how much you disagree or agree with each of the following statements.",
     },
-    // Page 5: Political Violence (outgroup)
+    // Page 5: Opposition to Bipartisanship & Social Distance
     {
         questions: [
             {
                 type: "scale",
-                name: "sendThreateningMessages",
-                question: "When, if ever, is it OK for [Republicans/Democrats] to send threatening and intimidating messages to [Democrat/Republican] party leaders?",
+                name: "bipartisanRepsCooperation",
+                question: "To what extent would you like to see Democratic and Republican elected representatives work together?",
                 min: 0,
                 max: 100,
-                milestones: [{ value: 0, label: "Never" }, { value: 100, label: "Always" }]
+                milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "Somewhat" }, { value: 100, label: "A great deal" }]
             },
             {
                 type: "scale",
-                name: "publicHarass",
-                question: "When, if ever, is it OK for an ordinary [Republican/Democrat] in the public to harass an ordinary [Democrat/Republican] on the Internet, in a way that makes the target feel frightened?",
+                name: "bipartisanCompromiseCooperation",
+                question: "To what extent would you like the Democratic and Republican parties to cooperate more, even if it means compromising on issues you care about?",
                 min: 0,
                 max: 100,
-                milestones: [{ value: 0, label: "Never" }, { value: 100, label: "Always" }]
+                milestones: [{ value: 0, label: "Not at all" }, { value: 50, label: "Somewhat" }, { value: 100, label: "A great deal" }]
             },
             {
                 type: "scale",
-                name: "violenceForGoals",
-                question: "How much do you feel it is justified for [Republicans/Democrats] to use violence in advancing their political goals these days?",
+                name: "comfortFriendsOutgroup",
+                question: "How comfortable are you having close personal friends who are [Democrats/Republicans]?",
                 min: 0,
                 max: 100,
-                milestones: [{ value: 0, label: "Not justified at all" }, { value: 50, label: "Moderately justified" }, { value: 100, label: "Extremely justified" }]
+                milestones: [{ value: 0, label: "Not at all comfortable" }, { value: 50, label: "Moderately comfortable" }, { value: 100, label: "Extremely comfortable" }]
             },
             {
                 type: "scale",
-                name: "violenceForElection",
-                question: "How much do you feel it is justified for [Republicans/Democrats] to use violence if the [Democrat/Republican] party wins more races in the next election?",
+                name: "comfortNeighborsOutgroup",
+                question: "How comfortable are you having neighbors on your street who are [Democrats/Republicans]?",
                 min: 0,
                 max: 100,
-                milestones: [{ value: 0, label: "Not justified at all" }, { value: 50, label: "Moderately justified" }, { value: 100, label: "Extremely justified" }]
+                milestones: [{ value: 0, label: "Not at all comfortable" }, { value: 50, label: "Moderately comfortable" }, { value: 100, label: "Extremely comfortable" }]
             }
         ],
         randomized: true,
@@ -409,7 +409,7 @@ export const postSurveyPages: SurveyPage[] = [
             {
                 type: "semanticDifferential",
                 name: "agentImpression",
-                question: "Please rate your impression of the AI agent during the conversation.",
+                question: "Based on your interaction with the AI agent, please indicate where your impression falls between each pair of adjectives below. For each pair of adjectives, select the point that best reflects your impression of the AI agent. Values closer to the left indicate the adjective on the left, values closer to the right indicate the adjective on the right, and the midpoint indicates a neutral impression.",
                 min: 1,
                 max: 7,
                 milestones: [
@@ -499,12 +499,11 @@ export const postSurveyPages: SurveyPage[] = [
                     { value: 7, label: "Strongly agree" },
                 ],
                 statements: [
-                    { name: "maeChangingViews", content: "The agent was trying to change my political views." },
-                    { name: "maeHiddenAgenda", content: "I felt like the agent had a hidden agenda." },
-                    { name: "maeHonestIntentions", content: "The agent was honest about its intentions." },
-                    { name: "maeWillingToDiscuss", content: "After this conversation, I would be more willing to discuss politics with someone from the opposing party." },
-                    { name: "maeMoreOpen", content: "I feel more open to hearing the opposing party's perspective than before." },
-                    { name: "maeMoreConversations", content: "I would be interested in having more conversations like this one." },
+                    { name: "maePersuasionAcceptable", content: "The way the agent tried to persuade me seemed acceptable." },
+                    { name: "maeUnwantedManipulation", content: "The agent tried to manipulate me in ways that I didn't like." },
+                    { name: "maeAnnoyedControl", content: "I was annoyed because the agent seemed to be trying to inappropriately manage or control the conversation." },
+                    { name: "maeApproachOkay", content: "I didn't mind the agent's approach; it tried to be persuasive without being excessively manipulative." },
+                    { name: "maeFair", content: "The agent was fair in what it said." },
                 ],
                 randomized: true
             },
@@ -567,8 +566,8 @@ export const postSurveyPages: SurveyPage[] = [
             },
             {
                 type: "text",
-                name: "oqImprove",
-                question: "Is there anything else you would like to share about how we could improve the AI agent?",
+                name: "oqAttitudeChangeOthersWhy",
+                question: "Please briefly explain how, if at all, the conversation would change how other people think about the opposing party.",
             },
         ],
     },
