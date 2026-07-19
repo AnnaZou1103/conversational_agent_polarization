@@ -12,8 +12,8 @@ export default function Header() {
                 <Image
                     src="/Socibot.png"
                     alt="Socibot Logo"
-                    width={1486}
-                    height={363}
+                    width={843}
+                    height={176}
                     className="w-auto h-7/12 object-contain"
                     priority
                 />
