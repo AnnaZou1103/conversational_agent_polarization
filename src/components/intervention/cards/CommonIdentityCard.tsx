@@ -4,8 +4,7 @@ import React from "react";
 export default function CommonIdentityCard({ observation }: { observation: CIObservation; }) {
     const userFeelingText = observation.userFeelingText;
     const userMediaText = observation.userMediaText;
-    const showSurvey = observation.showSurvey;
-    const surveyText = observation.surveyText;
+    const additionalCommonGroundText = observation.additionalCommonGroundText;
 
     return (
         <div className="manipulation-card-container">
@@ -27,21 +26,11 @@ export default function CommonIdentityCard({ observation }: { observation: CIObs
                 </DataRow>
             )}
 
-            {/* Divider before survey finding */}
-            {showSurvey && (userFeelingText || userMediaText) && (
-                <div className="my-4 border-t border-zinc-200" />
-            )}
-
-            {/* Survey finding */}
-            {showSurvey && surveyText && (
-                <div className="p-4 bg-[#EAECFC] rounded-xl border border-[#9E9DC9]">
-                    <div className="mb-2 text-[10px] uppercase tracking-[0.08em] text-[#7570C6] font-bold">
-                        What surveys found
-                    </div>
-                    <p className="m-0 text-[13px] leading-[1.65] text-[#5A5599]">
-                        {surveyText}
-                    </p>
-                </div>
+            {/* Additional common ground the user named */}
+            {additionalCommonGroundText && (
+                <DataRow label="What else connects you">
+                    "{additionalCommonGroundText}"
+                </DataRow>
             )}
         </div>
     );

@@ -37,10 +37,9 @@ export interface AgentStrategy {
 }
 
 export interface CIObservation {
-    showSurvey: boolean;
-    surveyText: string;
     userFeelingText: string | null;
     userMediaText: string | null;
+    additionalCommonGroundText: string | null;
 }
 
 export interface PNObservation {
