@@ -48,6 +48,6 @@ export const screenedOutMessage = (
 );
 
 export const cloudResearchRedirectUrls = {
-    completed: "https://connect.cloudresearch.com/participant/project/59ECA1F24A/complete",
-    screenedOut: "https://connect.cloudresearch.com/participant/project/988EB26C3B/complete",
+    completed: "https://connect.cloudresearch.com/participant/project/982C965085/complete",
+    screenedOut: "https://connect.cloudresearch.com/participant/project/9FDFEC3E7E/complete",
 };
