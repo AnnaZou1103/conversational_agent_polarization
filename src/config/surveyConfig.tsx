@@ -409,7 +409,7 @@ export const postSurveyPages: SurveyPage[] = [
             {
                 type: "semanticDifferential",
                 name: "agentImpression",
-                question: "Based on your interaction with the AI agent, please indicate where your impression falls between each pair of adjectives below. For each pair of adjectives, select the point that best reflects your impression of the AI agent. Values closer to the left indicate the adjective on the left, values closer to the right indicate the adjective on the right, and the midpoint indicates a neutral impression.",
+                question: "Based on your interaction with the AI agent, please indicate where your impression falls between each pair of adjectives below.\n\nFor each pair of adjectives, select the point that best reflects your impression of the AI agent. Values closer to the left indicate the adjective on the left, values closer to the right indicate the adjective on the right, and the midpoint indicates a neutral impression.",
                 min: 1,
                 max: 7,
                 milestones: [
@@ -557,8 +557,8 @@ export const postSurveyPages: SurveyPage[] = [
             },
             {
                 type: "rating",
-                name: "attitudeChangeOthers",
-                question: "To what extent do you think the conversation would change how other people think about the opposing party?",
+                name: "attitudeChangeInParty",
+                question: "If other members of your political party had a similar conversation, to what extent do you think it would change how they view the opposing party?",
                 min: 1,
                 max: 7,
                 minLabel: "Not at all",
@@ -566,8 +566,13 @@ export const postSurveyPages: SurveyPage[] = [
             },
             {
                 type: "text",
+                name: "oqAttitudeChangeOutParty",
+                question: "If members of the opposing political party had a similar conversation, to what extent do you think it would change how they view your party?",
+            },
+            {
+                type: "text",
                 name: "oqAttitudeChangeOthersWhy",
-                question: "Please briefly explain how, if at all, the conversation would change how other people think about the opposing party.",
+                question: "Please briefly explain why you think a similar conversation would or would not change how members of either political party view the other party.",
             },
         ],
     },
