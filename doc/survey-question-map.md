@@ -92,6 +92,6 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | `oqAttitudeChangeSelfWhy` | text | Please briefly explain how, if at all, the conversation changed how you think about the opposing party. | free text |
 | `attitudeChangeOthers` | rating | *(replaced by the two rows below)* To what extent do you think the conversation would change how other people think about the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
 | `attitudeChangeInParty` | rating | If other members of your political party had a similar conversation, to what extent do you think it would change how they view the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
-| `oqAttitudeChangeOutParty` | text | If members of the opposing political party had a similar conversation, to what extent do you think it would change how they view your party? | free text |
+| `attitudeChangeOutParty` | rating | If members of the opposing political party had a similar conversation, to what extent do you think it would change how they view your party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
 | `oqImprove` | text | *(replaced by the row below)* Is there anything else you would like to share about how we could improve the AI agent? | free text |
 | `oqAttitudeChangeOthersWhy` | text | Please briefly explain why you think a similar conversation would or would not change how members of either political party view the other party. | free text |

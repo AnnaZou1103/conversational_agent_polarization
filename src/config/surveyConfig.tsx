@@ -565,9 +565,13 @@ export const postSurveyPages: SurveyPage[] = [
                 maxLabel: "A great deal"
             },
             {
-                type: "text",
-                name: "oqAttitudeChangeOutParty",
+                type: "rating",
+                name: "attitudeChangeOutParty",
                 question: "If members of the opposing political party had a similar conversation, to what extent do you think it would change how they view your party?",
+                min: 1,
+                max: 7,
+                minLabel: "Not at all",
+                maxLabel: "A great deal"
             },
             {
                 type: "text",
