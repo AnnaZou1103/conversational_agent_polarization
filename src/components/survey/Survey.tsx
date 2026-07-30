@@ -240,6 +240,8 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
                         statements={q.statements}
                         responses={responses}
                         size={q.size}
+                        variant={q.variant}
+                        step={q.step}
                     />
                 );
 

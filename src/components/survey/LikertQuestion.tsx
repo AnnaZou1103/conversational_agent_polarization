@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import QuestionCard from "../common/QuestionCard";
 
 let measureContext: CanvasRenderingContext2D | null | undefined;
@@ -61,6 +63,8 @@ export default function LikertQuestion({
     statements,
     responses,
     size = "sm",
+    variant = "grid",
+    step = 1,
 }: {
     question?: string,
     min: number,
@@ -70,6 +74,8 @@ export default function LikertQuestion({
     responses?: Record<string, string>;
     randomized?: boolean;
     size?: "sm" | "lg";
+    variant?: "grid" | "slider";
+    step?: number;
 }) {
     const [canMeasure, setCanMeasure] = useState(false);
     useEffect(() => {
@@ -78,6 +84,101 @@ export default function LikertQuestion({
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setCanMeasure(true);
     }, []);
+
+    // Slider-variant state: each track starts at `min` and must be engaged
+    // (dragged, clicked, or keyed) before the value counts as an answer.
+    const [values, setValues] = useState<Record<string, number>>(() => {
+        const init: Record<string, number> = {};
+        statements.forEach(s => { init[s.name] = responses?.[s.name] != null ? Number(responses[s.name]) : min; });
+        return init;
+    });
+    const [touched, setTouched] = useState<Record<string, boolean>>(() => {
+        const init: Record<string, boolean> = {};
+        statements.forEach(s => { init[s.name] = responses?.[s.name] != null; });
+        return init;
+    });
+    const guardRefs = useRef<Record<string, HTMLInputElement | null>>({});
+    useEffect(() => {
+        // An untouched slider carries a blocking custom-validity message so the
+        // form won't submit until the participant engages every item; engaging
+        // clears it. (Runs each render to stay in sync with `touched`.)
+        statements.forEach(s => {
+            guardRefs.current[s.name]?.setCustomValidity(
+                touched[s.name] ? "" : "Please rate this item by moving the slider before continuing."
+            );
+        });
+    });
+
+    const markTouched = (name: string) =>
+        setTouched(prev => (prev[name] ? prev : { ...prev, [name]: true }));
+
+    if (variant === "slider") {
+        return (
+            <QuestionCard question={question ?? ""}>
+                <div className="min-w-[320px]">
+                    {statements.map((statement, index) => {
+                        const val = values[statement.name];
+                        const isTouched = touched[statement.name];
+                        return (
+                            <div
+                                key={index}
+                                className="grid items-center gap-4 py-4 px-3"
+                                style={{ gridTemplateColumns: "minmax(140px, 220px) 1fr minmax(44px, auto)", backgroundColor: index % 2 ? "" : "#F5F5F5" }}
+                            >
+                                <div className="pr-2 text-lg font-medium">{statement.content}</div>
+
+                                <div className="px-1">
+                                    <input
+                                        type="range"
+                                        suppressHydrationWarning
+                                        min={min}
+                                        max={max}
+                                        step={step}
+                                        value={val}
+                                        onChange={e => {
+                                            const v = Number(e.target.value);
+                                            setValues(prev => ({ ...prev, [statement.name]: v }));
+                                            markTouched(statement.name);
+                                        }}
+                                        onPointerDown={() => markTouched(statement.name)}
+                                        onKeyDown={() => markTouched(statement.name)}
+                                        className={`w-full cursor-pointer ${isTouched ? "accent-blue-600" : "accent-zinc-400"}`}
+                                    />
+                                    {milestones && milestones.length > 0 &&
+                                        <div className="mt-1 flex justify-between gap-2 text-base text-zinc-600">
+                                            {milestones.map((m, i) => (
+                                                <span
+                                                    key={m.value}
+                                                    className="leading-tight"
+                                                    style={{ textAlign: i === 0 ? "left" : i === milestones.length - 1 ? "right" : "center" }}
+                                                >
+                                                    {m.label}
+                                                </span>
+                                            ))}
+                                        </div>}
+                                    {/* Hidden field the form actually reads: empty (and thus blocking) until touched. */}
+                                    <input
+                                        ref={el => { guardRefs.current[statement.name] = el; }}
+                                        type="text"
+                                        name={statement.name}
+                                        value={isTouched ? String(val) : ""}
+                                        onChange={() => { }}
+                                        tabIndex={-1}
+                                        aria-hidden="true"
+                                        style={{ position: "absolute", opacity: 0, width: 1, height: 1, pointerEvents: "none" }}
+                                    />
+                                </div>
+
+                                <div className={`text-lg tabular-nums text-right ${isTouched ? "text-zinc-700 font-semibold" : "text-zinc-400"}`}>
+                                    {isTouched ? val : "—"}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </QuestionCard>
+        );
+    }
 
     const scale = Array.from({ length: max - min + 1 }, (_, i) => min + i);
     const labelByValue = new Map(milestones?.map(m => [m.value, m.label]));

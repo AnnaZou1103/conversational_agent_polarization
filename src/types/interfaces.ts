@@ -129,6 +129,10 @@ export interface LikertQuestion {
     questionLabel?: string;
     randomized?: boolean;
     size?: "sm" | "lg";
+    // "grid" (default) renders a radio button per scale point. "slider" renders
+    // one draggable track per statement, suitable for wide ranges (e.g. 0-100).
+    variant?: "grid" | "slider";
+    step?: number;
 }
 
 export interface TextQuestion extends BaseQuestion {

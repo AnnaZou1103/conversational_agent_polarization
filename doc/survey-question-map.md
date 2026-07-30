@@ -25,13 +25,13 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 
 | Key | Type | Question / Statement | Recorded Value (Possible Options) |
 |---|---|---|---|
-| `conversationEmotions` | likert | After the conversation, how much do you feel each of the following emotions? | 1 to 7 (1 = Not at all ... 7 = Very much) |
-| &nbsp;&nbsp;`emotionEnthusiastic` | (statement) | Enthusiastic | 1–7 |
-| &nbsp;&nbsp;`emotionHappy` | (statement) | Happy | 1–7 |
-| &nbsp;&nbsp;`emotionCalm` | (statement) | Calm | 1–7 |
-| &nbsp;&nbsp;`emotionDull` | (statement) | Dull | 1–7 |
-| &nbsp;&nbsp;`emotionAngry` | (statement) | Angry | 1–7 |
-| &nbsp;&nbsp;`emotionSad` | (statement) | Sad | 1–7 |
+| `conversationEmotions` | likert (slider) | After the conversation, how much do you feel each of the following emotions? | 0 to 100 slider (0 = Not at all, 50 = Moderately, 100 = Very much) |
+| &nbsp;&nbsp;`emotionEnthusiastic` | (statement) | Enthusiastic | 0–100 |
+| &nbsp;&nbsp;`emotionHappy` | (statement) | Happy | 0–100 |
+| &nbsp;&nbsp;`emotionCalm` | (statement) | Calm | 0–100 |
+| &nbsp;&nbsp;`emotionDull` | (statement) | Dull | 0–100 |
+| &nbsp;&nbsp;`emotionAngry` | (statement) | Angry | 0–100 |
+| &nbsp;&nbsp;`emotionSad` | (statement) | Sad | 0–100 |
 | `completedTask` | choice | What was the main topic of your conversation with the AI agent? | "Frustration and exhaustion with political conflict." \| "A person from the opposing party whom I liked." \| "A quiz about the opposing party's beliefs." \| "None of above" |
 | `rateRepublicansPost` | scale | How would you rate Republicans? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
 | `rateDemocratsPost` | scale | How would you rate Democrats? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
