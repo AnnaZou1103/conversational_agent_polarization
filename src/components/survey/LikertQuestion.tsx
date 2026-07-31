@@ -142,7 +142,10 @@ export default function LikertQuestion({
                                         }}
                                         onPointerDown={() => markTouched(statement.name)}
                                         onKeyDown={() => markTouched(statement.name)}
-                                        className={`w-full cursor-pointer ${isTouched ? "accent-blue-600" : "accent-zinc-400"}`}
+                                        className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                                        style={{
+                                            background: `linear-gradient(to right, #2563eb 0%, #2563eb ${((val - min) / (max - min)) * 100}%, #e5e7eb ${((val - min) / (max - min)) * 100}%, #e5e7eb 100%)`,
+                                        }}
                                     />
                                     {milestones && milestones.length > 0 &&
                                         <div className="mt-1 flex justify-between gap-2 text-base text-zinc-600">
@@ -169,7 +172,7 @@ export default function LikertQuestion({
                                     />
                                 </div>
 
-                                <div className={`text-lg tabular-nums text-right ${isTouched ? "text-zinc-700 font-semibold" : "text-zinc-400"}`}>
+                                <div className={`text-lg tabular-nums text-right ${isTouched ? "text-blue-600 font-semibold" : "text-zinc-400"}`}>
                                     {isTouched ? val : "—"}
                                 </div>
                             </div>

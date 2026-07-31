@@ -35,11 +35,6 @@ export default function SemanticDifferentialQuestion({
         });
         return init;
     });
-    const [touched, setTouched] = useState<Record<string, boolean>>(() => {
-        const init: Record<string, boolean> = {};
-        statements.forEach(s => { init[s.name] = responses?.[s.name] != null; });
-        return init;
-    });
 
     return (
         <QuestionCard question={question ?? ""}>
@@ -60,35 +55,40 @@ export default function SemanticDifferentialQuestion({
                         <div />
                     </div>
 
-                    {statements.map((statement, index) => (
-                        <div
-                            key={index}
-                            className="grid items-center gap-1 py-3 pl-2"
-                            style={{ gridTemplateColumns, backgroundColor: index % 2 ? "" : "#F5F5F5" }}
-                        >
-                            <div className="text-right pr-2 text-sm whitespace-nowrap">{statement.leftLabel}</div>
+                    {statements.map((statement, index) => {
+                        const pct = ((values[statement.name] - min) / (max - min)) * 100;
+                        return (
+                            <div
+                                key={index}
+                                className="grid items-center gap-1 py-3 pl-2"
+                                style={{ gridTemplateColumns, backgroundColor: index % 2 ? "" : "#F5F5F5" }}
+                            >
+                                <div className="text-right pr-2 text-sm whitespace-nowrap">{statement.leftLabel}</div>
 
-                            <div className="px-2" style={{ gridColumn: `span ${scale.length}` }}>
-                                <input
-                                    type="range"
-                                    suppressHydrationWarning
-                                    name={statement.name}
-                                    min={min}
-                                    max={max}
-                                    step={1}
-                                    value={values[statement.name]}
-                                    onChange={e => {
-                                        const v = Number(e.target.value);
-                                        setValues(prev => ({ ...prev, [statement.name]: v }));
-                                        setTouched(prev => ({ ...prev, [statement.name]: true }));
-                                    }}
-                                    className={`w-full cursor-pointer ${touched[statement.name] ? "accent-blue-600" : "accent-zinc-400"}`}
-                                />
+                                <div className="px-2" style={{ gridColumn: `span ${scale.length}` }}>
+                                    <input
+                                        type="range"
+                                        suppressHydrationWarning
+                                        name={statement.name}
+                                        min={min}
+                                        max={max}
+                                        step={1}
+                                        value={values[statement.name]}
+                                        onChange={e => {
+                                            const v = Number(e.target.value);
+                                            setValues(prev => ({ ...prev, [statement.name]: v }));
+                                        }}
+                                        className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                                        style={{
+                                            background: `linear-gradient(to right, #2563eb 0%, #2563eb ${pct}%, #e5e7eb ${pct}%, #e5e7eb 100%)`,
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="pl-2 text-sm whitespace-nowrap">{statement.rightLabel}</div>
                             </div>
-
-                            <div className="pl-2 text-sm whitespace-nowrap">{statement.rightLabel}</div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </QuestionCard>
