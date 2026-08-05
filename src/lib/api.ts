@@ -97,6 +97,7 @@ const chatAPI = {
                 model: chatRequest.model ?? "common-identity",
                 message: { role: "user", content: chatRequest.message },
                 stream: true,
+                ...(chatRequest.quizAnswer != null ? { quiz_answer: chatRequest.quizAnswer } : {}),
             }),
         });
 

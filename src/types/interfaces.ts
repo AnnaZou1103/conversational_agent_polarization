@@ -176,6 +176,10 @@ export interface SurveyPage {
 export interface ChatRequest {
     message: string;
     model?: APIStrategy;
+    // Misperception-correction quiz: the Likert value (1-4) the participant
+    // clicked for the current question. Sent so the backend records the score
+    // from the actual UI selection instead of re-extracting it from text.
+    quizAnswer?: number;
 }
 
 export interface ChatResponse {
