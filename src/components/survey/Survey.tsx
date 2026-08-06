@@ -68,6 +68,53 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
     const [responses, setResponses] = useState<Record<string, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [effectiveParty, setEffectiveParty] = useState<Party | undefined>(party);
+    // Gate rendering until we've restored any saved progress, so question
+    // components mount once with their restored value (defaultChecked reads it).
+    const [restored, setRestored] = useState(false);
+
+    // Per-participant, per-survey key so pre/post progress don't collide.
+    const storageKey = `survey-progress:${id}:${surveyType}`;
+
+    // Restore saved progress once on mount (client only).
+    useEffect(() => {
+        try {
+            const saved = window.localStorage.getItem(storageKey);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                const savedResponses = parsed?.responses;
+                const savedPage = parsed?.currentPage;
+                if (savedResponses && typeof savedResponses === "object") {
+                    setResponses(savedResponses);
+                    // Recompute effective party from restored answers so later
+                    // pages render their party-specific text.
+                    const partyChoice = savedResponses["partyIdentification"];
+                    const normalized = normalizePartyChoice(partyChoice);
+                    if (normalized) {
+                        setEffectiveParty(normalized);
+                    } else if (savedResponses["closerParty"]) {
+                        setEffectiveParty(Number(savedResponses["closerParty"]) > 0 ? "democrat" : "republican");
+                    }
+                }
+                if (typeof savedPage === "number" && savedPage >= 0 && savedPage < pages.length) {
+                    setCurrentPage(savedPage);
+                }
+            }
+        } catch {
+            // Ignore corrupt/unavailable storage and start fresh.
+        }
+        setRestored(true);
+    }, [storageKey, pages.length]);
+
+    // Persist progress on every change, but only after the initial restore so
+    // we don't overwrite saved data with the empty defaults.
+    useEffect(() => {
+        if (!restored) return;
+        try {
+            window.localStorage.setItem(storageKey, JSON.stringify({ responses, currentPage }));
+        } catch {
+            // Ignore quota/serialization errors.
+        }
+    }, [responses, currentPage, restored, storageKey]);
 
     const { setCurrentStep } = useProgress();
 
@@ -105,6 +152,8 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
             await api.survey.saveSurvey(id, surveyType, { responses: finalResponses });
             if (surveyType === "pre")
                 await api.user.saveUserParty(id, { party: resolvedParty! });
+            // Survey persisted server-side; drop the local progress copy.
+            try { window.localStorage.removeItem(storageKey); } catch { /* ignore */ }
             await routeToState(router, id, nextState[surveyType]);
         } catch (error) {
             console.error('Error submitting survey:', error);
@@ -148,7 +197,12 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
 
         // Let participants answer the party-strength/closerParty page before screening out
         if (shouldScreenOut && currentPage >= 1) {
-            await api.user.advanceUserState(id, { state: "complete", screened: true });
+            const screenReason: string[] = [];
+            if (isLowAiFrequency) screenReason.push("low_ai_frequency");
+            if (isIndependent) screenReason.push("independent");
+            await api.user.advanceUserState(id, { state: "complete", screened: true, screenReason });
+            // Participant is done; clear any saved local progress.
+            try { window.localStorage.removeItem(storageKey); } catch { /* ignore */ }
             router.replace(`/${id}/thankyou?screened=1`);
             return;
         }
@@ -271,6 +325,10 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
         }
     };
 
+
+    // Hold rendering until saved progress is restored to avoid a flash of the
+    // empty first page and to let question inputs mount with restored values.
+    if (!restored) return null;
 
     return (
         <main className="mx-auto my-10 w-full max-w-[880px] px-4 space-y-6">

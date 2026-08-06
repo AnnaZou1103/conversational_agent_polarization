@@ -22,6 +22,7 @@ export const ModelToCondition: Record<Strategy, APIStrategy> = {
 export interface UserState {
     state: State;
     screened?: boolean;
+    screenReason?: string[];
 }
 
 export interface StudyType {
