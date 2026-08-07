@@ -223,25 +223,25 @@ export const postSurveyPages: SurveyPage[] = [
         ]
     },
     // Page 3: Money Allocation
-    {
-        questions: [
-            {
-                type: "scale",
-                name: "giveCents",
-                question: "How many cents (if any) would you give to the [Democrat/Republican] participant?",
-                min: 0,
-                max: 50,
-                milestones: [{ value: 0, label: "cents" }, { value: 25, label: "cents" }, { value: 50, label: "cents" }],
-                displayValue: ((value: number) =>
-                    <div className="flex justify-around">
-                        <span className="text-xl font-semibold text-blue-600">Their Share {value}</span>
-                        <span className="text-xl font-semibold text-zinc-400">{50 - value} Your Share</span>
-                    </div>
-                )
-            },
-        ],
-        paragraph: "Suppose you have been anonymously and randomly matched with another participant who identifies as a [Democrat/Republican]. You have been given 50 cents. How would you decide to split these 50 cents between yourself and the [Democrat/Republican] participant?"
-    },
+    // {
+    //     questions: [
+    //         {
+    //             type: "scale",
+    //             name: "giveCents",
+    //             question: "How many cents (if any) would you give to the [Democrat/Republican] participant?",
+    //             min: 0,
+    //             max: 50,
+    //             milestones: [{ value: 0, label: "cents" }, { value: 25, label: "cents" }, { value: 50, label: "cents" }],
+    //             displayValue: ((value: number) =>
+    //                 <div className="flex justify-around">
+    //                     <span className="text-xl font-semibold text-blue-600">Their Share {value}</span>
+    //                     <span className="text-xl font-semibold text-zinc-400">{50 - value} Your Share</span>
+    //                 </div>
+    //             )
+    //         },
+    //     ],
+    //     paragraph: "Suppose you have been anonymously and randomly matched with another participant who identifies as a [Democrat/Republican]. You have been given 50 cents. How would you decide to split these 50 cents between yourself and the [Democrat/Republican] participant?"
+    // },
     // Page 4: Democratic Norms (outgroup)
     {
         questions: [
@@ -513,7 +513,7 @@ export const postSurveyPages: SurveyPage[] = [
             {
                 type: "rating",
                 name: "weWillingFuture",
-                question: "I would be willing to discuss similar topics with an AI agent like this in the future.",
+                question: "I would be willing to have a conversation about politics with an AI agent like this in the future.",
                 min: 1,
                 max: 7,
                 minLabel: "Strongly disagree",
@@ -522,7 +522,7 @@ export const postSurveyPages: SurveyPage[] = [
             {
                 type: "text",
                 name: "oqWillingFutureWhy",
-                question: "Please briefly explain why you would or would not be willing to discuss similar topics with an AI agent like this in the future.",
+                question: "Please briefly explain why you would or would not be willing to have a conversation about politics with an AI agent like this in the future.",
             },
             {
                 type: "rating",

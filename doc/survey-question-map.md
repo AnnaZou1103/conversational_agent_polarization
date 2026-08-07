@@ -35,7 +35,7 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | `completedTask` | choice | What was the main topic of your conversation with the AI agent? | "Frustration and exhaustion with political conflict." \| "A person from the opposing party whom I liked." \| "A quiz about the opposing party's beliefs." \| "None of above" |
 | `rateRepublicansPost` | scale | How would you rate Republicans? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
 | `rateDemocratsPost` | scale | How would you rate Democrats? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
-| `giveCents` | scale | How many cents (if any) would you give to the [Democrat/Republican] participant? | 0 to 50 |
+| `giveCents` | scale | *(disabled — dictator-game measure removed from the survey)* How many cents (if any) would you give to the [Democrat/Republican] participant? | 0 to 50 |
 | `reducePollStations` | scale | [Republicans/Democrats] should reduce the number of polling stations in areas that support [Democrats/Republicans]. | 0 to 100 (0 = Strongly disagree, 50 = Neither, 100 = Strongly agree) |
 | `ignoreUnfavorableJudges` | scale | [Republican/Democrat] governors should ignore unfavorable court rulings by [Democratic/Republican]-appointed judges. | 0 to 100 (0 = Strongly disagree, 50 = Neither, 100 = Strongly agree) |
 | `prosecuteJournalists` | scale | [Republican/Democratic] governors should prosecute journalists who accuse [Republican/Democratic] politicians of misconduct without revealing sources. | 0 to 100 (0 = Strongly disagree, 50 = Neither, 100 = Strongly agree) |
@@ -84,8 +84,8 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | &nbsp;&nbsp;`maeAnnoyedControl` | (statement) | I was annoyed because the agent seemed to be trying to inappropriately manage or control the conversation. | 1–7 |
 | &nbsp;&nbsp;`maeApproachOkay` | (statement) | I didn't mind the agent's approach; it tried to be persuasive without being excessively manipulative. | 1–7 |
 | &nbsp;&nbsp;`maeFair` | (statement) | The agent was fair in what it said. | 1–7 |
-| `weWillingFuture` | rating | I would be willing to discuss similar topics with an AI agent like this in the future. | 1 to 7 (1 = Strongly disagree, 7 = Strongly agree) |
-| `oqWillingFutureWhy` | text | Please briefly explain why you would or would not be willing to discuss similar topics with an AI agent like this in the future. | free text |
+| `weWillingFuture` | rating | I would be willing to have a conversation about politics with an AI agent like this in the future. | 1 to 7 (1 = Strongly disagree, 7 = Strongly agree) |
+| `oqWillingFutureWhy` | text | Please briefly explain why you would or would not be willing to have a conversation about politics with an AI agent like this in the future. | free text |
 | `saSatisfiedOverall` | rating | Overall, I was satisfied with my conversation experience with the AI agent. | 1 to 7 (1 = Strongly disagree, 7 = Strongly agree) |
 | `oqSatisfiedWhy` | text | Please briefly explain what made you satisfied or dissatisfied with your conversation experience with the AI agent. | free text |
 | `attitudeChangeSelf` | rating | To what extent did the conversation change how you think about the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
