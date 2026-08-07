@@ -49,10 +49,15 @@ export default function InputContainer({ addMessage, canContinue, isInitializing
         const submittedContent = lockedAnswer
             ? (reasoning ? `${lockedAnswer} ${reasoning}` : lockedAnswer)
             : content;
+        // The clicked quiz option always leads with its number ("1. Never").
+        // Pass that value through so the backend records the score from the
+        // actual selection rather than re-parsing it from the message text.
+        const quizAnswerMatch = lockedAnswer?.match(/^(\d+)\./);
+        const quizAnswer = quizAnswerMatch ? Number(quizAnswerMatch[1]) : undefined;
         setContent("");
         setLockedAnswer(null);
 
-        addMessage(submittedContent);
+        addMessage(submittedContent, quizAnswer);
     };
 
     return (

@@ -148,7 +148,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
         }
     }, [historyLoaded, partyLoaded]);
 
-    const addMessage = async (content: string) => {
+    const addMessage = async (content: string, quizAnswer?: number) => {
         setCanContinue(false);
         setPendingAnswer(null);
         setMessages(prev => [...prev, { role: "user", content: content }, { role: "assistant", content: "", status: "streaming" }]);
@@ -176,7 +176,7 @@ export default function ExperimentContainer({ id, strategy, onChatObservationUpd
             }
         };
 
-        await api.chat.llmInference(id, { message: content, model: strategy ? ModelToCondition[strategy] : undefined, }, handleMessage);
+        await api.chat.llmInference(id, { message: content, model: strategy ? ModelToCondition[strategy] : undefined, quizAnswer }, handleMessage);
     };
 
     const bottomRef = useRef<HTMLDivElement | null>(null);

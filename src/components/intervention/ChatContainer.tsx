@@ -137,7 +137,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
         }
     }, [historyLoaded]);
 
-    const addMessage = async (content: string) => {
+    const addMessage = async (content: string, quizAnswer?: number) => {
         setCanContinue(false);
         setPendingAnswer(null);
         setMessages(prev => [...prev, { role: "user", content: content }, { role: "assistant", content: "", status: "streaming" }]);
@@ -166,7 +166,7 @@ export default function ChatContainer({ id, strategy, onChatObservationUpdate }:
         };
 
         try {
-            await api.chat.llmInference(id, { message: content, model: strategy ? ModelToCondition[strategy] : undefined, }, handleMessage);
+            await api.chat.llmInference(id, { message: content, model: strategy ? ModelToCondition[strategy] : undefined, quizAnswer }, handleMessage);
         } catch {
             // Mark the streaming reply as done so the input is not locked forever.
             setMessages(prev => prev.map((m, i) =>

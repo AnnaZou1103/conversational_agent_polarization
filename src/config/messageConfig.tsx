@@ -38,12 +38,12 @@ export const thankyouMessage = (
 
 export const screenedOutMessage = (
     <div className="space-y-3">
-        <h1 className="text-title">Thank you for your response.</h1>
+        <h1 className="text-title">Thank you for your responses.</h1>
         <p className="text-main-body">
-            Based on your response, we have already reached our target number of participants for this group, so you do not need to complete the remaining portions of the study.
+            We have already reached the maximum number of participants for your group, so there is no need for you to complete the rest of the study.
         </p>
         <p className="text-main-body">Please click the button below to return to CloudResearch.</p>
-        <p className="text-main-body">Thank you for your participation.</p>
+        <p className="text-main-body">We appreciate your participation.</p>
     </div>
 );
 
