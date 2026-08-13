@@ -169,6 +169,9 @@ export const postSurveyPages: SurveyPage[] = [
                 min: 0,
                 max: 100,
                 size: "lg",
+                // "Not at all" is a common, legitimate answer here, so the track
+                // starts at 0 already counted rather than requiring a drag.
+                requireInteraction: false,
                 milestones: [
                     { value: 0, label: "Not at all" },
                     { value: 50, label: "Moderately" },
