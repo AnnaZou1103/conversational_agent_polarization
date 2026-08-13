@@ -296,6 +296,7 @@ export default function Survey({ id, surveyType, party }: { id: string, surveyTy
                         size={q.size}
                         variant={q.variant}
                         step={q.step}
+                        requireInteraction={q.requireInteraction}
                     />
                 );
 

@@ -65,6 +65,7 @@ export default function LikertQuestion({
     size = "sm",
     variant = "grid",
     step = 1,
+    requireInteraction = true,
 }: {
     question?: string,
     min: number,
@@ -76,6 +77,7 @@ export default function LikertQuestion({
     size?: "sm" | "lg";
     variant?: "grid" | "slider";
     step?: number;
+    requireInteraction?: boolean;
 }) {
     const [canMeasure, setCanMeasure] = useState(false);
     useEffect(() => {
@@ -86,7 +88,9 @@ export default function LikertQuestion({
     }, []);
 
     // Slider-variant state: each track starts at `min` and must be engaged
-    // (dragged, clicked, or keyed) before the value counts as an answer.
+    // (dragged, clicked, or keyed) before the value counts as an answer - unless
+    // `requireInteraction` is false, in which case the starting value already
+    // counts, so answering `min` costs no extra interaction.
     const [values, setValues] = useState<Record<string, number>>(() => {
         const init: Record<string, number> = {};
         statements.forEach(s => { init[s.name] = responses?.[s.name] != null ? Number(responses[s.name]) : min; });
@@ -94,7 +98,7 @@ export default function LikertQuestion({
     });
     const [touched, setTouched] = useState<Record<string, boolean>>(() => {
         const init: Record<string, boolean> = {};
-        statements.forEach(s => { init[s.name] = responses?.[s.name] != null; });
+        statements.forEach(s => { init[s.name] = !requireInteraction || responses?.[s.name] != null; });
         return init;
     });
     const guardRefs = useRef<Record<string, HTMLInputElement | null>>({});

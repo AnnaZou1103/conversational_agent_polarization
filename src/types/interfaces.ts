@@ -134,6 +134,10 @@ export interface LikertQuestion {
     // one draggable track per statement, suitable for wide ranges (e.g. 0-100).
     variant?: "grid" | "slider";
     step?: number;
+    // Slider variant only. Defaults to true: the participant must engage each
+    // track before it counts as answered. Set false when the low end is a
+    // legitimate answer that should not cost an extra drag to select.
+    requireInteraction?: boolean;
 }
 
 export interface TextQuestion extends BaseQuestion {
