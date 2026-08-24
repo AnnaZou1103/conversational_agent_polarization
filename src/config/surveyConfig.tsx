@@ -165,17 +165,14 @@ export const postSurveyPages: SurveyPage[] = [
                 type: "likert",
                 name: "conversationEmotions",
                 question: "After the conversation, how much do you feel each of the following emotions?",
-                variant: "slider",
-                min: 0,
-                max: 100,
-                size: "lg",
-                // "Not at all" is a common, legitimate answer here, so the track
-                // starts at 0 already counted rather than requiring a drag.
-                requireInteraction: false,
+                min: 1,
+                max: 5,
                 milestones: [
-                    { value: 0, label: "Not at all" },
-                    { value: 50, label: "Moderately" },
-                    { value: 100, label: "Very much" },
+                    { value: 1, label: "Not at all" },
+                    { value: 2, label: "A little" },
+                    { value: 3, label: "Moderately" },
+                    { value: 4, label: "Quite a bit" },
+                    { value: 5, label: "Extremely" },
                 ],
                 statements: [
                     { name: "emotionEnthusiastic", content: "Enthusiastic" },
@@ -542,13 +539,18 @@ export const postSurveyPages: SurveyPage[] = [
                 question: "Please briefly explain what made you satisfied or dissatisfied with your conversation experience with the AI agent.",
             },
             {
-                type: "rating",
+                type: "choice",
                 name: "attitudeChangeSelf",
                 question: "To what extent did the conversation change how you think about the opposing party?",
-                min: 1,
-                max: 7,
-                minLabel: "Not at all",
-                maxLabel: "A great deal"
+                options: [
+                    "1 - Much more negatively",
+                    "2 - Moderately more negatively",
+                    "3 - Slightly more negatively",
+                    "4 - No change",
+                    "5 - Slightly more positively",
+                    "6 - Moderately more positively",
+                    "7 - Much more positively",
+                ],
             },
             {
                 type: "text",
@@ -556,22 +558,32 @@ export const postSurveyPages: SurveyPage[] = [
                 question: "Please briefly explain how, if at all, the conversation changed how you think about the opposing party.",
             },
             {
-                type: "rating",
+                type: "choice",
                 name: "attitudeChangeInParty",
                 question: "If other members of your political party had a similar conversation, to what extent do you think it would change how they view the opposing party?",
-                min: 1,
-                max: 7,
-                minLabel: "Not at all",
-                maxLabel: "A great deal"
+                options: [
+                    "1 - Much more negatively",
+                    "2 - Moderately more negatively",
+                    "3 - Slightly more negatively",
+                    "4 - No change",
+                    "5 - Slightly more positively",
+                    "6 - Moderately more positively",
+                    "7 - Much more positively",
+                ],
             },
             {
-                type: "rating",
+                type: "choice",
                 name: "attitudeChangeOutParty",
                 question: "If members of the opposing political party had a similar conversation, to what extent do you think it would change how they view your party?",
-                min: 1,
-                max: 7,
-                minLabel: "Not at all",
-                maxLabel: "A great deal"
+                options: [
+                    "1 - Much more negatively",
+                    "2 - Moderately more negatively",
+                    "3 - Slightly more negatively",
+                    "4 - No change",
+                    "5 - Slightly more positively",
+                    "6 - Moderately more positively",
+                    "7 - Much more positively",
+                ],
             },
             {
                 type: "text",

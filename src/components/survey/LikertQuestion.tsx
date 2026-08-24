@@ -50,6 +50,22 @@ function milestoneColumnWidth(label: string | undefined, fontPx: number, canMeas
     return Math.ceil(width) + 14;
 }
 
+// Sizes the statement column. Every row and the header share this one value, so
+// the radios stay in vertical line regardless of how long an individual
+// statement is (a content-derived `auto` track would resolve per row and skew
+// them). Single-word statements get a narrow column so the radios sit close to
+// the text; long sentences are capped and wrap instead. The `min` side lets the
+// track shrink first when a wide scale leaves little room.
+const STATEMENT_COLUMN_MAX = 320;
+function statementColumnWidths(statements: { content: string; }[], canMeasure: boolean) {
+    const fontPx = 16;
+    const widest = Math.max(...statements.map(s =>
+        (canMeasure ? measureTextWidth(s.content, fontPx) : null) ?? estimateWordWidth(s.content, fontPx)
+    ));
+    const max = Math.min(Math.ceil(widest) + 24, STATEMENT_COLUMN_MAX);
+    return { min: Math.min(max, 120), max };
+}
+
 const SIZE_STYLES = {
     sm: { valueText: "text-sm", labelText: "text-xs", labelFontPx: 12, radio: "w-4 h-4" },
     lg: { valueText: "text-base", labelText: "text-sm", labelFontPx: 14, radio: "w-5 h-5" },
@@ -190,7 +206,11 @@ export default function LikertQuestion({
     const scale = Array.from({ length: max - min + 1 }, (_, i) => min + i);
     const labelByValue = new Map(milestones?.map(m => [m.value, m.label]));
     const styles = SIZE_STYLES[size];
-    const gridTemplateColumns = `minmax(160px, 1fr) ${scale.map(v => `${milestoneColumnWidth(labelByValue.get(v), styles.labelFontPx, canMeasure)}px`).join(" ")}`;
+    // Leftover width goes to the scale columns (each keeping its label-fitting
+    // width as a floor) instead of the statement column, so short statements
+    // don't leave a wide gap between the text and the radios.
+    const statementColumn = statementColumnWidths(statements, canMeasure);
+    const gridTemplateColumns = `minmax(${statementColumn.min}px, ${statementColumn.max}px) ${scale.map(v => `minmax(${milestoneColumnWidth(labelByValue.get(v), styles.labelFontPx, canMeasure)}px, 1fr)`).join(" ")}`;
     return (
         <QuestionCard question={question ?? ""}>
             <div className="overflow-x-auto">

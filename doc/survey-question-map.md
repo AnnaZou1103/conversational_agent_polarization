@@ -25,13 +25,13 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 
 | Key | Type | Question / Statement | Recorded Value (Possible Options) |
 |---|---|---|---|
-| `conversationEmotions` | likert (slider) | After the conversation, how much do you feel each of the following emotions? | 0 to 100 slider (0 = Not at all, 50 = Moderately, 100 = Very much) |
-| &nbsp;&nbsp;`emotionEnthusiastic` | (statement) | Enthusiastic | 0–100 |
-| &nbsp;&nbsp;`emotionHappy` | (statement) | Happy | 0–100 |
-| &nbsp;&nbsp;`emotionCalm` | (statement) | Calm | 0–100 |
-| &nbsp;&nbsp;`emotionDull` | (statement) | Dull | 0–100 |
-| &nbsp;&nbsp;`emotionAngry` | (statement) | Angry | 0–100 |
-| &nbsp;&nbsp;`emotionSad` | (statement) | Sad | 0–100 |
+| `conversationEmotions` | likert | After the conversation, how much do you feel each of the following emotions? | 1 to 5 (1 = Not at all, 2 = A little, 3 = Moderately, 4 = Quite a bit, 5 = Extremely) |
+| &nbsp;&nbsp;`emotionEnthusiastic` | (statement) | Enthusiastic | 1–5 |
+| &nbsp;&nbsp;`emotionHappy` | (statement) | Happy | 1–5 |
+| &nbsp;&nbsp;`emotionCalm` | (statement) | Calm | 1–5 |
+| &nbsp;&nbsp;`emotionDull` | (statement) | Dull | 1–5 |
+| &nbsp;&nbsp;`emotionAngry` | (statement) | Angry | 1–5 |
+| &nbsp;&nbsp;`emotionSad` | (statement) | Sad | 1–5 |
 | `completedTask` | choice | What was the main topic of your conversation with the AI agent? | "Frustration and exhaustion with political conflict." \| "A person from the opposing party whom I liked." \| "A quiz about the opposing party's beliefs." \| "None of above" |
 | `rateRepublicansPost` | scale | How would you rate Republicans? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
 | `rateDemocratsPost` | scale | How would you rate Democrats? (feeling thermometer) | 0 to 100 (0 = Very cold/unfavorable, 50 = Neutral, 100 = Very warm/favorable) |
@@ -88,10 +88,10 @@ Maps each `name` key in [surveyConfig.tsx](../src/config/surveyConfig.tsx) to it
 | `oqWillingFutureWhy` | text | Please briefly explain why you would or would not be willing to have a conversation about politics with an AI agent like this in the future. | free text |
 | `saSatisfiedOverall` | rating | Overall, I was satisfied with my conversation experience with the AI agent. | 1 to 7 (1 = Strongly disagree, 7 = Strongly agree) |
 | `oqSatisfiedWhy` | text | Please briefly explain what made you satisfied or dissatisfied with your conversation experience with the AI agent. | free text |
-| `attitudeChangeSelf` | rating | To what extent did the conversation change how you think about the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
+| `attitudeChangeSelf` | choice | To what extent did the conversation change how you think about the opposing party? | "1 - Much more negatively" \| "2 - Moderately more negatively" \| "3 - Slightly more negatively" \| "4 - No change" \| "5 - Slightly more positively" \| "6 - Moderately more positively" \| "7 - Much more positively" |
 | `oqAttitudeChangeSelfWhy` | text | Please briefly explain how, if at all, the conversation changed how you think about the opposing party. | free text |
 | `attitudeChangeOthers` | rating | *(replaced by the two rows below)* To what extent do you think the conversation would change how other people think about the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
-| `attitudeChangeInParty` | rating | If other members of your political party had a similar conversation, to what extent do you think it would change how they view the opposing party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
-| `attitudeChangeOutParty` | rating | If members of the opposing political party had a similar conversation, to what extent do you think it would change how they view your party? | 1 to 7 (1 = Not at all, 7 = A great deal) |
+| `attitudeChangeInParty` | choice | If other members of your political party had a similar conversation, to what extent do you think it would change how they view the opposing party? | "1 - Much more negatively" \| "2 - Moderately more negatively" \| "3 - Slightly more negatively" \| "4 - No change" \| "5 - Slightly more positively" \| "6 - Moderately more positively" \| "7 - Much more positively" |
+| `attitudeChangeOutParty` | choice | If members of the opposing political party had a similar conversation, to what extent do you think it would change how they view your party? | "1 - Much more negatively" \| "2 - Moderately more negatively" \| "3 - Slightly more negatively" \| "4 - No change" \| "5 - Slightly more positively" \| "6 - Moderately more positively" \| "7 - Much more positively" |
 | `oqImprove` | text | *(replaced by the row below)* Is there anything else you would like to share about how we could improve the AI agent? | free text |
 | `oqAttitudeChangeOthersWhy` | text | Please briefly explain why you think a similar conversation would or would not change how members of either political party view the other party. | free text |

@@ -8,15 +8,15 @@ export const consentFormItems: ConsentFormItem[] = [
             <>
                 <p>
                     You are invited to participate in a research study about how people interact with AI conversational agents on topics related to political attitudes.
-                    This study is conducted by Professor Chenyan Jia and Ph.D. student Min Ge at Northeastern University.
-                    Contact us at{" "}
+                    {/* This study is conducted by Professor Chenyan Jia and Ph.D. student Min Ge at Northeastern University.
+                    Contact us at{" "} */}
                     {/* <a href="mailto:chenyanjia@northeastern.edu" className="text-blue-600 underline">
                         chenyanjia@northeastern.edu
                     </a>
                     {" or "} */}
-                    <a href="mailto:ge.min@northeastern.edu" className="text-blue-600 underline">
+                    {/* <a href="mailto:ge.min@northeastern.edu" className="text-blue-600 underline">
                         ge.min@northeastern.edu
-                    </a>.
+                    </a>. */}
                 </p>
                 <br />
                 <p>You must be at least 18 years old to participate.</p>
